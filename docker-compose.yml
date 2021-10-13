@@ -1,0 +1,44 @@
+version: '3'
+services:
+  web-frontend:
+    build:
+      context: web-frontend
+      dockerfile: deployment/development/Dockerfile
+    volumes:
+      - ./web-frontend:/web-frontend/
+    depends_on: 
+      - web-backend
+
+  web-backend:
+    build:
+      context: web-backend
+      dockerfile: deployment/development/Dockerfile
+    volumes: 
+      - ./web-backend:/var/www/
+      # - ./web-frontend:/var/www/web-frontend
+    links:
+      - database
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: deployment/development/Dockerfile
+    ports:
+      - 3000:80
+    volumes:
+      - ./web-backend:/var/www/
+    links:
+      - web-backend
+      - web-frontend
+
+  database:
+    image: mysql:8.0.26
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+  
