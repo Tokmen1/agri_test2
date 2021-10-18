@@ -13,7 +13,7 @@ class DBController extends Controller
     public function GetAllData(){
         // dd(Config::get('database.default'));
         // $data = DB::raw('SELECT * FROM names');
-        $data = DB::table('names')
+        $data = DB::table('fields')
 #            ->select('name')
             ->get();
         return $data;
