@@ -23,9 +23,9 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 ### more
-//npm install axios --save
-//npm install --save vue-router
-//vue add bootstrap-vue
-//npm install laravel-vue-pagination
-//npm i services
-//npm i lodash.merge
+//npm install axios --save <br>
+//npm install --save vue-router <br>
+//vue add bootstrap-vue <br>
+//npm install laravel-vue-pagination <br>
+//npm i services <br>
+//npm i lodash.merge <br>
