@@ -5,7 +5,6 @@ export default{
         return (axios.create({
             baseURL: "http://"+location.hostname+":3000"
         })).get('/api/')
-        //.get('posts')
     },
     createData(){
         return (axios.create({
@@ -15,7 +14,7 @@ export default{
     create(data){
         return (axios.create({
             baseURL: "http://"+location.hostname+":3000"
-        })).get('/api/fields/', data)
+        })).post('/api/fields/',  data )
     },
     editData(id) {
         return (axios.create({
@@ -25,12 +24,12 @@ export default{
     update(data) {
         return (axios.create({
             baseURL: "http://"+location.hostname+":3000"
-        })).get('/api/fields/${data.id}', data)
+        })).put('/api/fields/${data.id}', data)
     },
     delete(id) {
         return (axios.create({
             baseURL: "http://"+location.hostname+":3000"
-        })).get(`/api/fields/${id}`)
+        })).delete(`/api/fields/${id}`)
     },
     list(params) {
         return (axios.create({

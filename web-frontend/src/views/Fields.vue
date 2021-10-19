@@ -20,7 +20,7 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input placeholder="global.search" :v-model="filters.search"></b-form-input>
+                <b-form-input :v-model="filters.search"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><i class="fa fa-search"/></b-button>
                 </b-input-group-append>
@@ -97,9 +97,10 @@ export default {
       tableFields: [
         { key: 'id', sortable: true, label: 'global.id' },
         { key: 'field_name', sortable: true, label: 'field.name' },
+        { key: 'area', sortable: true, label: 'area (ha)'},
         { key: 'created_at', sortable: true, label: 'global.created_at' },
         { key: 'updated_at', sortable: true, label: 'global.updated_at' },
-        { kegetData_field: null, sort_order: null, search: '' }
+        { kegetData_field: null, sort_order: null, search: '' },
       ],
       filters: {
         sort_field: null,

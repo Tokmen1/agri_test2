@@ -27,6 +27,7 @@ class FieldListRequest extends FormRequest
         $sortFieldsWhiteList = [
             'id',
             'field_name',
+            'area',
             'created_at',
             'updated_at'
         ];

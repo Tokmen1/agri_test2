@@ -13,16 +13,16 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group :invalid-feedback="'name'">
+        <b-form-group invalid-feedback="Enter field name value">
           <label>{{ 'field.name' }}</label>
           <b-form-input type="text" placeholder="field.name_placeholder"
-            :class="{ 'is-invalid' : 'name' }"
-            v-model="entity.name"/>
+            :class="{ 'is-invalid' : fErr(entity.field_name) }"
+            v-model="entity.field_name"/>
         </b-form-group>
-        <b-form-group invalid-feedback="'area'">
+        <b-form-group invalid-feedback="Enter area value">
           <label>{{ 'field.area' }}</label>
           <b-form-input type="text" placeholder="field.area_placeholder"
-            :class="{ 'is-invalid' : 'area' }"
+            :class="{ 'is-invalid' : fErr(entity.area) }"
             v-model="entity.area"/>
         </b-form-group>
       </div>
@@ -71,7 +71,7 @@ export default {
       type: Object,
       default() {
         return {
-          name: '',
+          field_name: '',
           area: null,
         };
       },
@@ -93,12 +93,28 @@ export default {
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
       action(this.$route.params.id).then((data) => {
-        this.spinners.contentIsLoading = false;
+        this.spinners.contentIsLoading = false;    
         this.entity = this.isUpdateForm ? data.data.field : { ...this.entity, ...data.data.field };
+
       }).catch((data) => {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
       });
+    
+    },
+    fErr (ErrValue) {
+      if (ErrValue === null || ErrValue == ""){
+        return ErrValue+" value is required!";
+      }
+      else{
+        console.log(ErrValue);
+      }
+    },
+    alertError(AlertValue){
+      console.log(AlertValue);
+    },
+    alertSuccess(){
+      window.alert("Field added successfully");
     },
     save() {
       if (this.isEmbedded) return;
@@ -112,13 +128,19 @@ export default {
         this.errorMsg = {};
         if (!this.isUpdateForm) {
           // After successful create
-          if (this.$can('edit', 'fields')) {
+          // if (this.$can('edit', 'fields')) {
+          if(this.id !== null){
             this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
-          } else { // do not redirect if cannot edit
+          }
+          else{
             this.entity = this.$options.props.value.default();
             this.load();
           }
-        }
+          // } else { // do not redirect if cannot edit
+          //   this.entity = this.$options.props.value.default();
+          //   this.load();
+          // }
+         }
       }).catch(({ errors, message }) => {
         this.spinners.isSaving = false;
         this.errorMsg = errors;

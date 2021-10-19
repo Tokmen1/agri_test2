@@ -16,7 +16,7 @@ class CreateFieldsTable extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->string('field_name');
-            $table->double('ha');
+            $table->double('area');
             $table->timestamps();
         });
     }

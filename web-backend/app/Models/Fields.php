@@ -13,11 +13,13 @@ class Fields extends Model
 
     protected $table = 'fields';
     protected $attributes = [
-        'name' => null,
+        'field_name' => null,
+        'area' => null,
         // 'is_active' => true
     ];
     protected $fillable = [
-         'field_name'
+         'field_name',
+         'area'
     ];
     protected $hidden = [
         // 'password',

@@ -15,6 +15,7 @@ class FieldRequest extends FormRequest
     {
         $rules = [
             'field_name' => ['required', 'string', 'max:32'],
+            'area' => ['required'],
             // 'surname' => ['required', 'string', 'max:32'],
             // 'roles' => ['required', 'array'],
             // 'roles.*' => ['required', 'integer', 'exists:roles,id'],

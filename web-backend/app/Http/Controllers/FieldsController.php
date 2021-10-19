@@ -45,9 +45,9 @@ class FieldsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(FieldRequest $request)
     {
-        $field = Fields::create($request->validated());
+        $fields = Fields::create($request->validated());
         return FieldResource::make($fields);
     }
 
