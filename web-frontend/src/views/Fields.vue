@@ -159,9 +159,6 @@ export default {
         console.log("search: ",this.filters.search);
       });
 
-      // fields.list({ page: 1 }).then((data) => {
-      //   this.list.data = data;
-      // });
     },
     onPageChange(page) {
       page = page || this.page;
