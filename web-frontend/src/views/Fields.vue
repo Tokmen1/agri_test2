@@ -20,7 +20,8 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input :v-model="filters.search"></b-form-input>
+                <b-form-input :v-model="filters.search" @change="getData()"></b-form-input>
+                <h1>{{filters.search}}</h1>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><i class="fa fa-search"/></b-button>
                 </b-input-group-append>
@@ -54,7 +55,7 @@
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
                     <b-btn>Update</b-btn>
                   </router-link>
-                  <b-btn href="#" onClick="delete(1)">Delete</b-btn>
+                  <b-btn href="#" @click="delete_data(row.item.id)">Delete</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -107,7 +108,7 @@ export default {
       filters: {
         sort_field: null,
         sort_order: null,
-        search: '',
+        search: '00',
       }
     };
   },
@@ -141,8 +142,10 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
-    delete_data(){
-      Services.fields.delete;
+    delete_data($my_id){
+      Services.fields.delete($my_id);
+      window.alert("Iteam with id: "+$my_id+ " deleted!")
+      this.getData();
     },
     // ...mapActions('Fields', {
     //   listData: VT.FIELDS_LIST,
@@ -153,7 +156,7 @@ export default {
       this.list.data = {};
       Services.fields.list({ page: 1 }).then((data) => {
         this.list.data = data.data;
-        console.log(data.data);
+        console.log("search: ",this.filters.search);
       });
 
       // fields.list({ page: 1 }).then((data) => {

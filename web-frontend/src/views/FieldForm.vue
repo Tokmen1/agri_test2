@@ -92,7 +92,6 @@ export default {
     load() {
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
-      
       action(this.$route.params.id).then((data) => {
         this.spinners.contentIsLoading = false;
         //data.data.field = {id:this.$route.params.id, field_name: "kkkkka", area: 22, created_at: 12,updated_at: 10};
