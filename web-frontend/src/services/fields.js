@@ -24,7 +24,7 @@ export default{
     update(data) {
         return (axios.create({
             baseURL: "http://"+location.hostname+":3000"
-        })).put('/api/fields/${data.id}', data)
+        })).put(`/api/fields/${data.id}`, data)
     },
     delete(id) {
         return (axios.create({

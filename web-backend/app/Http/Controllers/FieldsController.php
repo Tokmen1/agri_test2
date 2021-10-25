@@ -45,7 +45,7 @@ class FieldsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(FieldRequest $request)
+    public function store(Field $fields, Request $request)
     {
         $fields = Fields::create($request->validated());
         return FieldResource::make($fields);
@@ -68,8 +68,9 @@ class FieldsController extends Controller
      * @param  \App\Models\Fields  $fields
      * @return \Illuminate\Http\Response
      */
-    public function edit(Fields $fields)
+    public function edit($id)
     {
+        $fields = Fields::where('id', $id)->first();
         return [
             'field' => FieldResource::make($fields->load([]))
         ];
@@ -82,8 +83,9 @@ class FieldsController extends Controller
      * @param  \App\Models\Fields  $fields
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Fields $fields)
+    public function update(Fields $fields, FieldRequest $request, $id)
     {
+        $fields = Fields::where('id', $id)->first();
         $fields->update($request->validated());
         return FieldResource::make($fields);
     }
@@ -94,8 +96,9 @@ class FieldsController extends Controller
      * @param  \App\Models\Fields  $fields
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Fields $fields)
+    public function delete(Fields $fields, $id)
     {
+        $fields = Fields::where('id', $id)->first();
         $fields->delete();
         return ['deleted' => true];
     }

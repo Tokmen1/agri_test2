@@ -50,10 +50,11 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                  <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
+                  <router-link :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
+                    <b-btn>Update</b-btn>
                   </router-link>
-                  <b-btn>dzest</b-btn>
+                  <b-btn href="#" onClick="delete(1)">Delete</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -100,6 +101,7 @@ export default {
         { key: 'area', sortable: true, label: 'area (ha)'},
         { key: 'created_at', sortable: true, label: 'global.created_at' },
         { key: 'updated_at', sortable: true, label: 'global.updated_at' },
+        { key: 'options', label: 'global.options' },
         { kegetData_field: null, sort_order: null, search: '' },
       ],
       filters: {
@@ -139,6 +141,9 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
+    delete_data(){
+      Services.fields.delete;
+    },
     // ...mapActions('Fields', {
     //   listData: VT.FIELDS_LIST,
     //   deleteFn: VT.FIELD_DELETE,

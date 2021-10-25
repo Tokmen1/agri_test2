@@ -18,8 +18,12 @@ class Fields extends Model
         // 'is_active' => true
     ];
     protected $fillable = [
-         'field_name',
-         'area'
+        'id',
+        'field_name',
+        'area',
+        'created_at',
+        'updated_at'
+        
     ];
     protected $hidden = [
         // 'password',

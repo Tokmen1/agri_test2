@@ -19,10 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::get('/testdb', 'App\Http\Controllers\DBController@getAllData');
-Route::get('/', 'App\Http\Controllers\FieldsController@index');
-Route::get('/show', 'App\Http\Controllers\FieldsController@show');
-Route::get('/create', 'App\Http\Controllers\FieldsController@create');
-Route::get('/store', 'App\Http\Controllers\FieldsController@store');
 
 Route::prefix('fields')->group(function () {
     Route::get('/', 'App\Http\Controllers\FieldsController@index');

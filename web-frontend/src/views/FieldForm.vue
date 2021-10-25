@@ -92,10 +92,12 @@ export default {
     load() {
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
+      
       action(this.$route.params.id).then((data) => {
-        this.spinners.contentIsLoading = false;    
+        this.spinners.contentIsLoading = false;
+        //data.data.field = {id:this.$route.params.id, field_name: "kkkkka", area: 22, created_at: 12,updated_at: 10};
         this.entity = this.isUpdateForm ? data.data.field : { ...this.entity, ...data.data.field };
-
+        console.log("this.entity",this.entity);
       }).catch((data) => {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
@@ -129,18 +131,14 @@ export default {
         if (!this.isUpdateForm) {
           // After successful create
           // if (this.$can('edit', 'fields')) {
-          if(this.id !== null){
+          if(this.id != null){
             this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
           }
-          else{
+          else{ // do not redirect if cannot edit
             this.entity = this.$options.props.value.default();
             this.load();
           }
-          // } else { // do not redirect if cannot edit
-          //   this.entity = this.$options.props.value.default();
-          //   this.load();
-          // }
-         }
+        }
       }).catch(({ errors, message }) => {
         this.spinners.isSaving = false;
         this.errorMsg = errors;
