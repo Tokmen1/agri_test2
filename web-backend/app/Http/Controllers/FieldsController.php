@@ -21,8 +21,9 @@ class FieldsController extends Controller
     {
         // dd($request->all());
         // dd($request->validated());
-        // $fields = Fields::filter(["field_name" => "asd"])->paginate(20);
-        $fields = Fields::filter($request->validated())->paginate(20);
+        // $fields = Fields::search(["super"])->paginate(5);
+        // $fields = Fields::filter(["field_name" => "lauks"])->paginate(5);
+        $fields = Fields::filter($request->validated())->paginate(5);
         // $fields = Fields::latest()->paginate(5);
         return new FieldCollection($fields);
         // return view('products.index',compact('products'))
@@ -45,7 +46,7 @@ class FieldsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Field $fields, Request $request)
+    public function store(FieldRequest $request)
     {
         $fields = Fields::create($request->validated());
         return FieldResource::make($fields);

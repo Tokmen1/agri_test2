@@ -20,8 +20,7 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input :v-model="filters.search" @change="getData()"></b-form-input>
-                <h1>{{filters.search}}</h1>
+                <b-form-input v-model="filters.search"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><i class="fa fa-search"/></b-button>
                 </b-input-group-append>
@@ -84,6 +83,7 @@ import Pagination from 'laravel-vue-pagination';
 // var Services = require("services");
 // import Services from 'services';
 import Services from '@/services/index';
+// import fields from '../services/fields';
 
 
 export default {
@@ -108,7 +108,7 @@ export default {
       filters: {
         sort_field: null,
         sort_order: null,
-        search: '00',
+        search: '',
       }
     };
   },
@@ -116,6 +116,11 @@ export default {
     Pagination// NoDataView, Delete
   },
   computed: {
+    filteredRecords(){
+      return this.list.data.filter((record)=>{
+        return record.match(this.filters.search);
+      })
+    },
     // ...mapState('Fields', {
     //   list: 'fieldsList'
     // }),
@@ -153,10 +158,10 @@ export default {
     // }),
     getData() {
       // this.listData(this.params);
-      this.list.data = {};
-      Services.fields.list({ page: 1 }).then((data) => {
+      // this.list.data = {};
+      Services.fields.list(this.params).then((data) => {
         this.list.data = data.data;
-        console.log("search: ",this.filters.search);
+        console.log(this.list.data.data);
       });
 
     },
