@@ -13,16 +13,16 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group invalid-feedback="Enter field name value">
+        <b-form-group :invalid-feedback="fErr(entity.field_name, '\'Field name\'')">
           <label>{{ 'field.name' }}</label>
           <b-form-input type="text" placeholder="field.name_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.field_name) }"
+            :class="{ 'is-invalid' : fErr(entity.field_name, '\'Field name\'') }"
             v-model="entity.field_name"/>
         </b-form-group>
-        <b-form-group invalid-feedback="Enter area value">
+        <b-form-group :invalid-feedback="fErr(entity.area, 'Area')">
           <label>{{ 'field.area' }}</label>
           <b-form-input type="text" placeholder="field.area_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.area) }"
+            :class="{ 'is-invalid' : fErr(entity.area, 'Area') }"
             v-model="entity.area"/>
         </b-form-group>
       </div>
@@ -103,12 +103,15 @@ export default {
       });
     
     },
-    fErr (ErrValue) {
+    fErr (ErrValue, name) {
       if (ErrValue === null || ErrValue == ""){
-        return ErrValue+" value is required!";
+        return name+" value is required!";
       }
-      else{
-        console.log(ErrValue);
+      else if(name == 'Area' && parseFloat(ErrValue) != ErrValue ){
+        return "Please enter valid "+name+" (number or decimal with '.')!";
+      }
+      else if (name == 'Area'){
+        return '';
       }
     },
     alertError(AlertValue){
