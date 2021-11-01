@@ -20,14 +20,8 @@ class FieldsController extends Controller
     public function index(FieldListRequest $request)
     {
         // dd($request->all());
-        // dd($request->validated());
-        // $fields = Fields::search(["super"])->paginate(5);
-        // $fields = Fields::filter(["field_name" => "lauks"])->paginate(5);
         $fields = Fields::filter($request->validated())->paginate(5);
-        // $fields = Fields::latest()->paginate(5);
         return new FieldCollection($fields);
-        // return view('products.index',compact('products'))
-        //     ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
