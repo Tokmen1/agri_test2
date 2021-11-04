@@ -83,7 +83,6 @@ import Pagination from 'laravel-vue-pagination';
 // var Services = require("services");
 // import Services from 'services';
 import Services from '@/services/index';
-// import fields from '../services/fields';
 
 
 export default {
