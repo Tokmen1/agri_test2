@@ -30,3 +30,7 @@ Route::prefix('fields')->group(function () {
     Route::delete('{field}', 'App\Http\Controllers\FieldsController@delete');
 });
 
+Route::prefix('fieldactions')->group(function () {
+    Route::get('/{fieldaction}', 'App\Http\Controllers\FieldActionsController@index');
+});
+

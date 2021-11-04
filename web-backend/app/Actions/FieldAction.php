@@ -10,6 +10,6 @@ class FieldAction
 
     public function handle()
     {
-        // ...
+        // ..
     }
 }

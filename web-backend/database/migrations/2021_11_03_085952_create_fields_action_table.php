@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFieldsTable extends Migration
+class CreateFieldsActionTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,12 @@ class CreateFieldsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fields', function (Blueprint $table) {
-            // $table->id();
-            $table->bigIncrements('id');
-            $table->string('field_name');
-            $table->double('area');
+        Schema::create('fields_action', function (Blueprint $table) {
+            $table->id();
+            $table->string('action_type');
+            $table->date('date_from');
+            $table->date('date_to')->nullable();
+            $table->foreignId('fields_id')->constrained('fields');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ class CreateFieldsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fields');
+        Schema::dropIfExists('fields_action');
     }
 }
