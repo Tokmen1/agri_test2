@@ -1,39 +1,22 @@
-import axios from 'axios'
+import { backend } from '@/_axios'
 
 export default{
-    getAllData(){
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).get('/api/')
-    },
     createData(){
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).get('/api/fields/create')
+        return backend.get('/fields/create')
     },
     create(data){
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).post('/api/fields/',  data )
+        return backend.post('/fields/',  data )
     },
     editData(id) {
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).get(`/api/fields/${id}/edit`)
+        return backend.get(`/fields/${id}/edit`)
     },
     update(data) {
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).put(`/api/fields/${data.id}`, data)
+        return backend.put(`/fields/${data.id}`, data)
     },
     delete(id) {
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).delete(`/api/fields/${id}`)
+        return backend.delete(`/fields/${id}`)
     },
     list(params) {
-        return (axios.create({
-            baseURL: "http://"+location.hostname+":3000"
-        })).get('/api/fields/', { params })
+        return backend.get('/fields/', { params })
     }
 }

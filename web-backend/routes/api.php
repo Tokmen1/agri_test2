@@ -31,6 +31,6 @@ Route::prefix('fields')->group(function () {
 });
 
 Route::prefix('fieldactions')->group(function () {
-    Route::get('/{fieldaction}', 'App\Http\Controllers\FieldActionsController@index');
+    Route::get('/', 'App\Http\Controllers\FieldActionsController@index');
 });
 

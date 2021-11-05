@@ -33,7 +33,8 @@ class FieldActionsListRequest extends FormRequest
         return [
             'sort_field' => ['nullable', Rule::in($sortFieldsWhiteList)],
             'sort_order' => ['nullable', Rule::in(['asc', 'desc'])],
-            'search' => ['nullable', 'string', 'min:1', 'max:150'], 
+            'search' => ['nullable', 'string', 'min:1', 'max:150'],
+            'this_specific_field' => ['nullable', 'string', 'min:1', 'max:150'],
         ];
     }
 }

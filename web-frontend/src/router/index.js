@@ -4,7 +4,7 @@ const MainLayout = () => import('./../layouts/MainLayout.vue')
 const records = () => import('@/views/DBRecords.vue')
 const Fields = () => import('@/views/Fields.vue')
 const FieldForm = () => import('@/views/FieldForm.vue')
-const Bar = { template: '<div>barss</div>' }
+const FieldActions = () => import('@/views/FieldActions.vue')
 
 const routes = [
     {
@@ -13,8 +13,7 @@ const routes = [
         children: [
             { path: '/records', component: records },
             { path: '/example', component: Fields },
-            // { path: '/FieldCreate', component: FieldCreate},
-            { path: '/bar', component: Bar },
+            { path: '/FieldActions', component: FieldActions},
             {
                 path: 'fields',
                 name: null,
@@ -52,7 +51,47 @@ const routes = [
                   },
                 ]
               },
-
+              {
+                path: 'fieldactions',
+                name: null,
+                meta: { label: 'route.fields_list_title' },
+                redirect: { name: 'FieldActions', params: { page: 1 } },
+      
+                component: {
+                  render(c) { return c('router-view'); }
+                },
+      
+                children: [
+                  {
+                    path: 'list/:id',
+                    name: 'FieldActions',
+                    meta: { label: 'route.fieldaction_list' },
+                    props: (route) => {
+                      return {
+                        id: Number(route.params.id)
+                      };
+                    },
+                    component: FieldActions,
+                  },
+                  // {
+                  //   path: 'create',
+                  //   name: 'FieldCreate',
+                  //   meta: { label: 'route.field_create_title' },
+                  //   component: FieldForm
+                  // },
+                  // {
+                  //   path: 'update/:id',
+                  //   name: 'FieldUpdate',
+                  //   meta: { label: 'route.field_update_title' },
+                  //   props: (route) => {
+                  //     return {
+                  //       id: Number(route.params.id)
+                  //     };
+                  //   },
+                  //   component: FieldForm
+                  // },
+                ]
+              },
         ],
     }
 ] 

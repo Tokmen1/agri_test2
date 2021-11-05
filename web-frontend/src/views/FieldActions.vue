@@ -10,7 +10,7 @@
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  {{ 'field.create_new' }}
+                  {{ 'Create new action' }}
                 </b-button>
               <!-- </router-link> -->
             </b-button-group>
@@ -55,9 +55,6 @@
                     <b-btn>Update</b-btn>
                   </router-link>
                   <b-btn href="#" @click="delete_data(row.item.id)">Delete</b-btn>
-                  <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id }}">
-                    <b-btn>Add action</b-btn>
-                  </router-link>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -100,16 +97,17 @@ export default {
       },
       tableFields: [
         { key: 'id', sortable: true, label: 'ID' },
-        { key: 'field_name', sortable: true, label: 'Field.name' },
-        { key: 'area', sortable: true, label: 'Area (ha)'},
-        { key: 'created_at', sortable: true, label: 'Created_at' },
-        { key: 'updated_at', sortable: true, label: 'Updated_at' },
+        { key: 'action_type', sortable: true, label: 'Action type' },
+        { key: 'date_from', sortable: true, label: 'Date from' },
+        { key: 'date_to', sortable: true, label: 'Date to' },
+        { key: 'fields_id', sortable: true, label: 'fields_id' },
         { key: 'options', label: 'Options' },
       ],
       filters: {
         sort_field: null,
         sort_order: null,
         search: '',
+        this_specific_field: this.$route.params.id,
       }
     };
   },
@@ -160,14 +158,15 @@ export default {
     getData() {
       // this.listData(this.params);
       // this.list.data = {};
-      Services.fields.list(this.params).then((data) => {
+      this.filters.this_specific_field = this.$route.params.id;
+      Services.fieldactions.list(this.params).then((data) => {
         this.list.data = data.data;
       });
 
     },
     onPageChange(page) {
       page = page || this.page;
-      if (page !== this.page) this.$router.push({ name: 'Fields', params: { page } });
+      if (page !== this.page) this.$router.push({ name: 'FieldActions', params: { page } });
     },
   }
 };

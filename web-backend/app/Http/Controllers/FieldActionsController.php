@@ -11,7 +11,7 @@ use App\Http\Resources\FieldActionsCollection;
 
 class FieldActionsController extends Controller
 {
-    public function index(FieldActionsListRequest $request, $id)
+    public function index(FieldActionsListRequest $request)
     {
         //dd("mans id: ", $id);
         //dd($request->validated(['fields_id'=>1]));
