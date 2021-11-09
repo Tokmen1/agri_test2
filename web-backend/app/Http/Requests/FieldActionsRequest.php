@@ -14,10 +14,11 @@ class FieldActionsRequest extends FormRequest
     public function rules()
     {
         $rules = [
-            'id' => ['required','integer'],
+            'id' => ['integer'],
             'action_type' => ['required', 'string', 'max:32'],
             'date_from' => ['required'],
             'date_to' =>[],
+            'fields_id' => ['required','integer']
         ];
         if ($this->isMethod('post')) {
             // $rules['is_active'] = ['required', 'boolean'];

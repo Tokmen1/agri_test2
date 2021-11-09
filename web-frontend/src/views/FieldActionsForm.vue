@@ -4,8 +4,8 @@
       <div slot="header">
         <b-row>
           <b-col cols="6">
-            <span v-if="isUpdateForm">{{'field.update_title' }}</span>
-            <span v-else>{{ 'field.create_title' }}</span>
+            <span v-if="isUpdateForm">{{'Update field actions' }}</span>
+            <span v-else>{{ 'Create field actions' }}</span>
           </b-col>
         </b-row>
       </div>
@@ -13,17 +13,23 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group :invalid-feedback="fErr(entity.field_name, '\'Field name\'')">
-          <label>{{ 'field.name' }}</label>
-          <b-form-input type="text" placeholder="field.name_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.field_name, '\'Field name\'') }"
-            v-model="entity.field_name"/>
+        <b-form-group :invalid-feedback="fErr(entity.action_type, '\'Action type\'')">
+          <label>{{ 'Action type' }}</label>
+          <b-form-input type="text" placeholder="Action type"
+            :class="{ 'is-invalid' : fErr(entity.action_type, '\'Action type\'') }"
+            v-model="entity.action_type"/>
         </b-form-group>
-        <b-form-group :invalid-feedback="fErr(entity.area, 'Area')">
-          <label>{{ 'field.area' }}</label>
-          <b-form-input type="text" placeholder="field.area_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.area, 'Area') }"
-            v-model="entity.area"/>
+        <b-form-group :invalid-feedback="fErr(entity.date_from, '\'Date from\'')">
+          <label>{{ 'Date from' }}</label>
+          <b-form-input type="text" placeholder="Date from"
+            :class="{ 'is-invalid' : fErr(entity.date_from, '\'Date from\'') }"
+            v-model="entity.date_from"/>
+        </b-form-group>
+        <b-form-group :invalid-feedback="fErr(entity.date_to, '\'Date to\'')">
+          <label>{{ 'Date to' }}</label>
+          <b-form-input type="text" placeholder="Date to"
+            :class="{ 'is-invalid' : fErr(entity.date_to, '\'Date to\'') }"
+            v-model="entity.date_to"/>
         </b-form-group>
       </div>
       <div slot="footer">
@@ -31,7 +37,7 @@
           <b-spinner v-if="spinners.isSaving" type="grow" small/>
           {{ 'global.save' }}
         </b-button>
-        <router-view :to="{ name: 'Fields' }">
+        <router-view :to="{ name: 'FieldActions' }">
           <b-button type="reset" variant="info" class="ml-2">
             {{ 'global.cancel' }}
           </b-button>
@@ -62,7 +68,7 @@ export default {
   props: {
     // If id === null, form will be considered create form else update
     id: { type: Number, default: null },
-    field_id: { type: Number, default: null },
+    //fields_id: { type: String, default: null } ,
     // if title == false to hide header, pass string to override default title
     title: { type: [String, Boolean], default: undefined },
     // pass errors from parent form if embedded
@@ -72,8 +78,10 @@ export default {
       type: Object,
       default() {
         return {
-          field_name: '',
-          area: null,
+          action_type: '',
+          date_from: null,
+          date_to: null,
+          fields_id: this.$route.params.field_id,
         };
       },
     },
@@ -86,17 +94,17 @@ export default {
     isUpdateForm() { return this.id !== null; },
   },
   methods: {
-    getForUpdate: Services.fields.editData,
-    getForCreate: Services.fields.createData,
-    pushUpdate: Services.fields.update,
-    pushCreate: Services.fields.create,
+    getForUpdate: Services.fieldactions.editData,
+    getForCreate: Services.fieldactions.createData,
+    pushUpdate: Services.fieldactions.update,
+    pushCreate: Services.fieldactions.create,
     load() {
+      //this.entity.fields_id = this.$route.params.field_id;
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
       action(this.$route.params.id).then((data) => {
         this.spinners.contentIsLoading = false;
-        //data.data.field = {id:this.$route.params.id, field_name: "kkkkka", area: 22, created_at: 12,updated_at: 10};
-        this.entity = this.isUpdateForm ? data.data.field : { ...this.entity, ...data.data.field };
+        this.entity = this.isUpdateForm ? data.data.fieldactions : { ...this.entity, ...data.data.fieldactions };
       }).catch((data) => {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
@@ -118,7 +126,7 @@ export default {
       console.log(AlertValue);
     },
     alertSuccess(){
-      window.alert("Field added successfully");
+      window.alert("Field action added successfully");
     },
     save() {
       if (this.isEmbedded) return;
@@ -134,7 +142,7 @@ export default {
           // After successful create
           // if (this.$can('edit', 'fields')) {
           if(this.id != null){
-            this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
+            this.$router.push({ name: 'FieldActionsUpdate', params: { id: data.data.id } });
           }
           else{ // do not redirect if cannot edit
             this.entity = this.$options.props.value.default();

@@ -9,7 +9,7 @@
           <b-col md="auto">
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
-                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
+                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldActionsCreate', params:{ field_id: this.filters.thisSpecificField } }">
                   {{ 'Create new action' }}
                 </b-button>
               <!-- </router-link> -->
@@ -50,7 +50,7 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                  <router-link :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
+                  <router-link :to="{ name: 'FieldActionsUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
                     <b-btn>Update</b-btn>
                   </router-link>
@@ -74,14 +74,7 @@
 </template>
 
 <script>
-// import statuses from '@/store/statuses';
-// import { mapState, mapActions } from 'vuex';
 import Pagination from 'laravel-vue-pagination';
-// import VT from '@/store/types';
-// import NoDataView from '@/viewDeletes/Shared/NoDataView.vue';
-// import Delete from '@/views/Shared/ModalDelete';
-// var Services = require("services");
-// import Services from 'services';
 import Services from '@/services/index';
 
 
@@ -107,12 +100,12 @@ export default {
         sort_field: null,
         sort_order: null,
         search: '',
-        this_specific_field: this.$route.params.id,
+        thisSpecificField: this.$route.params.id,
       }
     };
   },
   components: {
-    Pagination// NoDataView, Delete
+    Pagination
   },
   computed: {
     filteredRecords(){
@@ -120,9 +113,6 @@ export default {
         return record.match(this.filters.search);
       })
     },
-    // ...mapState('Fields', {
-    //   list: 'fieldsList'
-    // }),
     listPaginator() {
       return Object.is(this.list.data, undefined) ? {} : this.list.data.meta;
     },
@@ -131,7 +121,6 @@ export default {
     },
     contentIsLoading() {
       return false;
-      // return this.list.status !== statuses.LOADED;
     },
     params() {
       return {
@@ -147,18 +136,11 @@ export default {
   },
   methods: {
     delete_data($my_id){
-      Services.fields.delete($my_id);
+      Services.fieldactions.delete($my_id);
       window.alert("Iteam with id: "+$my_id+ " deleted!")
       this.getData();
     },
-    // ...mapActions('Fields', {
-    //   listData: VT.FIELDS_LIST,
-    //   deleteFn: VT.FIELD_DELETE,
-    // }),
     getData() {
-      // this.listData(this.params);
-      // this.list.data = {};
-      this.filters.this_specific_field = this.$route.params.id;
       Services.fieldactions.list(this.params).then((data) => {
         this.list.data = data.data;
       });

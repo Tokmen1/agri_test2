@@ -16,6 +16,7 @@ class FieldActions extends Model
         'action_type' => null,
         'date_from' => null,
         'date_to' => null,
+        'fields_id' => null,
         // 'is_active' => true
     ];
     protected $fillable = [
@@ -23,6 +24,7 @@ class FieldActions extends Model
         'action_type',
         'date_from',
         'date_to',
+        'fields_id',
     ];
     protected $hidden = [
         // 'password',

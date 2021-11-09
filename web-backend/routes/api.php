@@ -32,5 +32,11 @@ Route::prefix('fields')->group(function () {
 
 Route::prefix('fieldactions')->group(function () {
     Route::get('/', 'App\Http\Controllers\FieldActionsController@index');
+    Route::get('/create', 'App\Http\Controllers\FieldActionsController@create');
+    Route::post('/', 'App\Http\Controllers\FieldActionsController@store');
+    Route::get('{fieldactions}', 'App\Http\Controllers\FieldActionsController@show');
+    Route::get('{fieldactions}/edit', 'App\Http\Controllers\FieldActionsController@edit');
+    Route::put('{fieldactions}', 'App\Http\Controllers\FieldActionsController@update');
+    Route::delete('{fieldactions}', 'App\Http\Controllers\FieldActionsController@delete');
 });
 

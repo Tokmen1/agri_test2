@@ -28,13 +28,15 @@ class FieldActionsListRequest extends FormRequest
             'id',
             'action_type',
             'date_from',
-            'date_to'
+            'date_to',
+            'fields_id',
         ];
         return [
             'sort_field' => ['nullable', Rule::in($sortFieldsWhiteList)],
             'sort_order' => ['nullable', Rule::in(['asc', 'desc'])],
+            'thisSpecificField' => ['string', 'min:1', 'max:150'],
             'search' => ['nullable', 'string', 'min:1', 'max:150'],
-            'this_specific_field' => ['nullable', 'string', 'min:1', 'max:150'],
+            
         ];
     }
 }

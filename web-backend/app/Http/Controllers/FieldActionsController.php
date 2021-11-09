@@ -13,15 +13,45 @@ class FieldActionsController extends Controller
 {
     public function index(FieldActionsListRequest $request)
     {
-        //dd("mans id: ", $id);
-        //dd($request->validated(['fields_id'=>1]));
         $fieldactions = FieldActions::filter($request->validated())->paginate(5);
         return new FieldActionsCollection($fieldactions);
-        // $fields = Fields::filter($request->validated())->paginate(5);
-        // return new FieldCollection($fields);
     }
-    public function show(FieldActions $fields)
+
+    public function create()
     {
-        return FieldActionsResource::make($fields->load([]));
+        return [];
+    }
+
+    public function store(FieldActionsRequest $request)
+    {
+        $fieldactions = FieldActions::create($request->all());
+        return FieldActionsResource::make($fieldactions);
+    }
+
+    public function show(FieldActions $fieldactions)
+    {
+        return FieldActionsResource::make($fieldactions->load([]));
+    }
+
+    public function edit($id)
+    {
+        $fieldactions = FieldActions::where('id', $id)->first();
+        return [
+            'fieldactions' => $fieldactions//FieldActionsResource::make($fieldactions->load([]))
+        ];
+    }
+
+    public function update(FieldActionsRequest $request, $id)
+    {
+        $fieldactions = FieldActions::where('id', $id)->first();
+        $fieldactions->update($request->validated());
+        return FieldActionsResource::make($fieldactions);
+    }
+
+    public function delete($id)
+    {
+        $fieldactions = FieldActions::where('id', $id)->first();
+        $fieldactions->delete();
+        return ['deleted' => true];
     }
 }

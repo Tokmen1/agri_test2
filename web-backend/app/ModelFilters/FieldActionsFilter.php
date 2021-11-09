@@ -25,11 +25,11 @@ class FieldActionsFilter extends ModelFilter
     public function search($value)
     {
         $this->where(function ($query) use ($value) {
-            $query->orWhere('fields_id', 'LIKE', "%$value%");
+            $query->orWhere('action_type', 'LIKE', "%$value%");
             // $query->orWhere('other', 'LIKE', "%$value%");
         });
     }
-    public function this_specific_field($value)
+    public function thisSpecificField($value)
     {
         $this->where(function ($query) use ($value) {
             $query->orWhere('fields_id', 'LIKE', "%$value%");
