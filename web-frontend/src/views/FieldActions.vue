@@ -76,7 +76,7 @@
 <script>
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
-
+//check git margee
 
 export default {
   mounted() {
