@@ -55,7 +55,7 @@
                     <b-btn>Update</b-btn>
                   </router-link>
                   <b-btn href="#" @click="delete_data(row.item.id)">Delete</b-btn>
-                  <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id }}">
+                  <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
                     <b-btn>Add action</b-btn>
                   </router-link>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->

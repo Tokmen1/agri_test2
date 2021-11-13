@@ -14,11 +14,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
-Route::get('/testdb', 'App\Http\Controllers\DBController@getAllData');
+// Route::get('/testdb', 'App\Http\Controllers\DBController@getAllData');
+
+Route::prefix('user')->group(function () {
+    Route::get('/', 'App\Http\Controllers\UserController@index');
+    Route::get('/create', 'App\Http\Controllers\UserController@create');
+    Route::post('/', 'App\Http\Controllers\UserController@store');
+    Route::get('{user}', 'App\Http\Controllers\UserController@show');
+    Route::get('{user}/edit', 'App\Http\Controllers\UserController@edit');
+    Route::put('{user}', 'App\Http\Controllers\UserController@update');
+    Route::delete('{user}', 'App\Http\Controllers\UserController@delete');
+});
 
 Route::prefix('fields')->group(function () {
     Route::get('/', 'App\Http\Controllers\FieldsController@index');

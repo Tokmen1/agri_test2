@@ -64,12 +64,13 @@ const routes = [
       
                 children: [
                   {
-                    path: 'list/:id',
+                    path: 'list/:page',
                     name: 'FieldActions',
                     meta: { label: 'route.fieldaction_list' },
                     props: (route) => {
                       return {
-                        id: Number(route.params.id)
+                        id: Number(route.params.id),
+                        page: Number(route.params.page)
                       };
                     },
                     component: FieldActions,
