@@ -82,7 +82,7 @@ export default {
   mounted() {
     this.getData();
   },
-  props: ['page'],
+  props: ['page', 'id'],
   data() {
     return {
       list: {
