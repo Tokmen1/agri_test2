@@ -1,0 +1,134 @@
+<template>
+  <div class="app flex-row align-items-center">
+    <div class="container">
+      <b-row class="justify-content-center">
+        <b-col cols="8" lg="4">
+          <b-card-group>
+            <b-card no-body class="p-4">
+              <b-card-body>
+                <b-form name="login">
+                  <h1>{{ 'Login_title' }}</h1>
+                  <p v-show="!isLoginFailed" class="text-muted">
+                    {{ 'Login description' }}
+                  </p>
+                  <p v-show="isLoginFailed" class="text-danger">{{ 'Login failed' }}</p>
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend>
+                      <b-input-group-text><i class="icon-user"/></b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-form-input ref="email" @keydown.enter.native="attemptLogin" v-model="email"
+                                  type="text" class="form-control"
+                                  placeholder="email"
+                                  autocomplete="username-email"/>
+                  </b-input-group>
+                  <b-input-group class="mb-4">
+                    <b-input-group-prepend><b-input-group-text>
+                      <i class="icon-lock"/></b-input-group-text>
+                    </b-input-group-prepend>
+                    <b-form-input @keydown.enter.native="attemptLogin" name="password" v-model="password"
+                                  type="password" class="form-control"
+                                  placeholder="password"
+                                  autocomplete="current-password" />
+                  </b-input-group>
+                  <b-row>
+                    <b-col cols="12">
+                      <b-button-group class="d-flex">
+                        <!-- <LanguagesDropdown/> -->
+                        <b-button name="login" block variant="primary" class="px-4 w-100" @click="attemptLogin()"
+                                  :disabled="isLoading">{{ 'Login' }}</b-button>
+                      </b-button-group>
+                    </b-col>
+                  </b-row>
+                  <b-row>
+                    <b-col cols="6" class="text-left">
+                      <b-button variant="link" class="px-0"
+                                :to="{ name: 'Register' }">{{ 'auth.register_link' }}</b-button>
+                    </b-col>
+                    <!-- <b-col cols="6" class="text-right">
+                      <b-button variant="link" class="px-0"
+                                :to="{ name: 'PasswordForgot' }">
+                        {{ 'auth.forgot_password_link' }}
+                      </b-button>
+                    </b-col> -->
+                  </b-row>
+                </b-form>
+              </b-card-body>
+            </b-card>
+          </b-card-group>
+        </b-col>
+      </b-row>
+    </div>
+  </div>
+</template>
+
+<script>
+// import { mapGetters, mapActions } from 'vuex';
+import AuthService from '@/services/auth';
+// import VT from '@/store/types';
+// import LanguagesDropdown from '@/containers/Dropdowns/LanguagesDropdown';
+
+export default {
+  mounted() {
+    this.$refs.email.$el.focus();
+  },
+  data() {
+    return {
+      email: '',
+      password: '',
+      isLoading: false,
+      isLoginFailed: false,
+    };
+  },
+  components: {
+    // LanguagesDropdown
+  },
+  computed: {
+  },
+  watch: {
+    user: {
+      handler: function () {
+        this.onUserChanged();
+      },
+      deep: true
+    },
+  },
+  methods: {
+    attemptLogin() {
+      this.isLoading = true;
+      // try {
+        AuthService.login(this.email, this.password).then(({ data }) => {
+          console.log(data);
+          this.$router.push({ name: 'Fields', params: { page:1 } });
+        }, () => {
+        this.isLoginFailed = true;
+        this.isLoading = false;
+      });
+      // } catch (error) {
+      //   console.log(error);
+      //   this.isLoginFailed = true;
+      //   this.isLoading = false;
+      // }
+      // AuthService.login(this.email, this.password).then(({ data }) => {
+      //   this.UPDATE_AUTH_TOKEN(data['access_token']).then(() => {
+      //     this.LOAD_USER_INFO();
+      //   });
+      // }, () => {
+      //   this.isLoginFailed = true;
+      //   this.isLoading = false;
+      // });
+    },
+    onUserChanged() {
+      this.isLoading = false;
+      if (this.user) {
+        const redirectPath = sessionStorage.getItem('redirectPath');
+        if (redirectPath) {
+          sessionStorage.removeItem('redirectPath');
+          this.$router.replace({ path: redirectPath });
+        } else {
+          this.$router.replace({ name: 'Dashboard' });
+        }
+      }
+    },
+  }
+};
+</script>

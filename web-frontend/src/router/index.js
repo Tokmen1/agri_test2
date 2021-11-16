@@ -6,6 +6,8 @@ const Fields = () => import('@/views/Fields.vue')
 const FieldForm = () => import('@/views/FieldForm.vue')
 const FieldActions = () => import('@/views/FieldActions.vue')
 const FieldActionsForm = () => import('@/views/FieldActionsForm.vue')
+const Login = () => import('@/views/Pages/Login.vue')
+const Register = () => import('@/views/Pages/Register.vue')
 
 const routes = [
     {
@@ -76,15 +78,9 @@ const routes = [
                     component: FieldActions,
                   },
                   {
-                    // path: 'create/:field_id',
                     path: 'create',
                     name: 'FieldActionsCreate',
                     meta: { label: 'route.field_actions_create_title' },
-                    // props: (route) => {
-                    //   return {
-                    //     field_id: Number(route.params.field_id)
-                    //   };
-                    // },
                     component: FieldActionsForm
                   },
                   {
@@ -101,10 +97,40 @@ const routes = [
                 ]
               },
         ],
-    }
-] 
+    },
+    {
+      path: '/login',
+      name: 'Login',
+      meta: { label: 'route.login' },
+      component: Login
+    },
+    {
+      path: '/register',
+      name: 'Register',
+      meta: { label: 'route.register' },
+      component: Register
+    },
+]
+const publicRoutes = [
+  'Login',
+  'Register'
+]; 
 const router = new VueRouter({
     routes
-  })
+  });
+
+  router.beforeEach((to, from, next) => {
+    if (!publicRoutes.includes(to.name)) {
+      next({ name: 'Login' });
+    }
+    if (to.name === 'Login' && from.name && from.name !== 'Login'
+      && from.name !== 'Register'
+      && from.name !== 'PasswordForgot'
+      && from.name !== 'PasswordReset') {
+      sessionStorage.setItem('redirectPath', from.path);
+    }
+  
+    next();
+  });
 
 export default router
