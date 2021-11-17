@@ -95,27 +95,14 @@ export default {
   methods: {
     attemptLogin() {
       this.isLoading = true;
-      // try {
         AuthService.login(this.email, this.password).then(({ data }) => {
           console.log(data);
-          this.$router.push({ name: 'Fields', params: { page:1 } });
+          sessionStorage.setItem('access_token', data['access_token']);
+          this.$router.replace({ name: 'Fields', params: { page:1 } });
         }, () => {
         this.isLoginFailed = true;
         this.isLoading = false;
       });
-      // } catch (error) {
-      //   console.log(error);
-      //   this.isLoginFailed = true;
-      //   this.isLoading = false;
-      // }
-      // AuthService.login(this.email, this.password).then(({ data }) => {
-      //   this.UPDATE_AUTH_TOKEN(data['access_token']).then(() => {
-      //     this.LOAD_USER_INFO();
-      //   });
-      // }, () => {
-      //   this.isLoginFailed = true;
-      //   this.isLoading = false;
-      // });
     },
     onUserChanged() {
       this.isLoading = false;

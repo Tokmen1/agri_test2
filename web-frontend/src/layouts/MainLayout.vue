@@ -32,13 +32,12 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+          <b-dropdown-item @click="sing_out()">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
     <router-view></router-view>
-    rutuyrty
     <!-- <RwvFooter /> -->
   </div>
 </template>
@@ -46,11 +45,19 @@
 <script>
 // import RwvHeader from "@/components/TheHeader";
 // import RwvFooter from "@/components/TheFooter";
+import Services from '@/services';
 export default {
   components: {
     // RwvHeader,
     // RwvFooter
-    
+  },
+  methods: {
+    sing_out(){
+      console.log("singing out");
+      sessionStorage.removeItem('access_token');
+      Services.auth.logout();
+      // this.$router.replace({ name: 'Login' });
+    }
   }
 };
 </script>

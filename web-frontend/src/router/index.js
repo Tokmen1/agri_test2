@@ -120,7 +120,7 @@ const router = new VueRouter({
   });
 
   router.beforeEach((to, from, next) => {
-    if (!publicRoutes.includes(to.name)) {
+    if (!publicRoutes.includes(to.name) && (typeof sessionStorage.getItem('access_token') === 'undefined')) {
       next({ name: 'Login' });
     }
     if (to.name === 'Login' && from.name && from.name !== 'Login'
