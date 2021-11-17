@@ -10,6 +10,9 @@ export default {
   register(data) {
     return backend.post('auth/register', data);
   },
+  logout(){
+    return backend.post('auth/logout');
+  }
   // forgotPassword(emailData) {
   //   return Backend.post('auth/forgot-password', emailData);
   // },
