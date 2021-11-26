@@ -10,7 +10,7 @@
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  {{ 'field.create_new' }}
+                  {{ 'Create new field' }}
                 </b-button>
               <!-- </router-link> -->
             </b-button-group>
@@ -50,7 +50,7 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                  <router-link :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
+                  <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
                     <b-btn>Update</b-btn>
                   </router-link>

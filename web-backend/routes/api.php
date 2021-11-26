@@ -43,13 +43,13 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('fields')->group(function () {
-    Route::get('/', 'App\Http\Controllers\FieldsController@index');
-    Route::get('/create', 'App\Http\Controllers\FieldsController@create');
-    Route::post('/', 'App\Http\Controllers\FieldsController@store');
-    Route::get('{field}', 'App\Http\Controllers\FieldsController@show');
-    Route::get('{field}/edit', 'App\Http\Controllers\FieldsController@edit');
-    Route::put('{field}', 'App\Http\Controllers\FieldsController@update');
-    Route::delete('{field}', 'App\Http\Controllers\FieldsController@delete');
+    Route::get('/', 'App\Http\Controllers\FieldsController@index')->middleware('can:viewList,App\Models\Fields');;
+    Route::get('/create', 'App\Http\Controllers\FieldsController@create')->middleware('can:create,App\Models\Fields');;
+    Route::post('/', 'App\Http\Controllers\FieldsController@store')->middleware('can:create,App\Models\Fields');
+    Route::get('{field}', 'App\Http\Controllers\FieldsController@show')->middleware('can:view,field');
+    Route::get('{field}/edit', 'App\Http\Controllers\FieldsController@edit')->middleware('can:view,field');
+    Route::put('{field}', 'App\Http\Controllers\FieldsController@update')->middleware('can:update,field');
+    Route::delete('{field}', 'App\Http\Controllers\FieldsController@delete')->middleware('can:delete,field');
 });
 
 Route::prefix('fieldactions')->group(function () {

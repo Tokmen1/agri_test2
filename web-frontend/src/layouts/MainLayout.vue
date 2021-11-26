@@ -54,9 +54,9 @@ export default {
   methods: {
     sing_out(){
       console.log("singing out");
+      Services.auth.logout(sessionStorage.getItem('access_token'));
       sessionStorage.removeItem('access_token');
-      Services.auth.logout();
-      // this.$router.replace({ name: 'Login' });
+      this.$router.replace({ name: 'Login' });
     }
   }
 };
