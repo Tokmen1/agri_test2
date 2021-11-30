@@ -43,8 +43,8 @@ Route::prefix('user')->group(function () {
 });
 
 Route::prefix('fields')->group(function () {
-    Route::get('/', 'App\Http\Controllers\FieldsController@index')->middleware('can:viewList,App\Models\Fields');;
-    Route::get('/create', 'App\Http\Controllers\FieldsController@create')->middleware('can:create,App\Models\Fields');;
+    Route::get('/', 'App\Http\Controllers\FieldsController@index');
+    Route::get('/create', 'App\Http\Controllers\FieldsController@create')->middleware('can:create,App\Models\Fields');
     Route::post('/', 'App\Http\Controllers\FieldsController@store')->middleware('can:create,App\Models\Fields');
     Route::get('{field}', 'App\Http\Controllers\FieldsController@show')->middleware('can:view,field');
     Route::get('{field}/edit', 'App\Http\Controllers\FieldsController@edit')->middleware('can:view,field');

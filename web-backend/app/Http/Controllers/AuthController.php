@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\LoginRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Controller;
 use App\Models\User;
@@ -46,14 +47,13 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\JsonResponse
      */
-    public function login()
-    {
-        $credentials = request(['email', 'password']);
-
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+    public function login(LoginRequest $request)
+    {   
+        $credentials = $request->validated();
+        //$credentials['is_active'] = true;
+        if (!$token = auth('api')->attempt($credentials)) {
+            return response()->json(['error' => 'Invalid login/password or user is inactive'], 401);
         }
-
         return $this->respondWithToken($token);
     }
 

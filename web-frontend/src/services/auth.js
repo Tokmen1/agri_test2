@@ -1,8 +1,8 @@
 import { backend } from '@/_axios';
 
 export default {
-  user() {
-    return backend.get('/users/me');
+  me() {
+    return backend.post('/auth/me', {headers:{'Authorization':'Bearer' + sessionStorage.getItem('access_token')}});
   },
   login(email, password) {
     return backend.post('auth/login', { email, password });

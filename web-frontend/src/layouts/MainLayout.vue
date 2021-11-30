@@ -55,6 +55,8 @@ export default {
     sing_out(){
       console.log("singing out");
       Services.auth.logout(sessionStorage.getItem('access_token'));
+      console.log( Services.auth.me());
+      console.log("ACCC T",sessionStorage.getItem('access_token'));
       sessionStorage.removeItem('access_token');
       this.$router.replace({ name: 'Login' });
     }
