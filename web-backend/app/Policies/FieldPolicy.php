@@ -30,7 +30,7 @@ class FieldPolicy
      */
     public function view(User $user, Fields $fields)
     {
-        return $user->id === $user->fields->id;
+        return true;//$user->id === $user->fields->id;
     }
 
     /**

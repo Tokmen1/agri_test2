@@ -26,10 +26,10 @@ class FieldResource extends JsonResource
             // 'created_at' => $this->formatDateTime($this->created_at),
             // 'updated_at' => $this->formatDateTime($this->updated_at)
             'actions' => [
-                // 'create' => Gate::allows('create', [$this->resource]),
-                // 'view' => Gate::allows('view', [$this->resource]),
-                // 'update' => true,//$user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
-                // 'delete' => Gate::allows('delete', [$this->resource]),
+                'create' => true,//Gate::allows('create', [$this->resource]),
+                'view' => true, //Gate::allows('view', [$this->resource]),
+                'update' => true,//$user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
+                'delete' => true, //Gate::allows('delete', [$this->resource]),
             ]
         ];
         return $return;

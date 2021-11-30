@@ -8,7 +8,7 @@ use App\Models\Fields;
 use Illuminate\Http\Request;
 use App\Http\Requests\FieldRequest;
 use App\Http\Requests\FieldListRequest;
-
+use Illuminate\Support\Facades\Auth;
 
 class FieldsController extends Controller
 {
@@ -20,6 +20,10 @@ class FieldsController extends Controller
     public function index(FieldListRequest $request)
     {
         // dd($request->all());
+        if(!$user = Auth::user())
+        {
+            return "i'm not authenticated!!!";
+        }
         $fields = Fields::filter($request->validated())->paginate(5);
         return new FieldCollection($fields);
     }
