@@ -46,6 +46,7 @@
 // import RwvHeader from "@/components/TheHeader";
 // import RwvFooter from "@/components/TheFooter";
 import Services from '@/services';
+import { backend } from '@/_axios';
 export default {
   components: {
     // RwvHeader,
@@ -53,11 +54,13 @@ export default {
   },
   methods: {
     sing_out(){
-      console.log("singing out");
-      Services.auth.logout(sessionStorage.getItem('access_token'));
-      console.log( Services.auth.me());
-      console.log("ACCC T",sessionStorage.getItem('access_token'));
-      sessionStorage.removeItem('access_token');
+      (async () => {
+        console.log("singing out");
+        await Services.auth.logout(sessionStorage.getItem('access_token'));
+        await sessionStorage.removeItem('access_token');
+        console.log(await sessionStorage.getItem('access_token'));
+        await delete backend.defaults.headers.common["Authorization"];
+      })();
       this.$router.replace({ name: 'Login' });
     }
   }

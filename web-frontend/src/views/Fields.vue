@@ -86,7 +86,7 @@ import Pagination from 'laravel-vue-pagination';
 // var Services = require("services");
 // import Services from 'services';
 import Services from '@/services/index';
-
+import { backend } from '@/_axios';
 
 export default {
   mounted() {
@@ -160,6 +160,7 @@ export default {
     getData() {
       // this.listData(this.params);
       // this.list.data = {};
+      backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
       Services.fields.list(this.params).then((data) => {
         this.list.data = data.data;
       });

@@ -62,10 +62,8 @@
 </template>
 
 <script>
-// import { mapGetters, mapActions } from 'vuex';
+
 import AuthService from '@/services/auth';
-// import VT from '@/store/types';
-// import LanguagesDropdown from '@/containers/Dropdowns/LanguagesDropdown';
 
 export default {
   mounted() {
@@ -96,9 +94,10 @@ export default {
     attemptLogin() {
       this.isLoading = true;
         AuthService.login(this.email, this.password).then(({ data }) => {
-          console.log(data);
-          sessionStorage.setItem('access_token', data['access_token']);
-          this.$router.replace({ name: 'Fields', params: { page:1 } });
+          (async () => {
+            await sessionStorage.setItem('access_token', data['access_token']);
+          })();
+          this.$router.push({ name: 'Fields', params: { page:1 } });
         }, () => {
         this.isLoginFailed = true;
         this.isLoading = false;
