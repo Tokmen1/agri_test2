@@ -28,7 +28,7 @@ class FieldResource extends JsonResource
             'actions' => [
                 'create' => true,//Gate::allows('create', [$this->resource]),
                 'view' => true, //Gate::allows('view', [$this->resource]),
-                'update' => true,//$user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
+                'update' => $user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
                 'delete' => true, //Gate::allows('delete', [$this->resource]),
             ]
         ];

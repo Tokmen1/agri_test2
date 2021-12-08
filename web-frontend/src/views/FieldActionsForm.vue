@@ -50,6 +50,7 @@
 <script>
 import merge from 'lodash.merge';
 import Services from '@/services/index';
+import ErrorMixin from '@/mixins/ErrorMixin'
 
 export default {
   mounted() {
@@ -99,7 +100,6 @@ export default {
     pushUpdate: Services.fieldactions.update,
     pushCreate: Services.fieldactions.create,
     load() {
-      //this.entity.fields_id = this.$route.params.field_id;
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
       action(this.$route.params.id).then((data) => {
@@ -110,17 +110,6 @@ export default {
         this.errorMsg = data.data ? data.data.errors : {};
       });
     
-    },
-    fErr (ErrValue, name) {
-      if (ErrValue === null || ErrValue == ""){
-        return name+" value is required!";
-      }
-      else if(name == 'Area' && parseFloat(ErrValue) != ErrValue ){
-        return "Please enter valid "+name+" (number or decimal with '.')!";
-      }
-      else if (name == 'Area'){
-        return '';
-      }
     },
     alertError(AlertValue){
       console.log(AlertValue);
@@ -155,7 +144,8 @@ export default {
         this.alertError({ text: message });
       });
     },
-  }
+  },
+  mixins: [ErrorMixin]
 };
 </script>
 
