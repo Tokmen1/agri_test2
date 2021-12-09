@@ -40,13 +40,12 @@
             <b-col>
               <div  v-if="!tableItems.length"> datu nav</div>
               <!-- <NoDataView v-if="!tableItems.length"/> -->
-              <b-table v-else class="table-sm text-center" responsive bordered
+              <b-table v-else-if="actions.create" class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
                   :sort-desc.sync="filters.sort_order"
                   :fields="tableFields"
                   :items="tableItems"
-
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
@@ -54,11 +53,10 @@
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
                     <b-btn>Update</b-btn>
                   </router-link>
-                  <b-btn href="#" @click="delete_data(row.item.id)">Delete</b-btn>
+                  <b-btn v-if="row.item.actions.delete" @click="delete_data(row.item.id)">Delete</b-btn>
                   <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
                     <b-btn>Add action</b-btn>
                   </router-link>
-                  <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
               </b-table>

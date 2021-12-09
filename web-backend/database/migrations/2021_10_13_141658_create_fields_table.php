@@ -18,6 +18,7 @@ class CreateFieldsTable extends Migration
             $table->bigIncrements('id');
             $table->string('field_name');
             $table->double('area');
+            $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
         });
     }

@@ -44,6 +44,7 @@
 <script>
 import merge from 'lodash.merge';
 import Services from '@/services/index';
+import ErrorMixin from '@/mixins/ErrorMixin'
 
 export default {
   mounted() {
@@ -103,17 +104,6 @@ export default {
       });
     
     },
-    fErr (ErrValue, name) {
-      if (ErrValue === null || ErrValue == ""){
-        return name+" value is required!";
-      }
-      else if(name == 'Area' && parseFloat(ErrValue) != ErrValue ){
-        return "Please enter valid "+name+" (number or decimal with '.')!";
-      }
-      else if (name == 'Area'){
-        return '';
-      }
-    },
     alertError(AlertValue){
       console.log(AlertValue);
     },
@@ -147,7 +137,8 @@ export default {
         this.alertError({ text: message });
       });
     },
-  }
+  },
+  mixins: [ErrorMixin]
 };
 </script>
 

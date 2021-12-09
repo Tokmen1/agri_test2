@@ -18,7 +18,7 @@ class FieldPolicy
      */
     public function viewAny(User $user)
     {
-        return true;
+        return false;
     }
 
     /**
@@ -30,7 +30,7 @@ class FieldPolicy
      */
     public function view(User $user, Fields $fields)
     {
-        return true;//$user->id === $user->fields->id;
+        return $user->id === $fields->user_id;
     }
 
     /**
@@ -53,7 +53,7 @@ class FieldPolicy
      */
     public function update(User $user, Fields $fields)
     {
-        return true;
+        return $user->id === $fields->user_id;
     }
 
     /**
@@ -65,7 +65,7 @@ class FieldPolicy
      */
     public function delete(User $user, Fields $fields)
     {
-        return true;
+        return $user->id === $fields->user_id;
     }
 
     /**
@@ -77,7 +77,7 @@ class FieldPolicy
      */
     public function restore(User $user, Fields $fields)
     {
-        return true;
+        return $user->id === $fields->user_id;
     }
 
     /**
@@ -89,6 +89,6 @@ class FieldPolicy
      */
     public function forceDelete(User $user, Fields $fields)
     {
-        return true;
+        return false;
     }
 }

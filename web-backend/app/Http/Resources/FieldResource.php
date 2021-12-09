@@ -21,15 +21,15 @@ class FieldResource extends JsonResource
             'id' => $this->id,
             'field_name' => $this->field_name,
             'area' => $this->area,
+            'user_id' => $this->user_id,//Auth::user()->id,
             'created_at' => $this->created_at->format('m/d/Y H:i:s'),
             'updated_at' => $this->updated_at->format('m/d/Y H:i:s'),
             // 'created_at' => $this->formatDateTime($this->created_at),
             // 'updated_at' => $this->formatDateTime($this->updated_at)
             'actions' => [
-                'create' => true,//Gate::allows('create', [$this->resource]),
-                'view' => true, //Gate::allows('view', [$this->resource]),
-                'update' => true,//$user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
-                'delete' => true, //Gate::allows('delete', [$this->resource]),
+                'view' => $user->can('view', [$this->resource]),
+                'update' => $user->can('update', $this->resource),//Gate::allows('update', [$this->resource]),
+                'delete' => $user->can('delete', [$this->resource]),
             ]
         ];
         return $return;
