@@ -40,7 +40,7 @@
             <b-col>
               <div  v-if="!tableItems.length"> datu nav</div>
               <!-- <NoDataView v-if="!tableItems.length"/> -->
-              <b-table v-else-if="actions.create" class="table-sm text-center" responsive bordered
+              <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
                   :sort-desc.sync="filters.sort_order"
@@ -161,6 +161,7 @@ export default {
       backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
       Services.fields.list(this.params).then((data) => {
         this.list.data = data.data;
+        console.log(this.list.data.data[0].actions.view)
       });
 
     },

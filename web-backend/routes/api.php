@@ -43,7 +43,7 @@ Route::group(['middleware' => ['auth:api']], function(){
     });
 
     Route::prefix('fields')->group(function () {
-        Route::get('/', 'App\Http\Controllers\FieldsController@index')->middleware('auth');
+        Route::get('/', 'App\Http\Controllers\FieldsController@index')->middleware('can:viewAny,App\Models\Fields');
         Route::get('/create', 'App\Http\Controllers\FieldsController@create')->middleware('can:create,App\Models\Fields');
         Route::post('/', 'App\Http\Controllers\FieldsController@store')->middleware('can:create,App\Models\Fields');
         Route::get('{field}', 'App\Http\Controllers\FieldsController@show')->middleware('can:view,field');
