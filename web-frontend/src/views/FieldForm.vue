@@ -104,17 +104,6 @@ export default {
       });
     
     },
-    // fErr (ErrValue, name) {
-    //   if (ErrValue === null || ErrValue == ""){
-    //     return name+" value is required!";
-    //   }
-    //   else if(name == 'Area' && parseFloat(ErrValue) != ErrValue ){
-    //     return "Please enter valid "+name+" (number or decimal with '.')!";
-    //   }
-    //   else if (name == 'Area'){
-    //     return '';
-    //   }
-    // },
     alertError(AlertValue){
       console.log(AlertValue);
     },

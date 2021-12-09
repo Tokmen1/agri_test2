@@ -20,10 +20,6 @@ class FieldsController extends Controller
     public function index(FieldListRequest $request)
     {
         // dd($request->all());
-        if(!$user = Auth::user())
-        {
-            return "i'm not authenticated!!!";
-        }
         $fields = Fields::filter($request->validated())->paginate(5);
         return new FieldCollection($fields);
     }

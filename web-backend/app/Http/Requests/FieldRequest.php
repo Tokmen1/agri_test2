@@ -17,6 +17,7 @@ class FieldRequest extends FormRequest
             'id' => ['integer'],
             'field_name' => ['required', 'string', 'max:32'],
             'area' => ['required', 'numeric'],
+            'user_id' => ['integer'],
             'created_at' =>[],
             'updated_at' =>[]
             // 'surname' => ['required', 'string', 'max:32'],

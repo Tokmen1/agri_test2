@@ -25,8 +25,7 @@ class FieldCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'actions' => [
-                // 'create' => $request->user()->can('create', Fields::class)
-                // 'create' => $user->can('create', $this->resource),
+                'create' => $user->can('create', Fields::class)
             ]
         ];
     }
