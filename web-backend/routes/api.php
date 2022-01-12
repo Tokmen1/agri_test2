@@ -47,19 +47,19 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::get('/create', 'App\Http\Controllers\FieldsController@create')->middleware('can:create,App\Models\Fields');
         Route::post('/', 'App\Http\Controllers\FieldsController@store')->middleware('can:create,App\Models\Fields');
         Route::get('{field}', 'App\Http\Controllers\FieldsController@show')->middleware('can:view,field');
-        Route::get('{field}/edit', 'App\Http\Controllers\FieldsController@edit')->middleware('can:view,field');
+        Route::get('{field}/edit', 'App\Http\Controllers\FieldsController@edit')->middleware('can:view, field');
         Route::put('{field}', 'App\Http\Controllers\FieldsController@update')->middleware('can:update,field');
         Route::delete('{field}', 'App\Http\Controllers\FieldsController@delete')->middleware('can:delete,field');
     });
 
     Route::prefix('fieldactions')->group(function () {
-        Route::get('/', 'App\Http\Controllers\FieldActionsController@index');
-        Route::get('/create', 'App\Http\Controllers\FieldActionsController@create');
-        Route::post('/', 'App\Http\Controllers\FieldActionsController@store');
-        Route::get('{fieldactions}', 'App\Http\Controllers\FieldActionsController@show');
-        Route::get('{fieldactions}/edit', 'App\Http\Controllers\FieldActionsController@edit');
-        Route::put('{fieldactions}', 'App\Http\Controllers\FieldActionsController@update');
-        Route::delete('{fieldactions}', 'App\Http\Controllers\FieldActionsController@delete');
+        Route::get('/', 'App\Http\Controllers\FieldActionsController@index')->middleware('can:viewAny,App\Models\FieldActions');
+        Route::get('/create', 'App\Http\Controllers\FieldActionsController@create')->middleware('can:create,App\Models\FieldActions');
+        Route::post('/', 'App\Http\Controllers\FieldActionsController@store')->middleware('can:create,App\Models\FieldActions');
+        Route::get('{fieldactions}', 'App\Http\Controllers\FieldActionsController@show')->middleware('can:view,fieldactions');
+        Route::get('{fieldactions}/edit', 'App\Http\Controllers\FieldActionsController@edit')->middleware('can:view,fieldactions');
+        Route::put('{fieldactions}', 'App\Http\Controllers\FieldActionsController@update')->middleware('can:update,fieldactions');
+        Route::delete('{fieldactions}', 'App\Http\Controllers\FieldActionsController@delete')->middleware('can:delete,fieldactions');
     });
 
 });

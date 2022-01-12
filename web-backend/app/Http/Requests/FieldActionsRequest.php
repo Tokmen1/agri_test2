@@ -18,6 +18,7 @@ class FieldActionsRequest extends FormRequest
             'action_type' => ['required', 'string', 'max:32'],
             'date_from' => ['required'],
             'date_to' =>[],
+            'user_id' => ['integer'],
             'fields_id' => ['required','integer']
         ];
         if ($this->isMethod('post')) {

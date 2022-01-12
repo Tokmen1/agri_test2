@@ -37,7 +37,7 @@ class FieldActionsController extends Controller
     {
         $fieldactions = FieldActions::where('id', $id)->first();
         return [
-            'fieldactions' => $fieldactions//FieldActionsResource::make($fieldactions->load([]))
+            'fieldactions' => FieldActionsResource::make($fieldactions->load([]))
         ];
     }
 
