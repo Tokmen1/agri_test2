@@ -16,8 +16,12 @@ class FieldActionsCollection extends ResourceCollection
 
     public function toArray($request)
     {
+        $user = $request->user();
         return [
-            'data' => $this->collection
+            'data' => $this->collection,
+            'actions' => [
+                'create' => $user->can('create', FieldActions::class)
+            ]
         ];
     }
 }

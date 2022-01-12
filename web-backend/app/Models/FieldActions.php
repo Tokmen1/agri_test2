@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 use App\ModelFilters\ResidenceFilter;
 use EloquentFilter\Filterable;
 
@@ -16,6 +17,7 @@ class FieldActions extends Model
         'action_type' => null,
         'date_from' => null,
         'date_to' => null,
+        'user_id' => null,
         'fields_id' => null,
         // 'is_active' => true
     ];
@@ -24,6 +26,7 @@ class FieldActions extends Model
         'action_type',
         'date_from',
         'date_to',
+        'user_id',
         'fields_id',
     ];
     protected $hidden = [
@@ -34,4 +37,14 @@ class FieldActions extends Model
         // 'is_active' => 'boolean'
     ];
     protected $appends = [];
+
+    public function save(array $options = array())
+    {
+        if( ! $this->user_id)
+        {
+            $this->user_id = Auth::user()->id;
+        }
+
+        parent::save($options);
+    }
 }

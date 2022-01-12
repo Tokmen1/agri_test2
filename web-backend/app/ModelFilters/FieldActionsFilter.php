@@ -3,6 +3,7 @@
 namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
+use Illuminate\Support\Facades\Auth;
 
 class FieldActionsFilter extends ModelFilter
 {
@@ -38,6 +39,7 @@ class FieldActionsFilter extends ModelFilter
 
     protected function order()
     {
+        $this->where('user_id', 'LIKE', Auth::user()->id);
         if ($this->input('sort_field')) {
             $this->orderColumn = $this->input('sort_field');
         }
