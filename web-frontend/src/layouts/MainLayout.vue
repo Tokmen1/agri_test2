@@ -53,7 +53,7 @@ export default {
     // RwvFooter
   },
   methods: {
-    sing_out(){
+    sing_out() {
       (async () => {
         console.log("singing out");
         await Services.auth.logout(sessionStorage.getItem('access_token'));

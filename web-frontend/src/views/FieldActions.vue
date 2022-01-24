@@ -76,7 +76,6 @@
 <script>
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
-//check git margee
 
 export default {
   mounted() {
@@ -108,10 +107,10 @@ export default {
     Pagination
   },
   computed: {
-    filteredRecords(){
-      return this.list.data.filter((record)=>{
+    filteredRecords() {
+      return this.list.data.filter((record) => {
         return record.match(this.filters.search);
-      })
+      });
     },
     listPaginator() {
       return Object.is(this.list.data, undefined) ? {} : this.list.data.meta;
@@ -135,16 +134,15 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
-    delete_data($my_id){
+    delete_data($my_id) {
       Services.fieldactions.delete($my_id);
-      window.alert("Iteam with id: "+$my_id+ " deleted!")
+      window.alert('Iteam with id: ', $my_id, ' deleted');
       this.getData();
     },
     getData() {
       Services.fieldactions.list(this.params).then((data) => {
         this.list.data = data.data;
       });
-
     },
     onPageChange(page) {
       page = page || this.page;

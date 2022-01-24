@@ -87,11 +87,11 @@
 
 <script>
 import Services from '@/services/index';
-import ErrorMixin from '@/mixins/ErrorMixin'
+import ErrorMixin from '@/mixins/ErrorMixin';
 
 export default {
   mounted() {
-    //this.$refs.name.$el.focus();
+    // this.$refs.name.$el.focus();
   },
   data() {
     return {
@@ -110,32 +110,32 @@ export default {
   },
   methods: {
     onRegister() {
-          Services.auth.register({
-          name: this.name,
-          //surname: this.surname,
-          email: this.email,
-          password: this.password,
-          password_confirmation: this.password_confirmation
-          }).then(() => {
-            this.$router.push({ name: 'Login' });
-          }, () => {
-            this.errorMsg = {};
-          if( this.fErr( this.name, 'Name' )){
-            this.errorMsg.name = true;
-          }
-          if( this.fErr(this.email, 'Email')){
-            this.errorMsg.email = true;
-          }
-          if( this.fErr(this.password, 'Password')){
-            this.errorMsg.password = true;
-          }
-          if( this.fErr(this.password_confirmation, 'Password confirmation')){
-            this.errorMsg.password_confirmation = true;
-          }
-          if( this.password !== this.password_confirmation ){
-            this.errorMsg.password_confirmation = true;
-          }
-          });
+      Services.auth.register({
+        name: this.name,
+        // surname: this.surname,
+        email: this.email,
+        password: this.password,
+        password_confirmation: this.password_confirmation
+      }).then(() => {
+        this.$router.push({ name: 'Login' });
+      }, () => {
+        this.errorMsg = {};
+        if ( this.fErr( this.name, 'Name' )) {
+          this.errorMsg.name = true;
+        }
+        if ( this.fErr(this.email, 'Email')) {
+          this.errorMsg.email = true;
+        }
+        if ( this.fErr(this.password, 'Password')) {
+          this.errorMsg.password = true;
+        }
+        if ( this.fErr(this.password_confirmation, 'Password confirmation')) {
+          this.errorMsg.password_confirmation = true;
+        }
+        if ( this.password !== this.password_confirmation ) {
+          this.errorMsg.password_confirmation = true;
+        }
+      });
     },
     onRegisterResponse() {
       this.errorMsg = {};
@@ -147,9 +147,9 @@ export default {
       //   this.errorMsg = this.register.data.data.errors;
       // }
     },
-    password_conf(){
-      if (this.password !== this.password_confirmation){
-        return 'This field must be identical to password field'
+    password_conf() {
+      if (this.password !== this.password_confirmation) {
+        return 'This field must be identical to password field';
       }
     }
   },

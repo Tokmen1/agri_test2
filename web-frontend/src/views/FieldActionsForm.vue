@@ -50,7 +50,7 @@
 <script>
 import merge from 'lodash.merge';
 import Services from '@/services/index';
-import ErrorMixin from '@/mixins/ErrorMixin'
+import ErrorMixin from '@/mixins/ErrorMixin';
 
 export default {
   mounted() {
@@ -69,7 +69,7 @@ export default {
   props: {
     // If id === null, form will be considered create form else update
     id: { type: Number, default: null },
-    //fields_id: { type: String, default: null } ,
+    // fields_id: { type: String, default: null } ,
     // if title == false to hide header, pass string to override default title
     title: { type: [String, Boolean], default: undefined },
     // pass errors from parent form if embedded
@@ -109,13 +109,12 @@ export default {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
       });
-    
     },
-    alertError(AlertValue){
+    alertError(AlertValue) {
       console.log(AlertValue);
     },
-    alertSuccess(){
-      window.alert("Field action added successfully");
+    alertSuccess() {
+      window.alert('Field action added successfully');
     },
     save() {
       if (this.isEmbedded) return;
@@ -130,10 +129,10 @@ export default {
         if (!this.isUpdateForm) {
           // After successful create
           // if (this.$can('edit', 'fields')) {
-          if(this.id != null){
+          if (this.id != null) {
             this.$router.push({ name: 'FieldActionsUpdate', params: { id: data.data.id } });
           }
-          else{ // do not redirect if cannot edit
+          else { // do not redirect if cannot edit
             this.entity = this.$options.props.value.default();
             this.load();
           }
