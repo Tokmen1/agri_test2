@@ -84,7 +84,7 @@ export default {
   },
   watch: {
     user: {
-      handler: function () {
+      handler: function() {
         this.onUserChanged();
       },
       deep: true
@@ -93,12 +93,12 @@ export default {
   methods: {
     attemptLogin() {
       this.isLoading = true;
-        AuthService.login(this.email, this.password).then(({ data }) => {
-          (async () => {
-            await sessionStorage.setItem('access_token', data['access_token']);
-          })();
-          this.$router.push({ name: 'Fields', params: { page:1 } });
-        }, () => {
+      AuthService.login(this.email, this.password).then(({ data }) => {
+        (async () => {
+          await sessionStorage.setItem('access_token', data['access_token']);
+        })();
+        this.$router.push({ name: 'Fields', params: { page: 1 } });
+      }, () => {
         this.isLoginFailed = true;
         this.isLoading = false;
       });

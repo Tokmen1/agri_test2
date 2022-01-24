@@ -39,7 +39,6 @@
           <b-row>
             <b-col>
               <div  v-if="!tableItems.length"> datu nav</div>
-              <!-- <NoDataView v-if="!tableItems.length"/> -->
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
@@ -75,14 +74,7 @@
 </template>
 
 <script>
-// import statuses from '@/store/statuses';
-// import { mapState, mapActions } from 'vuex';
 import Pagination from 'laravel-vue-pagination';
-// import VT from '@/store/types';
-// import NoDataView from '@/viewDeletes/Shared/NoDataView.vue';
-// import Delete from '@/views/Shared/ModalDelete';
-// var Services = require("services");
-// import Services from 'services';
 import Services from '@/services/index';
 import { backend } from '@/_axios';
 
@@ -108,21 +100,18 @@ export default {
         sort_field: null,
         sort_order: null,
         search: '',
-      }
+      },
     };
   },
   components: {
-    Pagination// NoDataView, Delete
+    Pagination
   },
   computed: {
-    filteredRecords(){
-      return this.list.data.filter((record)=>{
+    filteredRecords() {
+      return this.list.data.filter((record) => {
         return record.match(this.filters.search);
-      })
+      });
     },
-    // ...mapState('Fields', {
-    //   list: 'fieldsList'
-    // }),
     listPaginator() {
       return Object.is(this.list.data, undefined) ? {} : this.list.data.meta;
     },
@@ -131,7 +120,6 @@ export default {
     },
     contentIsLoading() {
       return false;
-      // return this.list.status !== statuses.LOADED;
     },
     params() {
       return {
@@ -146,24 +134,17 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
-    delete_data($my_id){
+    delete_data($my_id) {
       Services.fields.delete($my_id);
-      window.alert("Iteam with id: "+$my_id+ " deleted!")
+      window.alert("Iteam with id: "+$my_id+ " deleted!");
       this.getData();
     },
-    // ...mapActions('Fields', {
-    //   listData: VT.FIELDS_LIST,
-    //   deleteFn: VT.FIELD_DELETE,
-    // }),
     getData() {
-      // this.listData(this.params);
-      // this.list.data = {};
       backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
       Services.fields.list(this.params).then((data) => {
         this.list.data = data.data;
-        console.log(this.list.data.data[0].actions.view)
+        console.log(this.list.data.data[0].actions.view);
       });
-
     },
     onPageChange(page) {
       page = page || this.page;

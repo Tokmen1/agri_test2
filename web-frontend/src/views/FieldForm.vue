@@ -42,9 +42,9 @@
 </template>
 
 <script>
-import merge from 'lodash.merge';
+import ErrorMixin from '@/mixins/ErrorMixin';
 import Services from '@/services/index';
-import ErrorMixin from '@/mixins/ErrorMixin'
+import merge from 'lodash.merge';
 
 export default {
   mounted() {
@@ -96,19 +96,18 @@ export default {
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
       action(this.$route.params.id).then((data) => {
         this.spinners.contentIsLoading = false;
-        //data.data.field = {id:this.$route.params.id, field_name: "kkkkka", area: 22, created_at: 12,updated_at: 10};
+        // data.data.field = {id:this.$route.params.id, field_name: "kkkkka", area: 22, created_at: 12,updated_at: 10};
         this.entity = this.isUpdateForm ? data.data.field : { ...this.entity, ...data.data.field };
       }).catch((data) => {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
       });
-    
     },
-    alertError(AlertValue){
+    alertError(AlertValue) {
       console.log(AlertValue);
     },
-    alertSuccess(){
-      window.alert("Field added successfully");
+    alertSuccess() {
+      window.alert('Field added successfully');
     },
     save() {
       if (this.isEmbedded) return;
@@ -123,10 +122,9 @@ export default {
         if (!this.isUpdateForm) {
           // After successful create
           // if (this.$can('edit', 'fields')) {
-          if(this.id != null){
+          if (this.id !== null) {
             this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
-          }
-          else{ // do not redirect if cannot edit
+          } else { // do not redirect if cannot edit
             this.entity = this.$options.props.value.default();
             this.load();
           }

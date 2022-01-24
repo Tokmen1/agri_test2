@@ -53,7 +53,7 @@ class FieldPolicy
      */
     public function update(User $user, Fields $fields)
     {
-        return $user->hasPermissionTo('fields.view');//$user->id === $fields->user_id;
+        return $user->id === $fields->user_id;// $user->hasPermissionTo('fields.edit');//
     }
 
     /**
@@ -77,7 +77,7 @@ class FieldPolicy
      */
     public function restore(User $user, Fields $fields)
     {
-        return $user->id === $fields->user_id;
+        return false; //$user->id === $fields->user_id;
     }
 
     /**
