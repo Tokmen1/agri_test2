@@ -30,7 +30,7 @@ class FieldPolicy
      */
     public function view(User $user, Fields $fields)
     {
-        return $user->id === $fields->user_id;
+        return true;//$user->id === $fields->user_id;
     }
 
     /**
@@ -77,7 +77,7 @@ class FieldPolicy
      */
     public function restore(User $user, Fields $fields)
     {
-        return false; //$user->id === $fields->user_id;
+        return false;//$user->id === $fields->user_id;
     }
 
     /**

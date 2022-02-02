@@ -4,13 +4,13 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>{{ 'nav.fields_list_title' }}</h4>
+            <h4>{{ 'Lauku dati' }}</h4>
           </b-col>
           <b-col md="auto">
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  {{ 'Create new field' }}
+                  {{ 'Izveidot jaunu lauku' }}
                 </b-button>
               <!-- </router-link> -->
             </b-button-group>
@@ -22,7 +22,7 @@
               <b-input-group>
                 <b-form-input v-model="filters.search"></b-form-input>
                 <b-input-group-append>
-                  <b-button variant="primary" @click="getData()"><i class="fa fa-search"/></b-button>
+                  <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
@@ -48,14 +48,14 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                  <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
-                    <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn>Update</b-btn>
-                  </router-link>
-                  <b-btn v-if="row.item.actions.delete" @click="delete_data(row.item.id)">Delete</b-btn>
-                  <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
-                    <b-btn>Add action</b-btn>
-                  </router-link>
+                    <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
+                      <a><i class="mx-1 fa fa-edit fa-lg"/></a>
+                      <b-btn>Reģidēt</b-btn>
+                    </router-link>
+                    <b-btn v-if="row.item.actions.delete" @click="delete_data(row.item.id)" class="text-danger">Dzēst</b-btn>
+                    <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
+                      <b-btn>Pievienot darbību</b-btn>
+                    </router-link>
                   </div>
                 </template>
               </b-table>
@@ -90,11 +90,11 @@ export default {
       },
       tableFields: [
         { key: 'id', sortable: true, label: 'ID' },
-        { key: 'field_name', sortable: true, label: 'Field.name' },
-        { key: 'area', sortable: true, label: 'Area (ha)'},
-        { key: 'created_at', sortable: true, label: 'Created_at' },
-        { key: 'updated_at', sortable: true, label: 'Updated_at' },
-        { key: 'options', label: 'Options' },
+        { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
+        { key: 'area', sortable: true, label: 'Platība (ha)'},
+        // { key: 'created_at', sortable: true, label: 'Created_at' },
+        // { key: 'updated_at', sortable: true, label: 'Updated_at' },
+        { key: 'options', label: 'iespējas' },
       ],
       filters: {
         sort_field: null,

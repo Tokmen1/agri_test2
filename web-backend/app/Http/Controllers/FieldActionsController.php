@@ -33,8 +33,10 @@ class FieldActionsController extends Controller
         return FieldActionsResource::make($fieldactions->load([]));
     }
 
-    public function edit($id)
+    public function edit($id, FieldActions $fieldactions)
     {
+        // dd($fieldactions);
+        // $this->authorize('view', $fieldactions);
         $fieldactions = FieldActions::where('id', $id)->first();
         return [
             'fieldactions' => FieldActionsResource::make($fieldactions->load([]))

@@ -63,8 +63,9 @@ class FieldsController extends Controller
      * @param  \App\Models\Fields  $fields
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, Fields $fields)
     {
+        $this->authorize('view', $fields);
         $fields = Fields::where('id', $id)->first();
         return [
             'field' => FieldResource::make($fields->load([]))

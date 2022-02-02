@@ -1,3 +1,6 @@
+# To clear route changes
+php artisan cache:clear && php artisan config:clear && php artisan route:clear && php artisan view:clear && php artisan clear-compiled && composer dumpautoload
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">

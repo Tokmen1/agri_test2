@@ -7,27 +7,27 @@
             <b-card no-body class="p-4">
               <b-card-body>
                 <b-form name="login">
-                  <h1>{{ 'Login_title' }}</h1>
+                  <h1>{{ 'Ienākt' }}</h1>
                   <p v-show="!isLoginFailed" class="text-muted">
                     {{ 'Login description' }}
                   </p>
-                  <p v-show="isLoginFailed" class="text-danger">{{ 'Login failed' }}</p>
+                  <p v-show="isLoginFailed" class="text-danger">{{ 'Ieeja nav izdevusies' }}</p>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
-                      <b-input-group-text><i class="icon-user"/></b-input-group-text>
+                      <b-input-group-text><b-icon icon="envelope"></b-icon></b-input-group-text>
                     </b-input-group-prepend>
                     <b-form-input ref="email" @keydown.enter.native="attemptLogin" v-model="email"
                                   type="text" class="form-control"
-                                  placeholder="email"
+                                  placeholder="E-pasts"
                                   autocomplete="username-email"/>
                   </b-input-group>
                   <b-input-group class="mb-4">
                     <b-input-group-prepend><b-input-group-text>
-                      <i class="icon-lock"/></b-input-group-text>
+                      <b-icon icon="lock"/></b-input-group-text>
                     </b-input-group-prepend>
                     <b-form-input @keydown.enter.native="attemptLogin" name="password" v-model="password"
                                   type="password" class="form-control"
-                                  placeholder="password"
+                                  placeholder="Parole"
                                   autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
@@ -35,14 +35,14 @@
                       <b-button-group class="d-flex">
                         <!-- <LanguagesDropdown/> -->
                         <b-button name="login" block variant="primary" class="px-4 w-100" @click="attemptLogin()"
-                                  :disabled="isLoading">{{ 'Login' }}</b-button>
+                                  :disabled="isLoading">{{ 'Ienākt' }}</b-button>
                       </b-button-group>
                     </b-col>
                   </b-row>
                   <b-row>
                     <b-col cols="6" class="text-left">
                       <b-button variant="link" class="px-0"
-                                :to="{ name: 'Register' }">{{ 'auth.register_link' }}</b-button>
+                                :to="{ name: 'Register' }">{{ 'Reģistrēties' }}</b-button>
                     </b-col>
                     <!-- <b-col cols="6" class="text-right">
                       <b-button variant="link" class="px-0"
