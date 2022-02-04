@@ -31,6 +31,7 @@ Route::group([
     Route::post('refresh', 'App\Http\Controllers\AuthController@refresh');
     Route::post('me', 'App\Http\Controllers\AuthController@me');
 });
+//authorized routes
 Route::group(['middleware' => ['auth:api']], function(){
     Route::prefix('user')->group(function () {
         Route::get('/', 'App\Http\Controllers\UserController@index');
@@ -62,4 +63,13 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::delete('{fieldactions}', 'App\Http\Controllers\FieldActionsController@delete');//->middleware('can:delete,fieldactions');
     });
 
+    Route::prefix('sowing')->group(function () {
+        Route::get('/', 'App\Http\Controllers\SowingController@index');
+        Route::get('/create', 'App\Http\Controllers\SowingController@create');
+        Route::post('/', 'App\Http\Controllers\SowingController@store');
+        Route::get('{sowing}', 'App\Http\Controllers\SowingController@show');
+        Route::get('{sowing}/edit', 'App\Http\Controllers\SowingController@edit');
+        Route::put('{sowing}', 'App\Http\Controllers\SowingController@update');
+        Route::delete('{sowing}', 'App\Http\Controllers\SowingController@delete');
+    });
 });

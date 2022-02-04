@@ -21,6 +21,7 @@ class CreateSowingTable extends Migration
             $table->double('sowing_rate');
             $table->date('date_from');
             $table->date('date_to')->nullable();
+            $table->foreignId('field_id')->constrained('fields');
             $table->timestamps();
         });
     }

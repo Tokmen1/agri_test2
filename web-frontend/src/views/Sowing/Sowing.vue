@@ -4,13 +4,15 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>{{ 'Lauku dati' }}</h4>
+            <h4>{{ 'Sējas dati' }}</h4>
           </b-col>
           <b-col md="auto">
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
-                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  {{ 'Izveidot jaunu lauku' }}
+                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" 
+                :to="{ name: 'SowingCreate', params:{ field_id: this.fieldId } }"
+                >
+                  {{ 'Pievienot jaunus sējas datus' }}
                 </b-button>
               <!-- </router-link> -->
             </b-button-group>
@@ -39,6 +41,7 @@
           <b-row>
             <b-col>
               <div  v-if="!tableItems.length"> datu nav</div>
+              <!-- <NoDataView v-if="!tableItems.length"/> -->
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
@@ -48,17 +51,12 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                    <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
-                      <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                      <b-btn>Reģidēt</b-btn>
-                    </router-link>
-                    <b-btn v-if="row.item.actions.delete" @click="delete_data(row.item.id)">Dzēst</b-btn>
-                    <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
-                      <b-btn>Pievienot darbību</b-btn>
-                    </router-link>
-                    <router-link :to="{ name: 'Sowing', params:{ field_id: row.item.id, page: 1 }}">
-                      <b-btn>Sēja</b-btn>
-                    </router-link>
+                  <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
+                    <a><i class="mx-1 fa fa-edit fa-lg"/></a>
+                    <b-btn>Rediģēt</b-btn>
+                  </router-link>
+                  <b-btn href="#" @click="delete_data(row.item.id)" class="text-danger">Dzēst</b-btn>
+                  <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
               </b-table>
@@ -79,13 +77,12 @@
 <script>
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
-import { backend } from '@/_axios';
 
 export default {
   mounted() {
     this.getData();
   },
-  props: ['page'],
+  props: ['page', 'id', 'field_id'],
   data() {
     return {
       list: {
@@ -93,17 +90,22 @@ export default {
       },
       tableFields: [
         { key: 'id', sortable: true, label: 'ID' },
-        { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
-        { key: 'area', sortable: true, label: 'Platība (ha)'},
-        // { key: 'created_at', sortable: true, label: 'Created_at' },
-        // { key: 'updated_at', sortable: true, label: 'Updated_at' },
-        { key: 'options', label: 'iespējas' },
+        { key: 'name', sortable: true, label: 'Kultūraugs' },
+        { key: 'breed', sortable: true, label: 'Šķirne' },
+        { key: 'pre_plant', sortable: true, label: 'Priekšaugs' },
+        { key: 'sowing_rate', sortable: true, label: 'Izsējas norma' },
+        { key: 'date_from', sortable: true, label: 'Darbības sākuma datums' },
+        { key: 'date_to', sortable: true, label: 'Darbības beigu datums' },
+        { key: 'field_id', sortable: true, label: 'field_id' },
+        { key: 'options', label: 'Iespējas' },
       ],
       filters: {
         sort_field: null,
         sort_order: null,
         search: '',
-      },
+        field_id: this.$route.params.field_id,
+        
+      }
     };
   },
   components: {
@@ -124,6 +126,9 @@ export default {
     contentIsLoading() {
       return false;
     },
+    fieldId() {
+      return this.$route.params.field_id;
+    },
     params() {
       return {
         ...this.filters,
@@ -138,24 +143,19 @@ export default {
   },
   methods: {
     delete_data($my_id) {
-      Services.fields.delete($my_id);
-      window.alert("Iteam with id: "+$my_id+ " deleted!");
+      Services.sowing.delete($my_id);
+      window.alert('Iteam with id: ', $my_id, ' deleted');
       this.getData();
     },
     getData() {
-      backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
-      Services.fields.list(this.params).then((data) => {
+      Services.sowing.list(this.params).then((data) => {
         this.list.data = data.data;
-        console.log(this.list.data.data[0].actions.view);
       });
     },
     onPageChange(page) {
       page = page || this.page;
-      if (page !== this.page) this.$router.push({ name: 'Fields', params: { page } });
+      if (page !== this.page) this.$router.push({ name: 'Sowing', params: { page } });
     },
   }
 };
 </script>
-
-<style scoped>
-</style>

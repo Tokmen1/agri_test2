@@ -1,20 +1,4 @@
-module.exports = {
-  'env': {
-    'browser': true,
-    'es6': true,
-  },
-  'extends': [
-    'plugin:vue/essential',
-    'google',
-  ],
-  'parserOptions': {
-    'ecmaVersion': 10,
-    'sourceType': 'module',
-  },
-  'plugins': [
-    'vue',
-  ],
-  'rules': {
+'rules': {
     "max-len": ["warn", 120],
     "dot-notation": ["off"],
     "no-unused-vars": ["warn"],
@@ -35,8 +19,7 @@ module.exports = {
     "vue/multi-word-component-names": ["off"],
     "import/no-unresolved": ["off"],
     "brace-style": ["off"],
-    "block-spacing": ["off"],
+    "block-spacing": ["warn"],
     "no-var": ["off"],
     "arrow-parens": ["warn"],
   },
-};

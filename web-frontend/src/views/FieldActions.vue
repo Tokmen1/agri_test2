@@ -52,7 +52,7 @@
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'FieldActionsUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn>Reģidēt</b-btn>
+                    <b-btn>Rediģēt</b-btn>
                   </router-link>
                   <b-btn href="#" @click="delete_data(row.item.id)" class="text-danger">Dzēst</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
