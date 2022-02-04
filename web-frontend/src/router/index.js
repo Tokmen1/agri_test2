@@ -1,14 +1,19 @@
 import VueRouter from 'vue-router';
 
-const MainLayout = () => import('./../layouts/MainLayout.vue');
+const MainLayout = () => import('@/layouts/MainLayout.vue');
 const Fields = () => import('@/views/Fields.vue');
 const FieldForm = () => import('@/views/FieldForm.vue');
+
 const FieldActions = () => import('@/views/FieldActions.vue');
 const FieldActionsForm = () => import('@/views/FieldActionsForm.vue');
+
+const Sowing = () => import('@/views/Sowing/Sowing.vue');
+const SowingForm = () => import('@/views/Sowing/SowingForm.vue');
+
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
 
-const routes = [
+const routes = [ 
   {
     path: '/',
     component: MainLayout,
@@ -92,6 +97,54 @@ const routes = [
               };
             },
             component: FieldActionsForm
+          },
+        ]
+      },
+      {
+        path: 'field/:field_id/sowing',
+        name: null,
+        meta: { label: 'route.fields_list_title' },
+        redirect: { name: 'Sowing', params: { page: 1 } },
+
+        component: {
+          render(c) { return c('router-view'); }
+        },
+
+        children: [
+          {
+            path: 'list/:page',
+            name: 'Sowing',
+            meta: { label: 'route.sowing_list' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+                page: Number(route.params.page)
+              };
+            },
+            component: Sowing,
+          },
+          {
+            path: 'create',
+            name: 'SowingCreate',
+            meta: { label: 'route.sowing_create_title' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+              };
+            },
+            component: SowingForm
+          },
+          {
+            path: 'update/:id',
+            name: 'SowingUpdate',
+            meta: { label: 'route.sowing_update_title' },
+            props: (route) => {
+              return {
+                id: Number(route.params.id),
+                field_id: Number(route.params.field_id),
+              };
+            },
+            component: SowingForm
           },
         ]
       },

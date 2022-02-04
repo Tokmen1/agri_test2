@@ -2,11 +2,11 @@
 
 namespace App\Policies;
 
-use App\Models\Fields;
+use App\Models\Sowing;
 use App\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class FieldPolicy
+class SowingPolicy
 {
     use HandlesAuthorization;
 
@@ -25,12 +25,12 @@ class FieldPolicy
      * Determine whether the user can view the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fields  $fields
+     * @param  \App\Models\Sowing  $sowing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function view(User $user, Fields $fields)
+    public function view(User $user, Sowing $sowing)
     {
-        return true;//$user->id === $fields->user_id;
+        return true;
     }
 
     /**
@@ -48,47 +48,47 @@ class FieldPolicy
      * Determine whether the user can update the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fields  $fields
+     * @param  \App\Models\Sowing  $sowing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function update(User $user, Fields $fields)
+    public function update(User $user, Sowing $sowing)
     {
-        return $user->id === $fields->user_id;// $user->hasPermissionTo('fields.edit');//
+        return true;
     }
 
     /**
      * Determine whether the user can delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fields  $fields
+     * @param  \App\Models\Sowing  $sowing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function delete(User $user, Fields $fields)
+    public function delete(User $user, Sowing $sowing)
     {
-        return $user->id === $fields->user_id;
+        return true;
     }
 
     /**
      * Determine whether the user can restore the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fields  $fields
+     * @param  \App\Models\Sowing  $sowing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function restore(User $user, Fields $fields)
+    public function restore(User $user, Sowing $sowing)
     {
-        return false;//$user->id === $fields->user_id;
+        //
     }
 
     /**
      * Determine whether the user can permanently delete the model.
      *
      * @param  \App\Models\User  $user
-     * @param  \App\Models\Fields  $fields
+     * @param  \App\Models\Sowing  $sowing
      * @return \Illuminate\Auth\Access\Response|bool
      */
-    public function forceDelete(User $user, Fields $fields)
+    public function forceDelete(User $user, Sowing $sowing)
     {
-        return false;
+        //
     }
 }

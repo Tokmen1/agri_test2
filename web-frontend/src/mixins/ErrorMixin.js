@@ -2,7 +2,7 @@ export default {
   methods: {
     fErr(ErrValue, name) {
       if (ErrValue === null || ErrValue == "") {
-        return name+" value is required!";
+        return "Vērtība "+name+" jāievada obligāti!";
       }
       if (name == 'Area' && parseFloat(ErrValue) != ErrValue ) {
         return "Please enter valid "+name+" (number or decimal with '.')!";

@@ -6,24 +6,24 @@
           <b-card no-body class="mx-4">
             <b-card-body class="p-4">
               <b-form>
-                <h1>{{ 'auth register title' }}</h1>
+                <h1>{{ 'Reģistrēties' }}</h1>
                 <p class="text-muted">{{ 'auth register description' }}</p>
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
-                    <b-input-group-text><i class="icon-user"/></b-input-group-text>
+                    <b-input-group-text><b-icon icon="person"/></b-input-group-text>
                   </b-input-group-prepend>
                   <b-form-input ref="name" type="text" class="form-control"
-                                placeholder="Name"
+                                placeholder="Vārds"
                                 :class="{ 'is-invalid' : errorMsg.name }"
                                 v-model="name"/>
                   <div class="invalid-feedback" v-if="errorMsg.name">{{ fErr(name, 'Name') }}</div>
                 </b-input-group>
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
-                    <b-input-group-text><i class="icon-user"/></b-input-group-text>
+                    <b-input-group-text><b-icon icon="person-fill"/></b-input-group-text>
                   </b-input-group-prepend>
                   <b-form-input type="text" class="form-control"
-                                placeholder="Surname"
+                                placeholder="Uzvārds"
                                 :class="{ 'is-invalid' : errorMsg.surname }"
                                 v-model="surname"/>
                   <div class="invalid-feedback" v-if="errorMsg.surname">{{ fErr(surname, 'Surname') }}</div>
@@ -34,7 +34,7 @@
                     <b-input-group-text>@</b-input-group-text>
                   </b-input-group-prepend>
                   <b-form-input type="text" class="form-control"
-                                placeholder="Email"
+                                placeholder="E-pasts"
                                 :class="{ 'is-invalid' : errorMsg.email }"
                                 v-model="email"/>
                   <div class="invalid-feedback" v-if="errorMsg.email">{{ fErr(email, 'Email') }}</div>
@@ -42,10 +42,10 @@
 
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
-                    <b-input-group-text><i class="icon-lock"></i></b-input-group-text>
+                    <b-input-group-text><b-icon icon="lock" /></b-input-group-text>
                   </b-input-group-prepend>
                   <b-form-input type="password" class="form-control"
-                                placeholder="Password"
+                                placeholder="Parole"
                                 :class="{ 'is-invalid' : errorMsg.password }"
                                 
                                 v-model="password"/>
@@ -54,10 +54,10 @@
 
                 <b-input-group class="mb-4">
                   <b-input-group-prepend>
-                    <b-input-group-text><i class="icon-lock"></i></b-input-group-text>
+                    <b-input-group-text><b-icon icon="lock-fill"/></b-input-group-text>
                   </b-input-group-prepend>
                   <b-form-input type="password" class="form-control"
-                                placeholder="Password repeat"
+                                placeholder="Apstiprini paroli"
                                 :class="{ 'is-invalid' : errorMsg.password_confirmation }"
                                 
                                 v-model="password_confirmation"/>
@@ -66,13 +66,13 @@
                   </div>
                 </b-input-group>
                 <b-button variant="success" block @click="onRegister()">
-                  {{ 'Create account' }}
+                  {{ 'Izveidot kontu' }}
                 </b-button>
                 <b-row>
                   <b-col cols="12" class="text-center">
                     <b-button variant="link" class="px-0"
                               :to="{ name: 'Login' }">
-                      {{ 'Already have an account' }}
+                      {{ 'Man jau ir izveidots konts' }}
                     </b-button>
                   </b-col>
                 </b-row>

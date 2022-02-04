@@ -30,7 +30,7 @@ class FieldActionsPolicy
      */
     public function view(User $user, FieldActions $fieldActions)
     {
-        return $user->id === $fieldActions->user_id;
+        return true;//$user->id === $fieldActions->user_id;
     }
 
     /**
@@ -89,6 +89,6 @@ class FieldActionsPolicy
      */
     public function forceDelete(User $user, FieldActions $fieldActions)
     {
-        return false;
+        return true;
     }
 }
