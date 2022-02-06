@@ -8,28 +8,26 @@
           </b-col>
           <b-col md="auto">
             <b-button-group>
-              <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" 
                 :to="{ name: 'SowingCreate', params:{ field_id: this.fieldId } }"
                 >
                   {{ 'Pievienot jaunus sējas datus' }}
                 </b-button>
-              <!-- </router-link> -->
             </b-button-group>
           </b-col>
         </b-row>
-        <b-row v-if="tableItems.length">
+        <b-row >
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input v-model="filters.search"></b-form-input>
+                <b-form-input v-model="filters.search" placeholder="Meklēt..." debounce="700"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col md="auto">
+          <b-col md="auto" v-if="tableItems.length">
             <!--Paginator at top-->
             <Pagination class="pull-right" :data="listPaginator" :limit="5" @pagination-change-page="onPageChange"/>
           </b-col>
@@ -40,7 +38,12 @@
         <div v-else>
           <b-row>
             <b-col>
-              <div  v-if="!tableItems.length"> datu nav</div>
+              <div v-if="!tableItems.length">
+                <div v-if="filters.search">Netika atrasti dati ar vārdu <b>"{{ filters.search }}"</b>!</div> 
+                <div v-else v-b-popover.hover.bottom="'Spied pogu \'\'Pievienot jaunus sējas datus\'\''">
+                  Tabulā nav ievadīti dati!
+                </div>
+              </div>
               <!-- <NoDataView v-if="!tableItems.length"/> -->
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
@@ -53,9 +56,9 @@
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn>Rediģēt</b-btn>
+                    <b-btn variant="primary">Rediģēt</b-btn>
                   </router-link>
-                  <b-btn href="#" @click="delete_data(row.item.id)" class="text-danger">Dzēst</b-btn>
+                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger">Dzēst</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -94,9 +97,9 @@ export default {
         { key: 'breed', sortable: true, label: 'Šķirne' },
         { key: 'pre_plant', sortable: true, label: 'Priekšaugs' },
         { key: 'sowing_rate', sortable: true, label: 'Izsējas norma' },
-        { key: 'date_from', sortable: true, label: 'Darbības sākuma datums' },
-        { key: 'date_to', sortable: true, label: 'Darbības beigu datums' },
-        { key: 'field_id', sortable: true, label: 'field_id' },
+        { key: 'date_from', sortable: true, label: 'Sākuma datums' },
+        { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
+        // { key: 'field_id', sortable: true, label: 'field_id' },
         { key: 'options', label: 'Iespējas' },
       ],
       filters: {
