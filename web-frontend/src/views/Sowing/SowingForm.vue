@@ -13,53 +13,56 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group :invalid-feedback="fErr(entity.name, '\'Kultūrauga nosaukums\'')">
+        <b-form-group :invalid-feedback="fErr(entity.name, 'Kultūrauga nosaukums')">
           <label>{{ 'Kultūrauga nosaukums' }}</label>
           <b-form-input type="text" placeholder="Mieži, Kvieši, Rudzi uc."
-            :class="{ 'is-invalid' : fErr(entity.name, '\'Kultūrauga nosaukums\'') }"
+            v-bind:class="{ 'is-invalid' : fErr(entity.name, 'Kultūrauga nosaukums') }"
+            debounce="250"
             v-model="entity.name"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.breed, '\'Kultūrauga šķirne\'')">
+        <b-form-group :invalid-feedback="fErr(entity.breed, 'Kultūrauga šķirne')">
           <label>{{ 'Kultūrauga šķirne' }}</label>
           <b-form-input type="text" placeholder="Kultūrauga šķirne"
-            :class="{ 'is-invalid' : fErr(entity.breed, '\'Kultūrauga šķirne\'') }"
+            :class="{ 'is-invalid' : fErr(entity.breed, 'Kultūrauga šķirne') }"
+            debounce="250"
             v-model="entity.breed"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.pre_plant, '\'Priekšaugs\'')">
+        <b-form-group :invalid-feedback="fErr(entity.pre_plant, 'Priekšaugs')">
           <label>{{ 'Priekšaugs' }}</label>
           <b-form-input type="text" placeholder="Priekšaugs"
-            :class="{ 'is-invalid' : fErr(entity.pre_plant, '\'priekšaugs\'') }"
+            :class="{ 'is-invalid' : fErr(entity.pre_plant, 'priekšaugs') }"
+            debounce="250"
             v-model="entity.pre_plant"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.sowing_rate, '\'Izsējas norma\'')">
+        <b-form-group :invalid-feedback="decimalErr(entity.sowing_rate, 'Izsējas norma')">
           <label>{{ 'Izsējas norma' }}</label>
           <b-form-input type="text" placeholder="Izsējas norma"
-            :class="{ 'is-invalid' : fErr(entity.sowing_rate, '\'Izsējas norma\'') }"
+            :class="{ 'is-invalid' : decimalErr(entity.sowing_rate, 'Izsējas norma') }"
+            debounce="250"
             v-model="entity.sowing_rate"/>
         </b-form-group>
         
-        <b-form-group :invalid-feedback="fErr(entity.date_from, '\'Date from\'')">
+        <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
           <label>{{ 'Sākuma datums' }}</label>
-          <b-form-input type="text" placeholder="Sākuma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_from, '\'Date from\'') }"
+          <b-form-input type="date" placeholder="Sākuma datums"
+            :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') }"
+            debounce="250"
             v-model="entity.date_from"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.date_to, '\'Date to\'')">
+        <b-form-group :invalid-feedback="fErr(entity.date_to, 'Noslēguma datums')">
           <label>{{ 'Noslēguma datums' }}</label>
-          <b-form-input type="text" placeholder="Noslēguma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_to, '\'Date to\'') }"
+          <b-form-input type="date" placeholder="Noslēguma datums"
+            :class="{ 'is-invalid' : fErr(entity.date_to, 'Noslēguma datums') }"
+            debounce="250"
             v-model="entity.date_to"/>
         </b-form-group>
       </div>
       <div slot="footer">
-        <!-- <router-link :to="{ name: 'Sowing', params:{ field_id: row.item.id, page: 1 }}">
-          <b-btn>Sēja</b-btn>
-        </router-link> -->
-        <b-button :to="{ name: 'Sowing', params:{field_id: this.$route.params.field_id, page: 1 }}" type="reset" variant="info" >
+        <b-button :to="{ name: 'Sowing', params:{field_id: this.$route.params.field_id, page: 1 } }" type="reset" variant="primary" >
           {{ 'Atcelt' }}
         </b-button>
         <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()" class="ml-5">
@@ -93,7 +96,6 @@ export default {
   props: {
     // If id === null, form will be considered create form else update
     id: { type: Number, default: null },
-    // field_id: { type: Number, default: null },
     // if title == false to hide header, pass string to override default title
     title: { type: [String, Boolean], default: undefined },
     // pass errors from parent form if embedded
@@ -144,6 +146,11 @@ export default {
       window.alert('Sējas dati pievienoti veiksmīgi!');
     },
     save() {
+      if (this.entity.name === null) { this.entity.name = ""; }
+      if (this.entity.breed === null) { this.entity.breed = ""; }
+      if (this.entity.pre_plant === null) { this.entity.pre_plant = ""; }
+      if (this.entity.sowing_rate === null) { this.entity.sowing_rate = ""; }
+      if (this.entity.date_from === null) { this.entity.date_from = ""; }
       if (this.isEmbedded) return;
       this.spinners.isSaving = true;
       const action = this.isUpdateForm ? this.pushUpdate : this.pushCreate;
@@ -155,8 +162,8 @@ export default {
         this.errorMsg = {};
         if (!this.isUpdateForm) {
           // After successful create
-          // if (this.$can('edit', 'fields')) {
-          if (this.id != null) {
+          if (this.$can('edit', 'fields')) {
+          // if (this.id != null) {
             this.$router.push({ name: 'SowingUpdate', params: { id: data.data.id } });
           }
           else { // do not redirect if cannot edit
