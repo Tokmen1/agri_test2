@@ -9,10 +9,8 @@ export default {
       if (this.fErr(inputValue, fieldName)) {
         return this.fErr(inputValue, fieldName);
       } 
-      else if (inputValue !== null) {
-        if (parseFloat(inputValue) != inputValue ) {
-          return "Ievadītā vērtība \""+fieldName+"\" ir nepareiza (Lūdzu, ievadiet vesalu skaitli vai decimāldaļu ar '.')!";
-        }
+      if (inputValue !== null && parseFloat(inputValue) != inputValue ) {
+        return "Ievadītā vērtība \""+fieldName+"\" ir nepareiza (Lūdzu, ievadiet vesalu skaitli vai decimāldaļu ar '.')!";
       }
     }, 
     emailErr(inputValue, fieldName) {

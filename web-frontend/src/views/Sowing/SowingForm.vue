@@ -160,17 +160,7 @@ export default {
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge((this.entity), data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
-        if (!this.isUpdateForm) {
-          // After successful create
-          if (this.$can('edit', 'fields')) {
-          // if (this.id != null) {
-            this.$router.push({ name: 'SowingUpdate', params: { id: data.data.id } });
-          }
-          else { // do not redirect if cannot edit
-            this.entity = this.$options.props.value.default();
-            this.load();
-          }
-        }
+        this.$router.push({ name: 'Sowing', params: { field_id: this.entity.field_id, page: 1 }});
       }).catch(({ errors, message }) => {
         this.spinners.isSaving = false;
         this.errorMsg = errors;

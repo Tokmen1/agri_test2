@@ -56,9 +56,9 @@
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn variant="primary">Rediģēt</b-btn>
+                    <b-btn variant="primary" class="mx-1">Rediģēt</b-btn>
                   </router-link>
-                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger">Dzēst</b-btn>
+                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -99,12 +99,12 @@ export default {
         { key: 'sowing_rate', sortable: true, label: 'Izsējas norma' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
-        // { key: 'field_id', sortable: true, label: 'field_id' },
+        { key: 'field_id', sortable: true, label: 'field_id' },
         { key: 'options', label: 'Iespējas' },
       ],
       filters: {
-        sort_field: null,
-        sort_order: null,
+        sort_field: 'id',
+        sort_order: true,
         search: '',
         field_id: this.$route.params.field_id,
         

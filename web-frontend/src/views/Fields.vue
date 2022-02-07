@@ -16,7 +16,7 @@
             </b-button-group>
           </b-col>
         </b-row>
-        <b-row v-if="tableItems.length">
+        <b-row>
           <b-col>
             <b-form-group>
               <b-input-group>
@@ -27,7 +27,7 @@
               </b-input-group>
             </b-form-group>
           </b-col>
-          <b-col md="auto">
+          <b-col md="auto" v-if="tableItems.length">
             <!--Paginator at top-->
             <Pagination class="pull-right" :data="listPaginator" :limit="5" @pagination-change-page="onPageChange"/>
           </b-col>
@@ -38,7 +38,12 @@
         <div v-else>
           <b-row>
             <b-col>
-              <div  v-if="!tableItems.length"> datu nav</div>
+              <div  v-if="!tableItems.length">
+                <div v-if="filters.search">Netika atrasti dati ar vārdu <b>"{{ filters.search }}"</b>!</div> 
+                <div v-else v-b-popover.hover.bottom="'Spied pogu \'\'Pievienot jaunus sējas datus\'\''">
+                  Tabulā nav ievadīti dati!
+                </div>
+              </div>
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
@@ -50,14 +55,14 @@
                   <div class="flex-container options-center">
                     <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
                       <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                      <b-btn>Reģidēt</b-btn>
+                      <b-button variant="primary" class="mx-1">Reģidēt</b-button>
                     </router-link>
-                    <b-btn v-if="row.item.actions.delete" @click="delete_data(row.item.id)">Dzēst</b-btn>
+                    <b-button v-if="row.item.actions.delete" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-button>
                     <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
-                      <b-btn>Pievienot darbību</b-btn>
+                      <b-button variant="primary" class="mx-1">Pievienot darbību</b-button>
                     </router-link>
                     <router-link :to="{ name: 'Sowing', params:{ field_id: row.item.id, page: 1 }}">
-                      <b-btn>Sēja</b-btn>
+                      <b-button variant="primary" class="mx-1">Sēja</b-button>
                     </router-link>
                   </div>
                 </template>
