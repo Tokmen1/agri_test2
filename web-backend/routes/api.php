@@ -72,4 +72,14 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::put('{sowing}', 'App\Http\Controllers\SowingController@update');
         Route::delete('{sowing}', 'App\Http\Controllers\SowingController@delete');
     });
+
+    Route::prefix('harvest')->group(function () {
+        Route::get('/', 'App\Http\Controllers\HarvestController@index');
+        Route::get('/create', 'App\Http\Controllers\HarvestController@create');
+        Route::post('/', 'App\Http\Controllers\HarvestController@store');
+        Route::get('{harvest}', 'App\Http\Controllers\HarvestController@show');
+        Route::get('{harvest}/edit', 'App\Http\Controllers\HarvestController@edit');
+        Route::put('{harvest}', 'App\Http\Controllers\HarvestController@update');
+        Route::delete('{harvest}', 'App\Http\Controllers\HarvestController@delete');
+    });
 });

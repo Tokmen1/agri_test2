@@ -11,6 +11,9 @@ const FieldActionsForm = () => import('@/views/FieldActionsForm.vue');
 const Sowing = () => import('@/views/Sowing/Sowing.vue');
 const SowingForm = () => import('@/views/Sowing/SowingForm.vue');
 
+const Harvest = () => import('@/views/Harvest/Harvest.vue');
+const HarvestForm = () => import('@/views/Harvest/HarvestForm.vue');
+
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
 /* eslint-enabled */
@@ -147,6 +150,54 @@ const routes = [
               };
             },
             component: SowingForm
+          },
+        ]
+      },
+      {
+        path: 'field/:field_id/harvest',
+        name: null,
+        meta: { label: 'route.fields_list_title' },
+        redirect: { name: 'Harvest', params: { page: 1 } },
+
+        component: {
+          render(c) { return c('router-view'); }
+        },
+
+        children: [
+          {
+            path: 'list/:page',
+            name: 'Harvest',
+            meta: { label: 'route.harvest_list' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+                page: Number(route.params.page)
+              };
+            },
+            component: Harvest,
+          },
+          {
+            path: 'create',
+            name: 'HarvestCreate',
+            meta: { label: 'route.harvest_create_title' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+              };
+            },
+            component: HarvestForm
+          },
+          {
+            path: 'update/:id',
+            name: 'HarvestUpdate',
+            meta: { label: 'route.harvest_update_title' },
+            props: (route) => {
+              return {
+                id: Number(route.params.id),
+                field_id: Number(route.params.field_id),
+              };
+            },
+            component: HarvestForm
           },
         ]
       },

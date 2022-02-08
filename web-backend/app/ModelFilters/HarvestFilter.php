@@ -4,7 +4,7 @@ namespace App\ModelFilters;
 
 use EloquentFilter\ModelFilter;
 
-class SowingFilter extends ModelFilter
+class HarvestFilter extends ModelFilter
 {
     /**
     * Related Models that have ModelFilters as well as the method on the ModelFilter
@@ -24,10 +24,8 @@ class SowingFilter extends ModelFilter
     public function search($value)
     {
         $this->where(function ($query) use ($value) {
-            $query->orWhere('name', 'LIKE', "%$value%");
-            $query->orWhere('breed', 'LIKE', "%$value%");
-            $query->orWhere('pre_plant', 'LIKE', "%$value%");
-            $query->orWhere('sowing_rate', 'LIKE', "%$value%");
+            $query->orWhere('quantity', 'LIKE', "%$value%");
+            $query->orWhere('sell_price', 'LIKE', "%$value%");
             $query->orWhere('date_from', 'LIKE', "%$value%");
             $query->orWhere('date_to', 'LIKE', "%$value%");
         });
