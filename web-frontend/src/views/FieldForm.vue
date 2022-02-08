@@ -4,8 +4,8 @@
       <div slot="header">
         <b-row>
           <b-col cols="6">
-            <span v-if="isUpdateForm">{{'field.update_title' }}</span>
-            <span v-else>{{ 'field.create_title' }}</span>
+            <span v-if="isUpdateForm">Rediģēt lauka datus</span>
+            <span v-else>Izveidot datus par lauku</span>
           </b-col>
         </b-row>
       </div>
@@ -13,29 +13,29 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group :invalid-feedback="fErr(entity.field_name, '\'Field name\'')">
-          <label>{{ 'field.name' }}</label>
-          <b-form-input type="text" placeholder="field.name_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.field_name, '\'Field name\'') }"
+        <b-form-group :invalid-feedback="fErr(entity.field_name, 'Lauka nosaukums')">
+          <label>{{ 'Lauka nosaukums' }}</label>
+          <b-form-input type="text" placeholder="Lauka nosaukums"
+            :class="{ 'is-invalid' : fErr(entity.field_name, 'Lauka nosaukums') }"
+            debounce="250"
             v-model="entity.field_name"/>
         </b-form-group>
-        <b-form-group :invalid-feedback="fErr(entity.area, 'Area')">
-          <label>{{ 'field.area' }}</label>
-          <b-form-input type="text" placeholder="field.area_placeholder"
-            :class="{ 'is-invalid' : fErr(entity.area, 'Area') }"
+        <b-form-group :invalid-feedback="decimalErr(entity.area, 'Lauka platība')">
+          <label>{{ 'Lauka platība' }}</label>
+          <b-form-input type="text" placeholder="Lauka platība"
+            :class="{ 'is-invalid' : decimalErr(entity.area, 'Lauka platība') }"
+            debounce="250"
             v-model="entity.area"/>
         </b-form-group>
       </div>
       <div slot="footer">
-        <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()">
-          <b-spinner v-if="spinners.isSaving" type="grow" small/>
-          {{ 'global.save' }}
+        <b-button :to="{ name: 'Fields', params:{ page:1 }}" type="reset" variant="primary" class="mx-5">
+          Atcelt
         </b-button>
-        <router-view :to="{ name: 'Fields' }">
-          <b-button type="reset" variant="info" class="ml-2">
-            {{ 'global.cancel' }}
-          </b-button>
-        </router-view>
+        <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()" class="mx-5">
+          <b-spinner v-if="spinners.isSaving" type="grow" small/>
+          Saglabāt
+        </b-button>
       </div>
     </b-card>
   </div>
@@ -73,7 +73,7 @@ export default {
       type: Object,
       default() {
         return {
-          field_name: '',
+          field_name: null,
           area: null,
         };
       },
@@ -119,16 +119,17 @@ export default {
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge(this.entity, data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
-        if (!this.isUpdateForm) {
-          // After successful create
-          // if (this.$can('edit', 'fields')) {
-          if (this.id !== null) {
-            this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
-          } else { // do not redirect if cannot edit
-            this.entity = this.$options.props.value.default();
-            this.load();
-          }
-        }
+        this.$router.push({ name: 'Fields', params: { page: 1 }});
+        // if (!this.isUpdateForm) {
+        // After successful create
+        // if (this.$can('edit', 'fields')) {
+        // if (this.id !== null) {
+        //   this.$router.push({ name: 'FieldUpdate', params: { id: data.data.id } });
+        // } else { // do not redirect if cannot edit
+        //   this.entity = this.$options.props.value.default();
+        //   this.load();
+        // }
+        // }
       }).catch(({ errors, message }) => {
         this.spinners.isSaving = false;
         this.errorMsg = errors;

@@ -18,7 +18,7 @@ class SowingCollection extends ResourceCollection
         return [
             'data' => $this->collection,
             'actions' => [
-                'create' => true//$user->can('create', Sowing::class)
+                'create' => $user->can('create', Sowing::class)
             ]
         ];
     }

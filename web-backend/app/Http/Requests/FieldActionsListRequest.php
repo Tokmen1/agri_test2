@@ -29,6 +29,8 @@ class FieldActionsListRequest extends FormRequest
             'action_type',
             'date_from',
             'date_to',
+            'created_at',
+            'updated_at',
             'fields_id',
         ];
         return [

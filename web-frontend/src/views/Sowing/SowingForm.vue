@@ -4,8 +4,8 @@
       <div slot="header">
         <b-row>
           <b-col cols="6">
-            <span v-if="isUpdateForm">{{ 'Rediģēt sējas datus' }}</span>
-            <span v-else>{{ 'Izveidot datus par sēju' }}</span>
+            <span v-if="isUpdateForm">Rediģēt sējas datus</span>
+            <span v-else>Izveidot datus par sēju</span>
           </b-col>
         </b-row>
       </div>
@@ -14,7 +14,7 @@
       </div>
       <div v-else>
         <b-form-group :invalid-feedback="fErr(entity.name, 'Kultūrauga nosaukums')">
-          <label>{{ 'Kultūrauga nosaukums' }}</label>
+          <label>Kultūrauga nosaukums</label>
           <b-form-input type="text" placeholder="Mieži, Kvieši, Rudzi uc."
             v-bind:class="{ 'is-invalid' : fErr(entity.name, 'Kultūrauga nosaukums') }"
             debounce="250"
@@ -22,7 +22,7 @@
         </b-form-group>
 
         <b-form-group :invalid-feedback="fErr(entity.breed, 'Kultūrauga šķirne')">
-          <label>{{ 'Kultūrauga šķirne' }}</label>
+          <label>Kultūrauga šķirne</label>
           <b-form-input type="text" placeholder="Kultūrauga šķirne"
             :class="{ 'is-invalid' : fErr(entity.breed, 'Kultūrauga šķirne') }"
             debounce="250"
@@ -30,7 +30,7 @@
         </b-form-group>
 
         <b-form-group :invalid-feedback="fErr(entity.pre_plant, 'Priekšaugs')">
-          <label>{{ 'Priekšaugs' }}</label>
+          <label>Priekšaugs</label>
           <b-form-input type="text" placeholder="Priekšaugs"
             :class="{ 'is-invalid' : fErr(entity.pre_plant, 'priekšaugs') }"
             debounce="250"
@@ -38,7 +38,7 @@
         </b-form-group>
 
         <b-form-group :invalid-feedback="decimalErr(entity.sowing_rate, 'Izsējas norma')">
-          <label>{{ 'Izsējas norma' }}</label>
+          <label>Izsējas norma (Kg/ha)</label>
           <b-form-input type="text" placeholder="Izsējas norma"
             :class="{ 'is-invalid' : decimalErr(entity.sowing_rate, 'Izsējas norma') }"
             debounce="250"
@@ -46,7 +46,7 @@
         </b-form-group>
         
         <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
-          <label>{{ 'Sākuma datums' }}</label>
+          <label>Sākuma datums</label>
           <b-form-input type="date" placeholder="Sākuma datums"
             :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') }"
             debounce="250"
@@ -54,7 +54,7 @@
         </b-form-group>
 
         <b-form-group :invalid-feedback="fErr(entity.date_to, 'Noslēguma datums')">
-          <label>{{ 'Noslēguma datums' }}</label>
+          <label>Noslēguma datums</label>
           <b-form-input type="date" placeholder="Noslēguma datums"
             :class="{ 'is-invalid' : fErr(entity.date_to, 'Noslēguma datums') }"
             debounce="250"
@@ -63,11 +63,11 @@
       </div>
       <div slot="footer">
         <b-button :to="{ name: 'Sowing', params:{field_id: this.$route.params.field_id, page: 1 } }" type="reset" variant="primary" >
-          {{ 'Atcelt' }}
+          Atcelt
         </b-button>
         <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()" class="ml-5">
           <b-spinner v-if="spinners.isSaving" type="grow" small/>
-          {{ 'Saglabāt' }}
+          Saglabāt
         </b-button>
       </div>
     </b-card>

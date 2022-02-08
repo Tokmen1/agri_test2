@@ -4,14 +4,14 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>{{ 'Sējas dati' }}</h4>
+            <h4>Sējas dati</h4>
           </b-col>
           <b-col md="auto">
             <b-button-group>
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" 
                 :to="{ name: 'SowingCreate', params:{ field_id: this.fieldId } }"
                 >
-                  {{ 'Pievienot jaunus sējas datus' }}
+                  Pievienot jaunus sējas datus
                 </b-button>
             </b-button-group>
           </b-col>
@@ -92,18 +92,16 @@ export default {
         data: {},
       },
       tableFields: [
-        { key: 'id', sortable: true, label: 'ID' },
         { key: 'name', sortable: true, label: 'Kultūraugs' },
         { key: 'breed', sortable: true, label: 'Šķirne' },
         { key: 'pre_plant', sortable: true, label: 'Priekšaugs' },
-        { key: 'sowing_rate', sortable: true, label: 'Izsējas norma' },
+        { key: 'sowing_rate', sortable: true, label: 'Izsējas norma (kg/ha)' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
-        { key: 'field_id', sortable: true, label: 'field_id' },
         { key: 'options', label: 'Iespējas' },
       ],
       filters: {
-        sort_field: 'id',
+        sort_field: 'updated_at',
         sort_order: true,
         search: '',
         field_id: this.$route.params.field_id,

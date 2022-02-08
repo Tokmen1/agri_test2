@@ -4,13 +4,13 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>{{ 'Lauku dati' }}</h4>
+            <h4>Lauku dati</h4>
           </b-col>
           <b-col md="auto">
             <b-button-group>
               <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  {{ 'Izveidot jaunu lauku' }}
+                  Izveidot jaunu lauku
                 </b-button>
               <!-- </router-link> -->
             </b-button-group>
@@ -40,7 +40,7 @@
             <b-col>
               <div  v-if="!tableItems.length">
                 <div v-if="filters.search">Netika atrasti dati ar vārdu <b>"{{ filters.search }}"</b>!</div> 
-                <div v-else v-b-popover.hover.bottom="'Spied pogu \'\'Pievienot jaunus sējas datus\'\''">
+                <div v-else v-b-popover.hover.bottom="'Spied pogu \'\'Izveidot jaunu lauku\'\''">
                   Tabulā nav ievadīti dati!
                 </div>
               </div>
@@ -100,13 +100,11 @@ export default {
         { key: 'id', sortable: true, label: 'ID' },
         { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
         { key: 'area', sortable: true, label: 'Platība (ha)'},
-        // { key: 'created_at', sortable: true, label: 'Created_at' },
-        // { key: 'updated_at', sortable: true, label: 'Updated_at' },
-        { key: 'options', label: 'iespējas' },
+        { key: 'options', label: 'Iespējas' },
       ],
       filters: {
-        sort_field: null,
-        sort_order: null,
+        sort_field: 'updated_at',
+        sort_order: true,
         search: '',
       },
     };

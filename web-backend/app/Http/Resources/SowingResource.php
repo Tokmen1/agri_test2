@@ -22,8 +22,10 @@ class SowingResource extends JsonResource
             'breed' => $this->breed,
             'pre_plant' => $this->pre_plant,
             'sowing_rate' => $this->sowing_rate,
-            'date_from' => $this->date_from,// ->format('m/d/Y'),
-            'date_to' => $this->date_to,//->format('m/d/Y H:i:s')
+            'date_from' => $this->date_from,
+            'date_to' => $this->date_to,
+            'created_at' => $this->created_at->format('d/m/Y H:i:s'),
+            'updated_at' => $this->updated_at->format('d/m/Y H:i:s'),
             'field_id' => $this->field_id,
             'actions' => [
                 'view' => $user->can('view', [$this->resource]),
