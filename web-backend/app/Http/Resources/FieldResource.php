@@ -22,8 +22,8 @@ class FieldResource extends JsonResource
             'field_name' => $this->field_name,
             'area' => $this->area,
             'user_id' => $this->user_id,
-            'created_at' => $this->created_at->format('m/d/Y H:i:s'),
-            'updated_at' => $this->updated_at->format('m/d/Y H:i:s'),
+            'created_at' => $this->created_at->format('d/m/Y H:i:s'),
+            'updated_at' => $this->updated_at->format('d/m/Y H:i:s'),
             // 'created_at' => $this->formatDateTime($this->created_at),
             // 'updated_at' => $this->formatDateTime($this->updated_at)
             'actions' => [

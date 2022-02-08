@@ -31,7 +31,9 @@ class SowingListRequest extends FormRequest
                 'pre_plant',
                 'sowing_rate',
                 'date_from',
-                'date_to'
+                'date_to',
+                'created_at',
+                'updated_at'
             ];
 
             return [

@@ -32,12 +32,15 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">Profile</b-dropdown-item>
-          <b-dropdown-item @click="sing_out()">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
+        <b-nav-item @click="sing_out()">
+          <b>Iziet</b>
+        </b-nav-item>
       </b-navbar-nav>
     </b-collapse>
   </b-navbar>
     <router-view></router-view>
+    {{ tokenExpiryDate }}
     <!-- <RwvFooter /> -->
   </div>
 </template>
@@ -48,9 +51,29 @@
 import Services from '@/services';
 import { backend } from '@/_axios';
 export default {
+  data() {
+    return {
+      tokenExpiryDate: sessionStorage.getItem('access_token_exp')
+    };
+  },
   components: {
     // RwvHeader,
     // RwvFooter
+  },
+  watch: {
+    tokenExpiryDate: {
+      handler(value) {
+        if (value > 1) {
+          setTimeout(() => {
+            this.tokenExpiryDate--;
+            sessionStorage.setItem('access_token_exp', this.tokenExpiryDate);
+          }, 1000);
+        } else {
+          this.sing_out();
+        }
+      },
+      immediate: true
+    }
   },
   methods: {
     sing_out() {
@@ -58,8 +81,9 @@ export default {
         console.log("singing out");
         await Services.auth.logout(sessionStorage.getItem('access_token'));
         await sessionStorage.removeItem('access_token');
-        console.log(await sessionStorage.getItem('access_token'));
+        await sessionStorage.removeItem('access_token_exp');
         await delete backend.defaults.headers.common["Authorization"];
+        this.$router.go();
       })();
       this.$router.replace({ name: 'Login' });
     }

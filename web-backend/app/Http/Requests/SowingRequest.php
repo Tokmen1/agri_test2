@@ -21,7 +21,8 @@ class SowingRequest extends FormRequest
             'sowing_rate' => ['required', 'numeric'],
             'date_from' => ['required'],
             'date_to' =>[],
-            'user_id' => ['integer'],
+            'created_at' =>[],
+            'updated_at' =>[],
             'field_id' => ['required','integer']
         ];
     }

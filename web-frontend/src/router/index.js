@@ -1,3 +1,4 @@
+/* eslint-disable */
 import VueRouter from 'vue-router';
 
 const MainLayout = () => import('@/layouts/MainLayout.vue');
@@ -12,12 +13,13 @@ const SowingForm = () => import('@/views/Sowing/SowingForm.vue');
 
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
-
+/* eslint-enabled */
 const routes = [ 
   {
     path: '/',
     component: MainLayout,
     children: [
+      { path: '/', component: Fields },
       { path: '/records', component: Fields },
       { path: '/example', component: Fields },
       { path: '/FieldActions', component: FieldActions},

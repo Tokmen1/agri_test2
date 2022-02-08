@@ -95,6 +95,7 @@ export default {
       this.isLoading = true;
       AuthService.login(this.email, this.password).then(({ data }) => {
         (async () => {
+          sessionStorage.setItem('access_token_exp', data['expires_in']);
           await sessionStorage.setItem('access_token', data['access_token']);
         })();
         this.$router.push({ name: 'Fields', params: { page: 1 } });
