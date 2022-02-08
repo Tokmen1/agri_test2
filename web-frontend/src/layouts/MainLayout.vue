@@ -78,8 +78,7 @@ export default {
   methods: {
     sing_out() {
       (async () => {
-        console.log("singing out");
-        await Services.auth.logout(sessionStorage.getItem('access_token'));
+        Services.auth.logout(sessionStorage.getItem('access_token'));
         await sessionStorage.removeItem('access_token');
         await sessionStorage.removeItem('access_token_exp');
         await delete backend.defaults.headers.common["Authorization"];

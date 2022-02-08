@@ -20,7 +20,7 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input v-model="filters.search"></b-form-input>
+                <b-form-input v-model="filters.search" placeholder="Meklēt..."></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>

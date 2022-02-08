@@ -9,7 +9,7 @@
                 <b-form name="login">
                   <h1>{{ 'Ienākt' }}</h1>
                   <p v-show="!isLoginFailed" class="text-muted">
-                    {{ 'Login description' }}
+                    <!-- {{ 'Login description' }} -->
                   </p>
                   <p v-show="isLoginFailed" class="text-danger">{{ 'Ieeja nav izdevusies' }}</p>
                   <b-input-group class="mb-3">
@@ -19,6 +19,7 @@
                     <b-form-input ref="email" @keydown.enter.native="attemptLogin" v-model="email"
                                   type="text" class="form-control"
                                   placeholder="E-pasts"
+                                  debounce="250"
                                   autocomplete="username-email"/>
                   </b-input-group>
                   <b-input-group class="mb-4">
@@ -28,6 +29,7 @@
                     <b-form-input @keydown.enter.native="attemptLogin" name="password" v-model="password"
                                   type="password" class="form-control"
                                   placeholder="Parole"
+                                  debounce="250"
                                   autocomplete="current-password" />
                   </b-input-group>
                   <b-row>
@@ -112,7 +114,7 @@ export default {
           sessionStorage.removeItem('redirectPath');
           this.$router.replace({ path: redirectPath });
         } else {
-          this.$router.replace({ name: 'Dashboard' });
+          this.$router.replace({ name: 'Fields', params: { page: 1 } });
         }
       }
     },
