@@ -16,7 +16,9 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Fields::class => FieldPolicy::class,
-        'App\Models\FieldActions'=>'App\Policies\FieldActionsPolicy'
+        'App\Models\FieldActions'=>'App\Policies\FieldActionsPolicy',
+        'App\Models\Sowing'=>'App\Policies\SowingPolicy',
+        'App\Models\Harvest'=>'App\Policies\HarvestPolicy',
     ];
 
     /**

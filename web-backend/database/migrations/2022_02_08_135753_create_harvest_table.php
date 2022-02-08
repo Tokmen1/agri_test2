@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSowingTable extends Migration
+class CreateHarvestTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,15 @@ class CreateSowingTable extends Migration
      */
     public function up()
     {
-        Schema::create('sowing', function (Blueprint $table) {
+        Schema::create('harvest', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('breed');
-            $table->string('pre_plant');
-            $table->double('sowing_rate');
+            $table->double('quantity');
+            $table->double('sell_price');
             $table->date('date_from');
             $table->date('date_to')->nullable();
             $table->foreignId('field_id')
                 ->constrained('fields')
-                ->onDelete('cascade');
+                ->onDelete('cascade');;
             $table->timestamps();
         });
     }
@@ -35,6 +33,6 @@ class CreateSowingTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('sowing');
+        Schema::dropIfExists('harvest');
     }
 }

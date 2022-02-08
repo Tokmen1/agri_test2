@@ -18,8 +18,8 @@ class CreateFieldsActionTable extends Migration
             $table->string('action_type');
             $table->date('date_from');
             $table->date('date_to')->nullable();
-            $table->foreignId('fields_id')->constrained('fields');
-            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('fields_id')->constrained('fields')->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
