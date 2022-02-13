@@ -52,6 +52,11 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
+                <template v-slot:cell(pre_plant)="row">
+                  <div class="flex-container">
+                    {{ getPrePlant(row.item.id-2) }}
+                  </div>
+                </template>
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
@@ -143,6 +148,13 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
+    getPrePlant(prePlantId) {
+      try {
+        return this.tableItems[prePlantId].name + ' ' + this.tableItems[prePlantId].breed
+      } catch {
+        return 'NAV'
+      }
+    },
     delete_data($my_id) {
       Services.sowing.delete($my_id);
       window.alert('Iteam with id: ', $my_id, ' deleted');

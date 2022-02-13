@@ -96,16 +96,17 @@ export default {
     attemptLogin() {
       this.isLoading = true;
       AuthService.login(this.email, this.password).then(({ data }) => {
-          sessionStorage.setItem('access_token_exp', data['expires_in']);
-          sessionStorage.setItem('access_token', data['access_token']);
-          const redirectPath = sessionStorage.getItem('redirectPath');
-          if (redirectPath !== null) {
-            sessionStorage.removeItem('redirectPath');
-            this.$router.push({ path: redirectPath });
-          } else {
-            this.$router.push({ name: 'Fields', params: { page: 1 } });
-          }
-        // this.$router.push({ name: 'Fields', params: { page: 1 } });
+        // const redirectPath = sessionStorage.getItem('redirectPath');
+        sessionStorage.setItem('access_token', data['access_token']);
+        sessionStorage.setItem('access_token_exp', data['expires_in']);
+        // if (redirectPath !== null) {
+        //   sessionStorage.removeItem('redirectPath');
+        //   this.$router.push({ path: redirectPath });
+        //   this.$router.go();
+        // } else {
+        //   this.$router.push({ name: 'Fields', params: { page: 1 } });
+        // }
+        this.$router.push({ name: 'Fields', params: { page: 1 } });
       }, () => {
         this.isLoginFailed = true;
         this.isLoading = false;

@@ -2,7 +2,7 @@
   <div>
     <!-- <RwvHeader /> -->
 <b-navbar toggleable="lg" type="dark" variant="info">
-    <router-link to="/"><b-navbar-brand>Home</b-navbar-brand></router-link>
+    <router-link to="/"><b-navbar-brand>Lauku dati</b-navbar-brand></router-link>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
