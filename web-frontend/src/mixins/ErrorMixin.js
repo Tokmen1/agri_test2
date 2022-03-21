@@ -12,6 +12,9 @@ export default {
       if (inputValue !== null && parseFloat(inputValue) != inputValue ) {
         return "Ievadītā vērtība \""+fieldName+"\" ir nepareiza (Lūdzu, ievadiet vesalu skaitli vai decimāldaļu ar '.')!";
       }
+      if (inputValue < 0) {
+        return "Ievadītā vērtība \""+fieldName+"\" nedrīkst būt negatīva";
+      }
     }, 
     emailErr(inputValue, fieldName) {
       if (this.fErr(inputValue, fieldName)) {

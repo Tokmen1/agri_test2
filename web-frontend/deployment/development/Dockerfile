@@ -1,4 +1,4 @@
-FROM node
+FROM node:14.18.1
 
 RUN npm install -g http-server
 WORKDIR /web-frontend

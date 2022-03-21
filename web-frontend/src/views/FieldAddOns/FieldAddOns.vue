@@ -4,23 +4,23 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>Lauku dati</h4>
+            <h4>{{ `${this.typeText} dati` }}</h4>
           </b-col>
           <b-col md="auto">
             <b-button-group>
-              <!-- <router-link to="FieldCreate"> -->
-                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldCreate' }">
-                  Izveidot jaunu lauku
+                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" 
+                :to="{ name: 'FieldAddOnsCreate', params:{ field_id: this.fieldId, type: this.filters.type } }"
+                >
+                  {{ `Pievienot jaunus ${this.typeText} datus` }}
                 </b-button>
-              <!-- </router-link> -->
             </b-button-group>
           </b-col>
         </b-row>
-        <b-row>
+        <b-row >
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input v-model="filters.search" placeholder="Meklēt..."></b-form-input>
+                <b-form-input v-model="filters.search" placeholder="Meklēt..." debounce="700"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
@@ -38,12 +38,13 @@
         <div v-else>
           <b-row>
             <b-col>
-              <div  v-if="!tableItems.length">
+              <div v-if="!tableItems.length">
                 <div v-if="filters.search">Netika atrasti dati ar vārdu <b>"{{ filters.search }}"</b>!</div> 
-                <div v-else v-b-popover.hover.bottom="'Spied pogu \'\'Izveidot jaunu lauku\'\''">
-                  Tabulā nav ievadīti dati!
+                <div v-else v-b-popover.hover.bottom="`Spied pogu \'\'Pievienot jaunus ${this.typeText} datus\'\'`">
+                  {{ `Tabulā nav ievadīti ${this.typeText} dati!` }}
                 </div>
               </div>
+              <!-- <NoDataView v-if="!tableItems.length"/> -->
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"
@@ -53,29 +54,12 @@
                   >
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
-                    <router-link v-if="row.item.actions.update" :to="{ name: 'FieldUpdate', params:{ id: row.item.id }}">
-                      <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                      <b-button variant="primary" class="mx-1">Reģidēt</b-button>
-                    </router-link>
-                    <b-button v-if="row.item.actions.delete" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-button>
-                    <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
-                      <b-button variant="primary" class="mx-1">Pievienot darbību</b-button>
-                    </router-link>
-                    <router-link :to="{ name: 'Sowing', params:{ field_id: row.item.id, page: 1 }}">
-                      <b-button variant="primary" class="mx-1">Sēja dati</b-button>
-                    </router-link>
-                    <router-link :to="{ name: 'Harvest', params:{ field_id: row.item.id, page: 1 }}">
-                      <b-button variant="primary" class="mx-1">Raža dati</b-button>
-                    </router-link>
-                    <router-link :to="{ name: 'FieldAddOns', params:{ field_id: row.item.id, page: 1, type: 'lime' }}">
-                      <b-button variant="primary" class="mx-1">Kaļķa dati</b-button>
-                    </router-link>
-                    <router-link :to="{ name: 'FieldAddOns', params:{ field_id: row.item.id, page: 1, type: 'AAL' }}">
-                      <b-button variant="primary" class="mx-1">AAL dati</b-button>
-                    </router-link>
-                    <router-link :to="{ name: 'FieldAddOns', params:{ field_id: row.item.id, page: 1, type: 'mineral_fertilizer' }}">
-                      <b-button variant="primary" class="mx-1">Minerālmēslojuma dati</b-button>
-                    </router-link>
+                  <router-link :to="{ name: 'FieldAddOnsUpdate', params:{ id: row.item.id }}">
+                    <a><i class="mx-1 fa fa-edit fa-lg"/></a>
+                    <b-btn variant="primary" class="mx-1">Rediģēt</b-btn>
+                  </router-link>
+                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-btn>
+                  <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
               </b-table>
@@ -96,35 +80,47 @@
 <script>
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
-import { backend } from '@/_axios';
 
 export default {
   mounted() {
     this.getData();
   },
-  props: ['page'],
+  props: ['page', 'id', 'field_id', 'type'],
   data() {
     return {
       list: {
         data: {},
       },
       tableFields: [
-        // { key: 'id', sortable: true, label: 'ID' },
-        { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
-        { key: 'area', sortable: true, label: 'Platība (ha)'},
+        { key: 'type', sortable: true, label: 'Tips' },
+        { key: 'name', sortable: true, label: 'Nosaukums' },
+        { key: 'amount_per_ha', sortable: true, label: 'Daudzums uz ha' },
+        { key: 'date_from', sortable: true, label: 'Sākuma datums' },
+        { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         { key: 'options', label: 'Iespējas' },
       ],
       filters: {
         sort_field: 'updated_at',
         sort_order: true,
         search: '',
-      },
+        field_id: this.$route.params.field_id,
+        type: this.$route.params.type,
+      }
     };
   },
   components: {
     Pagination
   },
   computed: {
+    typeText() {
+      if (this.filters.type == 'lime') {
+        return 'Kaļķa';
+      } else if (this.filters.type == "AAL") {
+        return "AAL";
+      } else {
+        return "Minerālmēslu";
+      }
+    },
     filteredRecords() {
       return this.list.data.filter((record) => {
         return record.match(this.filters.search);
@@ -138,6 +134,9 @@ export default {
     },
     contentIsLoading() {
       return false;
+    },
+    fieldId() {
+      return this.$route.params.field_id;
     },
     params() {
       return {
@@ -153,24 +152,19 @@ export default {
   },
   methods: {
     delete_data($my_id) {
-      Services.fields.delete($my_id);
-      window.alert("Iteam with id: "+$my_id+ " deleted!");
+      Services.fieldAddOns.delete($my_id);
+      window.alert('Iteam with id: ', $my_id, ' deleted');
       this.getData();
     },
     getData() {
-      backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
-      Services.fields.list(this.params).then((data) => {
+      Services.fieldAddOns.list(this.params).then((data) => {
         this.list.data = data.data;
-        console.log(this.list.data.data[0].actions.view);
       });
     },
     onPageChange(page) {
       page = page || this.page;
-      if (page !== this.page) this.$router.push({ name: 'Fields', params: { page } });
+      if (page !== this.page) this.$router.push({ name: 'FieldAddOns', params: { page } });
     },
   }
 };
 </script>
-
-<style scoped>
-</style>

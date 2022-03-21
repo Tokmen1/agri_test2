@@ -82,4 +82,14 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::put('{harvest}', 'App\Http\Controllers\HarvestController@update');
         Route::delete('{harvest}', 'App\Http\Controllers\HarvestController@delete');
     });
+
+    Route::prefix('fieldAddOns')->group(function () {
+        Route::get('/', 'App\Http\Controllers\FieldAddOnsController@index');
+        Route::get('/create', 'App\Http\Controllers\FieldAddOnsController@create');
+        Route::post('/', 'App\Http\Controllers\FieldAddOnsController@store');
+        Route::get('{fieldAddOns}', 'App\Http\Controllers\FieldAddOnsController@show');
+        Route::get('{fieldAddOns}/edit', 'App\Http\Controllers\FieldAddOnsController@edit');
+        Route::put('{fieldAddOns}', 'App\Http\Controllers\FieldAddOnsController@update');
+        Route::delete('{fieldAddOns}', 'App\Http\Controllers\FieldAddOnsController@delete');
+    });
 });

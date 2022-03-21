@@ -14,6 +14,9 @@ const SowingForm = () => import('@/views/Sowing/SowingForm.vue');
 const Harvest = () => import('@/views/Harvest/Harvest.vue');
 const HarvestForm = () => import('@/views/Harvest/HarvestForm.vue');
 
+const FieldAddOns = () => import('@/views/FieldAddOns/FieldAddOns.vue');
+const FieldAddOnsForm = () => import('@/views/FieldAddOns/FieldAddOnsForm.vue');
+
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
 /* eslint-enabled */
@@ -198,6 +201,57 @@ const routes = [
               };
             },
             component: HarvestForm
+          },
+        ]
+      },
+      {
+        path: 'field/:field_id/fieldAddOns/:type',
+        name: null,
+        meta: { label: 'route.fields_list_title' },
+        redirect: { name: 'FieldAddOns', params: { page: 1 } },
+
+        component: {
+          render(c) { return c('router-view'); }
+        },
+
+        children: [
+          {
+            path: 'list/:page',
+            name: 'FieldAddOns',
+            meta: { label: 'route.fieldAddOns_list' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+                type: String(route.params.type),
+                page: Number(route.params.page)
+              };
+            },
+            component: FieldAddOns,
+          },
+          {
+            path: 'create',
+            name: 'FieldAddOnsCreate',
+            meta: { label: 'route.fieldAddOns_create_title' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+                type: String(route.params.type),
+              };
+            },
+            component: FieldAddOnsForm
+          },
+          {
+            path: 'update/:id',
+            name: 'FieldAddOnsUpdate',
+            meta: { label: 'route.fieldAddOns_update_title' },
+            props: (route) => {
+              return {
+                id: Number(route.params.id),
+                field_id: Number(route.params.field_id),
+                type: String(route.params.type),
+              };
+            },
+            component: FieldAddOnsForm
           },
         ]
       },

@@ -143,7 +143,11 @@ export default {
       console.log(AlertValue);
     },
     alertSuccess() {
-      window.alert('Sējas dati pievienoti veiksmīgi!');
+       if (this.isUpdateForm) {
+        window.alert('Sējas dati rediģēti veiksmīgi!');
+      } else {
+        window.alert('Sējas dati pievienoti veiksmīgi!');
+      }
     },
     save() {
       if (this.entity.name === null) { this.entity.name = ""; }

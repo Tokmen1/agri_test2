@@ -52,11 +52,11 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
-                <template v-slot:cell(pre_plant)="row">
+                <!-- <template v-slot:cell(pre_plant)="row">
                   <div class="flex-container">
                     {{ getPrePlant(row.item.id-2) }}
                   </div>
-                </template>
+                </template> -->
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">

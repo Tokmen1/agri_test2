@@ -7,27 +7,24 @@ use Illuminate\Database\Eloquent\Model;
 use App\ModelFilters\ResidenceFilter;
 use EloquentFilter\Filterable;
 
-class Sowing extends Model
+class FieldAddOns extends Model
 {
     use HasFactory, Filterable;
 
-    protected $table = 'sowing';
+    protected $table = 'field_add_ons';
     protected $attributes = [
+        'type' => null,
         'name' => null,
-        'breed' => null,
-        'pre_plant' => null,
-        'sowing_rate' => null,
+        'amount_per_ha' => null,
         'date_from' => null,
         'date_to' => null,
         'field_id' => null,
-        // 'is_active' => true
     ];
     protected $fillable = [
         'id',
+        'type',
         'name',
-        'breed',
-        'pre_plant',
-        'sowing_rate',
+        'amount_per_ha',
         'date_from',
         'date_to',
         'field_id',
@@ -35,9 +32,4 @@ class Sowing extends Model
     protected $hidden = [];
     protected $casts = [];
     protected $appends = [];
-
-    public function fields() {
-        return $this->belongsTo(Fields::class);
-    }
 }
-

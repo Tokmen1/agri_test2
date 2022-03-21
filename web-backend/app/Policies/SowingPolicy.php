@@ -30,7 +30,7 @@ class SowingPolicy
      */
     public function view(User $user, Sowing $sowing)
     {
-        return true;
+        return false;
     }
 
     /**

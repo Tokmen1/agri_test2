@@ -88,7 +88,7 @@ export default {
         data: {},
       },
       tableFields: [
-        { key: 'id', sortable: true, label: 'ID' },
+        // { key: 'id', sortable: true, label: 'ID' },
         { key: 'action_type', sortable: true, label: 'Darbības tips' },
         { key: 'date_from', sortable: true, label: 'Darbības sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Darbības beigu datums' },

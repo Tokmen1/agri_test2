@@ -4,8 +4,8 @@
       <div slot="header">
         <b-row>
           <b-col cols="6">
-            <span v-if="isUpdateForm">Rediģēt ražas datus</span>
-            <span v-else>Izveidot datus par ražu</span>
+            <span v-if="true">{{ `Rediģēt ${this.typeText} datus` }}</span>
+            <span v-else>{{ `Izveidot datus par ${this.typeText}` }}</span>
           </b-col>
         </b-row>
       </div>
@@ -13,20 +13,20 @@
         <b-spinner type="grow" variant="primary"/>
       </div>
       <div v-else>
-        <b-form-group :invalid-feedback="decimalErr(entity.quantity, 'Daudzums tonnās(t)')">
-          <label>Kopējais novāktais daudzums tonnās(t)</label>
-          <b-form-input type="text" placeholder="Daudzums tonnās(t)"
-            v-bind:class="{ 'is-invalid' : decimalErr(entity.quantity, 'Daudzums tonnās(t)') }"
+        <b-form-group :invalid-feedback="fErr(entity.name, 'Nosaukums')">
+          <label>{{ `${this.typeText} nosaukums` }}</label>
+          <b-form-input type="text" placeholder="Nosaukums"
+            v-bind:class="{ 'is-invalid' : fErr(entity.name, 'Nosaukums') }"
             debounce="250"
-            v-model="entity.quantity"/>
+            v-model="entity.name"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="decimalErr(entity.sell_price, 'EUR/t')">
-          <label>Pārdošanas cena EUR par tonnu(t)</label>
-          <b-form-input type="text" placeholder="EUR/t"
-            :class="{ 'is-invalid' : decimalErr(entity.sell_price, 'EUR/t') }"
+        <b-form-group :invalid-feedback="decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra (kg/ha)')">
+          <label>Daudzums uz hektāra (kg/ha)</label>
+          <b-form-input type="text" placeholder="Daudzums uz hektāra (kg/ha)"
+            :class="{ 'is-invalid' : decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra (kg/ha)') }"
             debounce="250"
-            v-model="entity.sell_price"/>
+            v-model="entity.amount_per_ha"/>
         </b-form-group>
         
         <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
@@ -46,7 +46,7 @@
         </b-form-group>
       </div>
       <div slot="footer">
-        <b-button :to="{ name: 'Harvest', params:{field_id: this.$route.params.field_id, page: 1 } }" type="reset" variant="primary" >
+        <b-button :to="{ name: 'FieldAddOns', params:{field_id: this.$route.params.field_id, page: 1 } }" type="reset" variant="primary" >
           Atcelt
         </b-button>
         <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()" class="ml-5">
@@ -75,6 +75,7 @@ export default {
       },
       entity: this.value,
       errorMsg: this.errors,
+      type: this.$route.params.type,
     };
   },
   props: {
@@ -89,8 +90,9 @@ export default {
       type: Object,
       default() {
         return {
-          quantity: null,
-          sell_price: null,
+          type: this.$route.params.type,
+          name: null,
+          amount_per_ha: null,
           date_from: null,
           date_to: null,
           field_id: this.$route.params.field_id,
@@ -104,18 +106,27 @@ export default {
     // embedded form will have value passed using v-model, we could also make a custom prop for checking this
     isEmbedded() { return this.$options.propsData.value !== undefined; },
     isUpdateForm() { return this.id !== null; },
+    typeText() {
+      if (this.type == 'lime') {
+        return 'Kaļķa';
+      } else if (this.type == "AAL") {
+        return "AAL";
+      } else {
+        return this.type;
+      }
+    }
   },
   methods: {
-    getForUpdate: Services.harvest.editData,
-    getForCreate: Services.harvest.createData,
-    pushUpdate: Services.harvest.update,
-    pushCreate: Services.harvest.create,
+    getForUpdate: Services.fieldAddOns.editData,
+    getForCreate: Services.fieldAddOns.createData,
+    pushUpdate: Services.fieldAddOns.update,
+    pushCreate: Services.fieldAddOns.create,
     load() {
       this.spinners.contentIsLoading = true;
       const action = this.isUpdateForm ? this.getForUpdate : this.getForCreate;
       action(this.$route.params.id).then((data) => {
         this.spinners.contentIsLoading = false;
-        this.entity = this.isUpdateForm ? data.data.harvest : { ...this.entity, ...data.data.harvest };
+        this.entity = this.isUpdateForm ? data.data.fieldAddOns : { ...this.entity, ...data.data.fieldAddOns };
       }).catch((data) => {
         this.spinners.contentIsLoading = false;
         this.errorMsg = data.data ? data.data.errors : {};
@@ -126,14 +137,14 @@ export default {
     },
     alertSuccess() {
       if (this.isUpdateForm) {
-        window.alert('Ražas dati rediģēti veiksmīgi!');
+        window.alert(`Sējas dati rediģēti veiksmīgi!`);
       } else {
-        window.alert('Ražas dati pievienoti veiksmīgi!');
+        window.alert(`Sējas dati pievienoti veiksmīgi!`);
       }
     },
     save() {
-      if (this.entity.quantity === null) { this.entity.quantity = ""; }
-      if (this.entity.sell_price === null) { this.entity.sell_price = ""; }
+      if (this.entity.name === null) { this.entity.name = ""; }
+      if (this.entity.amount_per_ha === null) { this.entity.amount_per_ha = ""; }
       if (this.entity.date_from === null) { this.entity.date_from = ""; }
       if (this.isEmbedded) return;
       this.spinners.isSaving = true;
@@ -144,7 +155,7 @@ export default {
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge((this.entity), data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
-        this.$router.push({ name: 'Harvest', params: { field_id: this.entity.field_id, page: 1 }});
+        this.$router.push({ name: 'FieldAddOns', params: { field_id: this.entity.field_id, type: this.type, page: 1 }});
       }).catch(({ errors, message }) => {
         this.spinners.isSaving = false;
         this.errorMsg = errors;
@@ -153,5 +164,5 @@ export default {
     },
   },
   mixins: [ErrorMixin]
-};
+}
 </script>

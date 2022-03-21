@@ -6,4 +6,4 @@ RUN apk update \
 
 COPY deployment/development/nginx.conf  etc/nginx/nginx.conf
 COPY deployment/development/site.conf   etc/nginx/conf.d/site.conf
-#COPY deployment/development/site.conf   etc/nginx/conf.d/default.conf
+COPY deployment/development/site.conf   etc/nginx/conf.d/default.conf

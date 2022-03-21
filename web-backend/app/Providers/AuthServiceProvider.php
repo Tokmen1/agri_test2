@@ -19,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Models\FieldActions'=>'App\Policies\FieldActionsPolicy',
         'App\Models\Sowing'=>'App\Policies\SowingPolicy',
         'App\Models\Harvest'=>'App\Policies\HarvestPolicy',
+        'App\Models\FieldAddOns'=>'App\Policies\FieldAddOns',
     ];
 
     /**

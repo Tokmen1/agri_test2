@@ -63,11 +63,11 @@
                   </b-input-group-prepend>
                   <b-form-input type="password" class="form-control"
                                 placeholder="Apstiprini paroli"
-                                :class="{ 'is-invalid' : errorMsg.password_confirmation && fErr(password_confirmation, 'Paroles apstiprināšana')}"
+                                :class="{ 'is-invalid' : errorMsg.password_confirmation }"
                                 debounce="250"
                                 v-model="password_confirmation"/>
-                  <div class="invalid-feedback" v-if="errorMsg.password_confirmation || password !== password_confirmation">
-                    {{ fErr(password_confirmation, 'Paroles apstiprināšana') ||  password_conf() }}
+                  <div class="invalid-feedback">
+                    {{ fErr(password_confirmation, 'Paroles apstiprināšana') ||  this.password_conf() }}
                   </div>
                 </b-input-group>
                 <b-button type="submit" variant="success" block @click="onRegister()">
@@ -137,7 +137,7 @@ export default {
         if ( this.fErr(this.password_confirmation, 'Paroles apstiprināšana')) {
           this.errorMsg.password_confirmation = true;
         }
-        if ( this.password !== this.password_confirmation ) {
+        if ( this.password !== this.password_confirmation || this.password_conf()) {
           this.errorMsg.password_confirmation = true;
         }
       });
@@ -154,7 +154,7 @@ export default {
     },
     password_conf() {
       if (this.password !== this.password_confirmation) {
-        return 'This field must be identical to password field';
+        return 'Šai vērtībai jābūt identiskai "Paroles" vērtībai';
       }
     }
   },
