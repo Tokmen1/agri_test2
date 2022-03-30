@@ -53,7 +53,8 @@ class HarvestController extends Controller
 
     public function update($id, HarvestRequest $request)
     {
-        $fields = Fields::find($request->validated()["field_id"]);
+        $harvest = Harvest::where('id', $id)->first();
+        $fields = Fields::find($harvest["field_id"]);
         Gate::authorize('update', $fields);
         $harvest->update($request->validated());
         return HarvestResource::make($harvest);

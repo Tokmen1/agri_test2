@@ -30,7 +30,7 @@ class HarvestPolicy
      */
     public function view(User $user, Harvest $harvest)
     {
-        return false;
+        return true;
     }
 
     /**

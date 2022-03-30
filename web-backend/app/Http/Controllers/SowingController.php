@@ -53,7 +53,8 @@ class SowingController extends Controller
 
     public function update($id, SowingRequest $request)
     {
-        $fields = Fields::find($request->validated()["field_id"]);
+        $sowing = Sowing::where('id', $id)->first();
+        $fields = Fields::find($sowing["field_id"]);
         Gate::authorize('update', $fields);
         $sowing->update($request->validated());
         return SowingResource::make($sowing);

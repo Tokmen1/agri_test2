@@ -152,9 +152,13 @@ export default {
   },
   methods: {
     delete_data($my_id) {
-      Services.fieldAddOns.delete($my_id);
-      window.alert('Iteam with id: ', $my_id, ' deleted');
-      this.getData();
+      if (confirm('Vai tiešām vēlaties izdzēst?')){
+        Services.fieldAddOns.delete($my_id).then(() => {
+          this.getData();
+          //TO DO:
+          this.alertSuccess({text: 'Atlasītais ierakst ir veiksmīgi dzēsts!', title: 'Veiksmīgi dzēsts'});
+        }).catch(err => console.log(err));
+      }
     },
     getData() {
       Services.fieldAddOns.list(this.params).then((data) => {

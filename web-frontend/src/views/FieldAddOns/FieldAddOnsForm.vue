@@ -62,6 +62,7 @@
 import merge from 'lodash.merge';
 import Services from '@/services/index';
 import ErrorMixin from '@/mixins/ErrorMixin';
+import AlertMixin from '@/mixins/AlertMixin';
 
 export default {
   mounted() {
@@ -132,16 +133,6 @@ export default {
         this.errorMsg = data.data ? data.data.errors : {};
       });
     },
-    alertError(AlertValue) {
-      console.log(AlertValue);
-    },
-    alertSuccess() {
-      if (this.isUpdateForm) {
-        window.alert(`Sējas dati rediģēti veiksmīgi!`);
-      } else {
-        window.alert(`Sējas dati pievienoti veiksmīgi!`);
-      }
-    },
     save() {
       if (this.entity.name === null) { this.entity.name = ""; }
       if (this.entity.amount_per_ha === null) { this.entity.amount_per_ha = ""; }
@@ -151,7 +142,13 @@ export default {
       const action = this.isUpdateForm ? this.pushUpdate : this.pushCreate;
       action(this.entity).then((data) => {
         this.spinners.isSaving = false;
-        this.alertSuccess();
+        setTimeout(() => {
+          if (this.isUpdateForm) {
+            this.alertSuccess({text: `${this.typeText} dati rediģēti veiksmīgi!`});
+          } else {
+            this.alertSuccess({text: `${this.typeText} dati pivienoti veiksmīgi!`});
+          }
+        }, 10);
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge((this.entity), data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
@@ -163,6 +160,6 @@ export default {
       });
     },
   },
-  mixins: [ErrorMixin]
+  mixins: [ErrorMixin, AlertMixin]
 }
 </script>
