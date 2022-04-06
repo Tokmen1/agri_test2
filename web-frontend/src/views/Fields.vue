@@ -97,6 +97,7 @@
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
 import { backend } from '@/_axios';
+import AlertMixin from '@/mixins/AlertMixin';
 
 export default {
   mounted() {
@@ -153,9 +154,12 @@ export default {
   },
   methods: {
     delete_data($my_id) {
-      Services.fields.delete($my_id);
-      window.alert("Iteam with id: "+$my_id+ " deleted!");
-      this.getData();
+      if (confirm('Vai tiešām vēlaties izdzēst?')){
+        Services.fields.delete($my_id).then(() => {
+          this.getData();
+          this.alertSuccess({text: 'Atlasītais ierakst ir veiksmīgi dzēsts!', title: 'Veiksmīgi dzēsts'});
+        }).catch(err => console.log(err));
+      }
     },
     getData() {
       backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
@@ -168,7 +172,8 @@ export default {
       page = page || this.page;
       if (page !== this.page) this.$router.push({ name: 'Fields', params: { page } });
     },
-  }
+  },
+  mixins: [AlertMixin]
 };
 </script>
 

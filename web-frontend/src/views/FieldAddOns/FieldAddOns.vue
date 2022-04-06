@@ -80,6 +80,7 @@
 <script>
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
+import AlertMixin from '@/mixins/AlertMixin';
 
 export default {
   mounted() {
@@ -155,7 +156,6 @@ export default {
       if (confirm('Vai tiešām vēlaties izdzēst?')){
         Services.fieldAddOns.delete($my_id).then(() => {
           this.getData();
-          //TO DO:
           this.alertSuccess({text: 'Atlasītais ierakst ir veiksmīgi dzēsts!', title: 'Veiksmīgi dzēsts'});
         }).catch(err => console.log(err));
       }
@@ -169,6 +169,7 @@ export default {
       page = page || this.page;
       if (page !== this.page) this.$router.push({ name: 'FieldAddOns', params: { page } });
     },
-  }
+  },
+  mixins: [AlertMixin]
 };
 </script>

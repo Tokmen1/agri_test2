@@ -43,6 +43,7 @@
 
 <script>
 import ErrorMixin from '@/mixins/ErrorMixin';
+import AlertMixin from '@/mixins/AlertMixin';
 import Services from '@/services/index';
 import merge from 'lodash.merge';
 
@@ -103,19 +104,19 @@ export default {
         this.errorMsg = data.data ? data.data.errors : {};
       });
     },
-    alertError(AlertValue) {
-      console.log(AlertValue);
-    },
-    alertSuccess() {
-      window.alert('Field added successfully');
-    },
     save() {
       if (this.isEmbedded) return;
       this.spinners.isSaving = true;
       const action = this.isUpdateForm ? this.pushUpdate : this.pushCreate;
       action(this.entity).then((data) => {
         this.spinners.isSaving = false;
-        this.alertSuccess();
+        setTimeout(() => {
+          if (this.isUpdateForm) {
+            this.alertSuccess({text: 'Lauka dati rediģēti veiksmīgi!'});
+          } else {
+            this.alertSuccess({text: 'Lauka dati pivienoti veiksmīgi!'});
+          }
+        }, 10);
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge(this.entity, data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
@@ -137,7 +138,7 @@ export default {
       });
     },
   },
-  mixins: [ErrorMixin]
+  mixins: [ErrorMixin, AlertMixin]
 };
 </script>
 

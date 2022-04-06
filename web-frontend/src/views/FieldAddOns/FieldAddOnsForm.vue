@@ -4,7 +4,7 @@
       <div slot="header">
         <b-row>
           <b-col cols="6">
-            <span v-if="true">{{ `Rediģēt ${this.typeText} datus` }}</span>
+            <span v-if="isUpdateForm">{{ `Rediģēt ${this.typeText} datus` }}</span>
             <span v-else>{{ `Izveidot datus par ${this.typeText}` }}</span>
           </b-col>
         </b-row>

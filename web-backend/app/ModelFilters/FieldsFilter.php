@@ -27,7 +27,7 @@ class FieldsFilter extends ModelFilter
     {
         $this->where(function ($query) use ($value) {
             $query->orWhere('field_name', 'LIKE', "%$value%");
-            // $query->orWhere('other', 'LIKE', "%$value%");
+            $query->orWhere('area', 'LIKE', "%$value%");
         });
     }
 

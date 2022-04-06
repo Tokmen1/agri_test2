@@ -28,6 +28,7 @@ class FieldListRequest extends FormRequest
             'id',
             'field_name',
             'area',
+            'user_id',
             'created_at',
             'updated_at'
         ];

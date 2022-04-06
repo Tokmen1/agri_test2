@@ -78,6 +78,7 @@
 import merge from 'lodash.merge';
 import Services from '@/services/index';
 import ErrorMixin from '@/mixins/ErrorMixin';
+import AlertMixin from '@/mixins/AlertMixin';
 
 export default {
   mounted() {
@@ -139,16 +140,6 @@ export default {
         this.errorMsg = data.data ? data.data.errors : {};
       });
     },
-    alertError(AlertValue) {
-      console.log(AlertValue);
-    },
-    alertSuccess() {
-       if (this.isUpdateForm) {
-        window.alert('Sējas dati rediģēti veiksmīgi!');
-      } else {
-        window.alert('Sējas dati pievienoti veiksmīgi!');
-      }
-    },
     save() {
       if (this.entity.name === null) { this.entity.name = ""; }
       if (this.entity.breed === null) { this.entity.breed = ""; }
@@ -161,6 +152,13 @@ export default {
       action(this.entity).then((data) => {
         this.spinners.isSaving = false;
         this.alertSuccess();
+        setTimeout(() => {
+          if (this.isUpdateForm) {
+            this.alertSuccess({text: 'Sējas dati rediģēti veiksmīgi!'});
+          } else {
+            this.alertSuccess({text: 'Sējas dati pivienoti veiksmīgi!'});
+          }
+        }, 10);
         // this.entity = data.data; // This wont work if entity has nested objects/forms
         merge((this.entity), data.data); // This will not delete keys but will preserve original object
         this.errorMsg = {};
@@ -172,6 +170,6 @@ export default {
       });
     },
   },
-  mixins: [ErrorMixin]
+  mixins: [ErrorMixin, AlertMixin]
 };
 </script>

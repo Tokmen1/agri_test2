@@ -78,10 +78,12 @@ class FieldsController extends Controller
      * @param  \App\Models\Fields  $fields
      * @return \Illuminate\Http\Response
      */
-    public function update(Fields $fields, FieldRequest $request, $id)
+    public function update($id, FieldRequest $request)
     {
         $fields = Fields::where('id', $id)->first();
+        
         $fields->update($request->validated());
+        dd($request->validated());
         return FieldResource::make($fields);
     }
 
