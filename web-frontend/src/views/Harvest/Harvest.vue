@@ -72,6 +72,11 @@
             </b-col>
           </b-row>
           <b-row>
+            <b-col>
+              <button @click="downloadPDF()" variant="info" class="mx-1">download PDF</button>
+            </b-col>
+          </b-row>
+          <b-row>
             <!--Paginator at bottom-->
             <b-col v-if="tableItems.length">
               <Pagination :data="listPaginator" :limit="5" @pagination-change-page="onPageChange"/>
@@ -84,6 +89,7 @@
 </template>
 
 <script>
+import jsPDF from 'jspdf'
 import Pagination from 'laravel-vue-pagination';
 import Services from '@/services/index';
 import AlertMixin from '@/mixins/AlertMixin';
@@ -149,6 +155,14 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
+    downloadPDF(){
+      console.log("hellloo");
+      var pdf = jsPDF();
+      console.log(id=> 11);
+      pdf.setTableHeaderRow(['id','quantity'])
+      pdf.table(10, 10, id=> 1);
+      pdf.save('test.pdf');
+    },
     delete_data($my_id) {
       if (confirm('Vai tiešām vēlaties izdzēst?')){
         Services.harvest.delete($my_id).then(() => {
