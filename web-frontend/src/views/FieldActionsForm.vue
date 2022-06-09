@@ -46,15 +46,23 @@
         </b-form-group>
       </div>
       <div slot="footer">
-        <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()">
+        <b-button :to="{ name: 'Fields', params:{ page: 1 } }" type="reset" variant="primary" >
+          Atcelt
+        </b-button>
+        <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()" class="ml-5">
           <b-spinner v-if="spinners.isSaving" type="grow" small/>
-          {{ 'global.save' }}
+          Saglabāt
+        </b-button>
+
+        <!-- <b-button type="submit" variant="primary" :disabled="spinners.isSaving" @click="save()">
+          <b-spinner v-if="spinners.isSaving" type="grow" small/>
+          {{ 'Saglabāt' }}
         </b-button>
         <router-view :to="{ name: 'FieldActions' }">
           <b-button type="reset" variant="info" class="ml-2">
-            {{ 'global.cancel' }}
-          </b-button>
-        </router-view>
+            {{ 'Atcelt' }}
+          </b-button> -->
+        <!-- </router-view> -->
       </div>
     </b-card>
   </div>

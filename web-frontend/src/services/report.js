@@ -5,7 +5,7 @@ export default {
 //     return backend.get(`/sowing/create/`);
 //   },
   create(data) {
-    return backend.post(`/profitLoss`, data );
+    return backend.post(`/report`, data );
   },
 //   editData(id) {
 //     return backend.get(`/sowing/${id}/edit`);
@@ -17,6 +17,6 @@ export default {
 //     return backend.delete(`/sowing/${id}`);
 //   },
   list(params) {
-    return backend.get(`/profitLoss/`, { params });
+    return backend.get(`/report/`, { params });
   }
 };

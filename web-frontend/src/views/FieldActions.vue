@@ -8,11 +8,9 @@
           </b-col>
           <b-col md="auto">
             <b-button-group>
-              <!-- <router-link to="FieldCreate"> -->
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldActionsCreate', params:{ field_id: this.filters.thisSpecificField } }">
                   {{ 'Pievienot jaunu darbību' }}
                 </b-button>
-              <!-- </router-link> --> 
             </b-button-group>
           </b-col>
         </b-row>
@@ -39,7 +37,6 @@
           <b-row>
             <b-col>
               <div  v-if="!tableItems.length"> datu nav</div>
-              <!-- <NoDataView v-if="!tableItems.length"/> -->
               <b-table v-else class="table-sm text-center" responsive bordered
                   :no-local-sorting=true
                   :sort-by.sync="filters.sort_field"

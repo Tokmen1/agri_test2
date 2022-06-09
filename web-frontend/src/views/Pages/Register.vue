@@ -8,7 +8,6 @@
               <b-form>
                 <h1>{{ 'Reģistrēties' }}</h1>
                 <p class="text-muted">
-                  <!-- {{ 'auth register description' }} -->
                 </p>
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
@@ -21,17 +20,6 @@
                                 v-model="name"/>
                   <div class="invalid-feedback" v-if="errorMsg.name">{{ fErr(name, 'Vārds') }}</div>
                 </b-input-group>
-                <!-- <b-input-group class="mb-3">
-                  <b-input-group-prepend>
-                    <b-input-group-text><b-icon icon="person-fill"/></b-input-group-text>
-                  </b-input-group-prepend>
-                  <b-form-input type="text" class="form-control"
-                                placeholder="Uzvārds"
-                                :class="{ 'is-invalid' : errorMsg.surname }"
-                                debounce="250"
-                                v-model="surname"/>
-                  <div class="invalid-feedback" v-if="errorMsg.surname">{{ fErr(surname, 'Uzvārds') }}</div>
-                </b-input-group> -->
 
                 <b-input-group class="mb-3">
                   <b-input-group-prepend>
@@ -93,11 +81,9 @@
 <script>
 import Services from '@/services/index';
 import ErrorMixin from '@/mixins/ErrorMixin';
+import AlertMixin from '@/mixins/AlertMixin';
 
 export default {
-  mounted() {
-    // this.$refs.name.$el.focus();
-  },
   data() {
     return {
       name: '',
@@ -122,6 +108,9 @@ export default {
         password: this.password,
         password_confirmation: this.password_confirmation
       }).then(() => {
+        setTimeout(() => {
+          this.alertSuccess({text: 'Reģistācija ir veiksīga!'});
+        }, 10);
         this.$router.push({ name: 'Login' });
       }, () => {
         this.errorMsg = {};
@@ -146,6 +135,7 @@ export default {
       this.errorMsg = {};
       this.errorMsg = this.register.data.data.errors;
       console.log(this.errorMsg);
+      this.alertError({text: this.errorMsg});
       // if (this.register.status === statuses.LOADED) {
       //   this.$router.push({ name: 'Login' });
       // } else if (this.register.status === statuses.ERROR) {
@@ -158,7 +148,7 @@ export default {
       }
     }
   },
-  mixins: [ErrorMixin]
+  mixins: [ErrorMixin, AlertMixin]
 };
 
 </script>

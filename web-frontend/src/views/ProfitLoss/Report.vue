@@ -4,17 +4,8 @@
       <b-card>
         <b-row>
           <b-col>
-            <h4>Ieņēmumu dati</h4>
+            <h4>Atskaite</h4>
           </b-col>
-          <!-- <b-col md="auto">
-            <b-button-group>
-                <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" 
-                :to="{ name: 'SowingCreate', params:{ field_id: this.fieldId } }"
-                >
-                  Pievienot jaunus sējas datus
-                </b-button>
-            </b-button-group>
-          </b-col> -->
         </b-row>
         <b-row >
           <b-col>
@@ -26,13 +17,16 @@
                 </b-input-group-append>
               </b-input-group>
               <b-input-group>
-                <label id="start_date">Sākuma datums:</label>
+                <label id="start_date">Datums no:</label>
                 <b-form-input v-model="filters.search_date_from" type="date" placeholder="Meklēt..." debounce="500"></b-form-input>
               </b-input-group>
               <b-input-group>
-                <label>Noslēguma datums:</label>
+                <label>Datums līdz:</label>
                 <b-form-input v-model="filters.search_date_to" type="date" placeholder="Meklēt..." debounce="500"></b-form-input>
               </b-input-group>
+              <b-btn v-if="!isHidden" variant="primary" @click="printer()" >
+                Printēt
+              </b-btn>
             </b-form-group>
           </b-col>
           <b-col md="auto" v-if="tableItems.length">
@@ -113,16 +107,17 @@ export default {
         { key: 'cost', sortable: true, label: 'Cena EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
-        { key: 'options', label: 'Iespējas' },
+        // { key: 'options', label: 'Iespējas' },
       ],
       filters: {
-        sortField: 'date_to',
+        sortField: 'date_from',
         sort_order: true,
         search: '',
         field_id: this.$route.params.field_id,
         search_date_from: '',
         search_date_to: '',
-      }
+      }, 
+      isHidden: false,
     };
   },
   components: {
@@ -159,31 +154,19 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
-    // getPrePlant(prePlantId) {
-    //   try {
-    //     return this.tableItems[prePlantId].name + ' ' + this.tableItems[prePlantId].breed
-    //   } catch {
-    //     return 'NAV'
-    //   }
-    // },
-    // delete_data($my_id) {
-    //   if (confirm('Vai tiešām vēlaties izdzēst?')){
-    //     Services.profitLoss.delete($my_id).then(() => {
-    //       this.getData();
-    //       this.alertSuccess({text: 'Atlasītais ierakst ir veiksmīgi dzēsts!', title: 'Veiksmīgi dzēsts'});
-    //     }).catch(err => console.log(err));
-    //   }
-    // },
+    printer(){
+      this.isHidden = true;
+      setTimeout(function(){ window.print(); }, 100)
+      setTimeout(function(){this.isHidden = false; }, 5000);
+    },
     getData() {
-      console.log(this.filters.sortField);
-      Services.profitLoss.list(this.params).then((data) => {
+      Services.report.list(this.params).then((data) => {
         this.list.data = data.data;
       });
-      console.log("eeeeeennnn",this.filters.sortField);
     },
     onPageChange(page) {
       page = page || this.page;
-      if (page !== this.page) this.$router.push({ name: 'ProfitLoss', params: { page } });
+      if (page !== this.page) this.$router.push({ name: 'Report', params: { page } });
     },
   },
   mixins: [AlertMixin]
@@ -191,6 +174,6 @@ export default {
 </script>
 <style scoped>
 #start_date{
-  margin-right: 22px;
+  margin-right: 7px;
 }
 </style>

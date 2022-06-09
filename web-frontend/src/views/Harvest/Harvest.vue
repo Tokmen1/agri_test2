@@ -107,7 +107,7 @@ export default {
       tableFields: [
         { key: 'quantity', sortable: true, label: 'Daudzums tonnās(t)' },
         { key: 'sell_price', sortable: true, label: 'Cena tonnā(t) EUR' },
-        { key: 'total_price', sortable: true, label: 'Kopējā cena EUR' },
+        { key: 'total_price', sortable: false, label: 'Kopējā cena EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         { key: 'options', label: 'Iespējas' },

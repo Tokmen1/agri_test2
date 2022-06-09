@@ -93,7 +93,7 @@ Route::group(['middleware' => ['auth:api']], function(){
         Route::delete('{fieldAddOns}', 'App\Http\Controllers\FieldAddOnsController@delete');
     });
 
-    Route::prefix('profitLoss')->group(function () {
+    Route::prefix('report')->group(function () {
         Route::get('/', 'App\Http\Controllers\ProfitLossController@index');
     });
 });
