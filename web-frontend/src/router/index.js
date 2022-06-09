@@ -17,6 +17,8 @@ const HarvestForm = () => import('@/views/Harvest/HarvestForm.vue');
 const FieldAddOns = () => import('@/views/FieldAddOns/FieldAddOns.vue');
 const FieldAddOnsForm = () => import('@/views/FieldAddOns/FieldAddOnsForm.vue');
 
+const ProfitLoss = () => import('@/views/ProfitLoss/ProfitLoss.vue');
+
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
 /* eslint-enabled */
@@ -201,6 +203,31 @@ const routes = [
               };
             },
             component: HarvestForm
+          },
+        ]
+      },
+      {
+        path: 'field/:field_id/profitloss',
+        name: null,
+        meta: { label: 'route.fields_list_title' },
+        redirect: { name: 'ProfitLoss', params: { page: 1 } },
+
+        component: {
+          render(c) { return c('router-view'); }
+        },
+
+        children: [
+          {
+            path: 'list/:page',
+            name: 'ProfitLoss',
+            meta: { label: 'route.profitloss_list' },
+            props: (route) => {
+              return {
+                field_id: Number(route.params.field_id),
+                page: Number(route.params.page)
+              };
+            },
+            component: ProfitLoss,
           },
         ]
       },

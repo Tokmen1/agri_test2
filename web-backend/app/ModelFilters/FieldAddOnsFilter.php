@@ -26,6 +26,7 @@ class FieldAddOnsFilter extends ModelFilter
         $this->where(function ($query) use ($value) {
             $query->orWhere('name', 'LIKE', "%$value%");
             $query->orWhere('amount_per_ha', 'LIKE', "%$value%");
+            $query->orWhere('cost', 'LIKE', "%$value%");
             $query->orWhere('date_from', 'LIKE', "%$value%");
             $query->orWhere('date_to', 'LIKE', "%$value%");
         });

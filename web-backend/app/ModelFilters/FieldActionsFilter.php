@@ -27,6 +27,7 @@ class FieldActionsFilter extends ModelFilter
     {
         $this->where(function ($query) use ($value) {
             $query->orWhere('action_type', 'LIKE', "%$value%");
+            $query->orWhere('cost', 'LIKE', "%$value%");
             // $query->orWhere('other', 'LIKE', "%$value%");
         });
     }

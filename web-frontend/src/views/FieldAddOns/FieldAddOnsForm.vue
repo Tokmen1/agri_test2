@@ -28,6 +28,14 @@
             debounce="250"
             v-model="entity.amount_per_ha"/>
         </b-form-group>
+
+        <b-form-group :invalid-feedback="costErr(entity.cost, 'Izmaksas EUR')">
+          <label>Izmaksas EUR</label>
+          <b-form-input type="text" placeholder="Izmaksas EUR"
+            :class="{ 'is-invalid' : costErr(entity.cost, 'Izmaksas EUR') }"
+            debounce="250"
+            v-model="entity.cost"/>
+        </b-form-group>
         
         <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
           <label>Sākuma datums</label>
@@ -93,6 +101,7 @@ export default {
         return {
           type: this.$route.params.type,
           name: null,
+          cost: null,
           amount_per_ha: null,
           date_from: null,
           date_to: null,
@@ -110,11 +119,14 @@ export default {
     typeText() {
       if (this.type == 'lime') {
         return 'Kaļķa';
-      } else if (this.type == "AAL") {
-        return "AAL";
-      } else {
-        return this.type;
       }
+      if (this.type == "AAL") {
+        return "AAL";
+      }
+      if (this.type == "mineral_fertilizer") { 
+        return "Minerālmēslojuma";
+      }
+      else {return "unexpected"}
     }
   },
   methods: {

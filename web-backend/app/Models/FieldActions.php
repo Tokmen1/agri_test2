@@ -15,6 +15,7 @@ class FieldActions extends Model
     protected $table = 'fields_action';
     protected $attributes = [
         'action_type' => null,
+        'cost' => null,
         'date_from' => null,
         'date_to' => null,
         'user_id' => null,
@@ -24,6 +25,7 @@ class FieldActions extends Model
     protected $fillable = [
         'id',
         'action_type',
+        'cost',
         'date_from',
         'date_to',
         'user_id',

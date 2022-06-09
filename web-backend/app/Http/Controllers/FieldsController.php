@@ -83,7 +83,6 @@ class FieldsController extends Controller
         $fields = Fields::where('id', $id)->first();
         
         $fields->update($request->validated());
-        dd($request->validated());
         return FieldResource::make($fields);
     }
 

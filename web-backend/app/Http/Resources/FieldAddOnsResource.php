@@ -20,6 +20,7 @@ class FieldAddOnsResource extends JsonResource
             'type' => $this->type,
             'name' => $this->name,
             'amount_per_ha' => $this->amount_per_ha,
+            'cost' => $this->cost,
             'date_from' => $this->date_from,
             'date_to' => $this->date_to,
             'created_at' => $this->created_at->format('d/m/Y H:i:s'),

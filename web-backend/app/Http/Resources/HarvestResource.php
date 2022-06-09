@@ -19,6 +19,7 @@ class HarvestResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->quantity,
             'sell_price' => $this->sell_price,
+            'cost' => $this->cost,
             'date_from' => $this->date_from,
             'date_to' => $this->date_to,
             'created_at' => $this->created_at->format('d/m/Y H:i:s'),

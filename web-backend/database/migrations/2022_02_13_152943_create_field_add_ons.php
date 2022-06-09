@@ -18,6 +18,7 @@ class CreateFieldAddOns extends Migration
             $table->string('type');
             $table->string('name');
             $table->double('amount_per_ha');
+            $table->double('cost');
             $table->date('date_from');
             $table->date('date_to')->nullable();
             $table->foreignId('field_id')

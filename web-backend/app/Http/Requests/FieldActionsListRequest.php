@@ -27,6 +27,7 @@ class FieldActionsListRequest extends FormRequest
         $sortFieldsWhiteList = [
             'id',
             'action_type',
+            'cost',
             'date_from',
             'date_to',
             'created_at',

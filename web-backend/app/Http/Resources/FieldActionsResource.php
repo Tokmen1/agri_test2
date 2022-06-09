@@ -19,6 +19,7 @@ class FieldActionsResource extends JsonResource
         $return = [
             'id' => $this->id,
             'action_type' => $this->action_type,
+            'cost' => $this->cost,
             'date_from' => $this->date_from,// ->format('m/d/Y'),
             'date_to' => $this->date_to,//->format('m/d/Y H:i:s')
             'user_id' => $this->user_id,

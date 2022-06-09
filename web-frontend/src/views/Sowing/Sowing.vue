@@ -25,6 +25,10 @@
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
               </b-input-group>
+              <b-input-group>
+                <b-form-input v-model="filters.startDateSearch" type="date" placeholder="Meklēt..." debounce="700"></b-form-input>
+                <b-form-input v-model="filters.endDateSearch" type="date" placeholder="Meklēt..." debounce="700"></b-form-input>
+              </b-input-group>
             </b-form-group>
           </b-col>
           <b-col md="auto" v-if="tableItems.length">
@@ -102,6 +106,7 @@ export default {
         { key: 'breed', sortable: true, label: 'Šķirne' },
         { key: 'pre_plant', sortable: true, label: 'Priekšaugs' },
         { key: 'sowing_rate', sortable: true, label: 'Izsējas norma (kg/ha)' },
+        { key: 'cost', sortable: true, label: 'Izmaksas EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         { key: 'options', label: 'Iespējas' },
@@ -111,7 +116,8 @@ export default {
         sort_order: true,
         search: '',
         field_id: this.$route.params.field_id,
-        
+        startDateSearch: '',
+        endDateSearch: ''
       }
     };
   },

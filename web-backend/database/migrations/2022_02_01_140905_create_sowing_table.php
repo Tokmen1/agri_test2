@@ -19,6 +19,7 @@ class CreateSowingTable extends Migration
             $table->string('breed');
             $table->string('pre_plant');
             $table->double('sowing_rate');
+            $table->double('cost');
             $table->date('date_from');
             $table->date('date_to')->nullable();
             $table->foreignId('field_id')

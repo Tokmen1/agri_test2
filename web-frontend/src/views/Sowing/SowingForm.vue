@@ -44,6 +44,14 @@
             debounce="250"
             v-model="entity.sowing_rate"/>
         </b-form-group>
+
+        <b-form-group :invalid-feedback="costErr(entity.cost, 'Izmaksas EUR')">
+          <label>Izmaksas EUR</label>
+          <b-form-input type="text" placeholder="Izmaksas EUR"
+            :class="{ 'is-invalid' : costErr(entity.cost, 'Izmaksas EUR') }"
+            debounce="250"
+            v-model="entity.cost"/>
+        </b-form-group>
         
         <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
           <label>Sākuma datums</label>
@@ -110,6 +118,7 @@ export default {
           breed: null,
           pre_plant: null,
           sowing_rate: null,
+          cost: null,
           date_from: null,
           date_to: null,
           field_id: this.$route.params.field_id,

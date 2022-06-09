@@ -20,7 +20,7 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input v-model="filters.search" placeholder="Meklēt..."></b-form-input>
+                <b-form-input v-model="filters.search" placeholder="Meklēt..." debounce="700"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
@@ -165,7 +165,6 @@ export default {
       backend.defaults.headers.common['Authorization'] = 'Bearer ' + sessionStorage.getItem('access_token');
       Services.fields.list(this.params).then((data) => {
         this.list.data = data.data;
-        console.log(this.list.data.data[0].actions.view);
       });
     },
     onPageChange(page) {

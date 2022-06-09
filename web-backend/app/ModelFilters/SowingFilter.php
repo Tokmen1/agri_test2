@@ -28,8 +28,22 @@ class SowingFilter extends ModelFilter
             $query->orWhere('breed', 'LIKE', "%$value%");
             $query->orWhere('pre_plant', 'LIKE', "%$value%");
             $query->orWhere('sowing_rate', 'LIKE', "%$value%");
+            $query->orWhere('cost', 'LIKE', "%$value%");
             $query->orWhere('date_from', 'LIKE', "%$value%");
             $query->orWhere('date_to', 'LIKE', "%$value%");
+        });
+    }
+
+    public function startDateSearch($value)
+    {
+        $endDateSearch = $this->input('endDateSearch');
+        $startDateSearch = $this->input('startDateSearch');
+        // whereBetween('date_from', [$value, '2022-06-10']);
+        // dd($startDateSearch);
+        $this->where(function ($query) use ($value) {
+            // $query->orWhere('date_from', 'LIKE', "%$value%");
+            $query->orWhereBetween('date_from', [$startDateSearch, $endDateSearch]);
+            // $query->whereBetween('date_to', [$value.from, $value.to]);
         });
     }
 

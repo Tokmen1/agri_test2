@@ -12,7 +12,7 @@
                 <b-button v-if="!contentIsLoading" class="mb-3" variant="primary" :to="{ name: 'FieldActionsCreate', params:{ field_id: this.filters.thisSpecificField } }">
                   {{ 'Pievienot jaunu darbību' }}
                 </b-button>
-              <!-- </router-link> -->
+              <!-- </router-link> --> 
             </b-button-group>
           </b-col>
         </b-row>
@@ -20,7 +20,7 @@
           <b-col>
             <b-form-group>
               <b-input-group>
-                <b-form-input v-model="filters.search"></b-form-input>
+                <b-form-input v-model="filters.search" placeholder="Meklēt..." debounce="700"></b-form-input>
                 <b-input-group-append>
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
@@ -52,9 +52,9 @@
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'FieldActionsUpdate', params:{ id: row.item.id }}">
                     <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn>Rediģēt</b-btn>
+                    <b-btn variant="primary" class="mx-1">Rediģēt</b-btn>
                   </router-link>
-                  <b-btn href="#" @click="delete_data(row.item.id)" class="text-danger">Dzēst</b-btn>
+                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-btn>
                   <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
@@ -92,7 +92,6 @@ export default {
         { key: 'action_type', sortable: true, label: 'Darbības tips' },
         { key: 'date_from', sortable: true, label: 'Darbības sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Darbības beigu datums' },
-        { key: 'fields_id', sortable: true, label: 'fields_id' },
         { key: 'options', label: 'Iespējas' },
       ],
       filters: {

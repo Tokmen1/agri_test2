@@ -16,6 +16,7 @@ class FieldActionsRequest extends FormRequest
         $rules = [
             'id' => ['integer'],
             'action_type' => ['required', 'string', 'max:32'],
+            'cost' => ['numeric'],
             'date_from' => ['required'],
             'date_to' =>[],
             'created_at' =>[],

@@ -93,9 +93,9 @@ export default {
         data: {},
       },
       tableFields: [
-        { key: 'type', sortable: true, label: 'Tips' },
         { key: 'name', sortable: true, label: 'Nosaukums' },
         { key: 'amount_per_ha', sortable: true, label: 'Daudzums uz ha' },
+        { key: 'cost', sortable: true, label: 'Izmaksas EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         { key: 'options', label: 'Iespējas' },

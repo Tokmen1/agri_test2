@@ -29,6 +29,7 @@ class FieldAddOnsListRequest extends FormRequest
             'type',
             'name',
             'amount_per_ha',
+            'cost',
             'date_from',
             'date_to',
             'created_at',

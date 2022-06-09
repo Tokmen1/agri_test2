@@ -16,6 +16,7 @@ class CreateFieldsActionTable extends Migration
         Schema::create('fields_action', function (Blueprint $table) {
             $table->id();
             $table->string('action_type');
+            $table->double('cost');
             $table->date('date_from');
             $table->date('date_to')->nullable();
             $table->foreignId('fields_id')->constrained('fields')->onDelete('cascade');

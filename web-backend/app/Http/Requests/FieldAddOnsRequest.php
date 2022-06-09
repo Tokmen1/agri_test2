@@ -18,6 +18,7 @@ class FieldAddOnsRequest extends FormRequest
             'type' => ['required', 'string'],
             'name' => ['required', 'string'],
             'amount_per_ha' => ['required', 'numeric'],
+            'cost' => ['numeric'],
             'date_from' => ['required'],
             'date_to' =>[],
             'created_at' =>[],

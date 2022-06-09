@@ -19,6 +19,7 @@ class SowingRequest extends FormRequest
             'breed' => ['required', 'string', 'max:50'],
             'pre_plant' => ['required', 'string', 'max:50'],
             'sowing_rate' => ['required', 'numeric'],
+            'cost' => ['numeric'],
             'date_from' => ['required'],
             'date_to' =>[],
             'created_at' =>[],
