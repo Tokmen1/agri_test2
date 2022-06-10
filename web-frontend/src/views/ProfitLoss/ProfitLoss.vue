@@ -153,10 +153,8 @@ export default {
     countProfit(whoIm, cost){
       if(whoIm == "Raža"){
         this.profit_value = this.profit_value + cost;
-        // this.profit_value.toFixed(2);
       } else {
         this.loss_value = this.loss_value - cost;
-        // this.loss_value.toFixed(2);
       }
     },
     printer(){

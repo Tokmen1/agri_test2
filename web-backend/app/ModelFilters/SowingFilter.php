@@ -37,12 +37,11 @@ class SowingFilter extends ModelFilter
     public function startDateSearch($value)
     {
         $endDateSearch = $this->input('endDateSearch');
-        $startDateSearch = $this->input('startDateSearch');
-        // whereBetween('date_from', [$value, '2022-06-10']);
-        // dd($startDateSearch);
+        // $startDateSearch = $this->input('startDateSearch');
         $this->where(function ($query) use ($value) {
-            // $query->orWhere('date_from', 'LIKE', "%$value%");
-            $query->orWhereBetween('date_from', [$startDateSearch, $endDateSearch]);
+            $query->orWhere('date_from', '>=', $value);
+            $query->Orwhere('date_to', '<=', $endDateSearch);
+            // $query->orWhereBetween('date_from', [$startDateSearch, $endDateSearch]);
             // $query->whereBetween('date_to', [$value.from, $value.to]);
         });
     }
