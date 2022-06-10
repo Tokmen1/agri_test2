@@ -129,7 +129,7 @@ export default {
   components: {
   },
   computed: {
-    // embedded form will have value passed using v-model, we could also make a custom prop for checking this
+    // embedded form will have value passed using v-model
     isEmbedded() { return this.$options.propsData.value !== undefined; },
     isUpdateForm() { return this.id !== null; },
   },
