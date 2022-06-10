@@ -18,6 +18,7 @@ const FieldAddOns = () => import('@/views/FieldAddOns/FieldAddOns.vue');
 const FieldAddOnsForm = () => import('@/views/FieldAddOns/FieldAddOnsForm.vue');
 
 const Report = () => import('@/views/ProfitLoss/Report.vue');
+const ProfitLoss = () => import('@/views/ProfitLoss/ProfitLoss.vue');
 
 const Login = () => import('@/views/Pages/Login.vue');
 const Register = () => import('@/views/Pages/Register.vue');
@@ -228,6 +229,31 @@ const routes = [
               };
             },
             component: Report,
+          },
+        ]
+      },
+      {
+        path: '/profit/:field_id',
+        name: null,
+        meta: { label: 'route.fields_list_title' },
+        redirect: { name: 'ProtfitLoss', params: { page: 1 } },
+
+        component: {
+          render(c) { return c('router-view'); }
+        },
+
+        children: [
+          {
+            path: 'list/:page',
+            name: 'ProfitLoss',
+            meta: { label: 'route.profitLoss_list' },
+            props: (route) => {
+              return {
+                field_id: 1, // Number(route.params.field_id),
+                page: Number(route.params.page)
+              };
+            },
+            component: ProfitLoss,
           },
         ]
       },

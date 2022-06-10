@@ -24,6 +24,17 @@
                 <label>Datums līdz:</label>
                 <b-form-input v-model="filters.search_date_to" type="date" placeholder="Meklēt..." debounce="500"></b-form-input>
               </b-input-group>
+              <b-row class="pt-2">
+                <b-col>
+                  <b>Kopējie ienākumi: {{ profit_value.toFixed(2) }}</b>
+                </b-col>
+                <b-col>
+                  <b>Kopējie tēriņi: {{ loss_value.toFixed(2) }}</b>
+                </b-col>
+                <b-col>
+                  <b>Ienākumi - tēriņi: {{ loss_value + profit_value }}</b>
+                </b-col>
+              </b-row>
               <b-btn v-if="!isHidden" variant="primary" @click="printer()" >
                 Printēt
               </b-btn>
@@ -53,16 +64,6 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
-                <!-- <template v-slot:cell(options)="row">
-                  <div class="flex-container options-center">
-                  <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
-                    <a><i class="mx-1 fa fa-edit fa-lg"/></a>
-                    <b-btn variant="primary" class="mx-1">Rediģēt</b-btn>
-                  </router-link>
-                  <b-btn href="#" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-btn> -->
-                  <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
-                  <!-- </div>
-                </template> -->
               </b-table>
             </b-col>
           </b-row>
@@ -97,6 +98,7 @@ export default {
         { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
         { key: 'whoIm', sortable: true, label: 'Darbība' },
         { key: 'name', sortable: true, label: 'Nosaukums' },
+        { key: 'cost', sortable: true, label: 'Cena EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         // { key: 'options', label: 'Iespējas' },
@@ -110,6 +112,8 @@ export default {
         search_date_to: '',
       }, 
       isHidden: false,
+      profit_value: 1,
+      loss_value: 1,
     };
   },
   components: {
@@ -146,6 +150,15 @@ export default {
     filters: { deep: true, handler: 'getData' },
   },
   methods: {
+    countProfit(whoIm, cost){
+      if(whoIm == "Raža"){
+        this.profit_value = this.profit_value + cost;
+        // this.profit_value.toFixed(2);
+      } else {
+        this.loss_value = this.loss_value - cost;
+        // this.loss_value.toFixed(2);
+      }
+    },
     printer(){
       this.isHidden = true;
       setTimeout(function(){ window.print(); }, 100)
@@ -153,12 +166,17 @@ export default {
     },
     getData() {
       Services.report.list(this.params).then((data) => {
+        this.profit_value = 0;
+        this.loss_value = 0;
+        data.data.forEach(el => {
+          this.countProfit(el.whoIm, el.cost);
+        });
         this.list.data = data.data;
       });
     },
     onPageChange(page) {
       page = page || this.page;
-      if (page !== this.page) this.$router.push({ name: 'Report', params: { page } });
+      if (page !== this.page) this.$router.push({ name: 'ProfitLoss', params: { page } });
     },
   },
   mixins: [AlertMixin]

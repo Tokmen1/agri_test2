@@ -14,7 +14,12 @@
       
       <router-link class="px-4" to="/report/1/list/1">
         <b-btn variant="outline-dark">
-          <b-navbar-brand variant="outline-dark">Atskaites</b-navbar-brand>
+          <b-navbar-brand>Atskaites</b-navbar-brand>
+        </b-btn>
+      </router-link>
+      <router-link class="px-4" to="/profit/1/list/1">
+        <b-btn variant="outline-dark">
+          <b-navbar-brand>Atskaites ar izdevumiem</b-navbar-brand>
         </b-btn>
       </router-link>
       

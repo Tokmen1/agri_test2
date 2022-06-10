@@ -95,17 +95,13 @@ class ProfitLossController extends Controller
             }; 
             return $searchResult;
         };
-        // sort by
-        // if ($request['sortField']) {
-        //     $this->orderColumn = $request['sortField'];
-        // }
+        
         if($request['sort_order'] == "desc"){
             $result = $result->sortByDesc($request['sortField'])->values();
         }
         else {
             $result = $result->sortBy($request['sortField'])->values();
         }
-        // $harvest = Harvest::filter($request->validated())->paginate(5);
         return $result->toArray();
     }
 }
