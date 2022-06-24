@@ -58,9 +58,6 @@
                       <b-button variant="primary" class="mx-1">Reģidēt</b-button>
                     </router-link>
                     <b-button v-if="row.item.actions.delete" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-button>
-                    <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
-                      <b-button variant="primary" class="mx-1">Pievienot darbību</b-button>
-                    </router-link>
                     <router-link :to="{ name: 'Sowing', params:{ field_id: row.item.id, page: 1 }}">
                       <b-button variant="primary" class="mx-1">Sēja dati</b-button>
                     </router-link>
@@ -75,6 +72,9 @@
                     </router-link>
                     <router-link :to="{ name: 'FieldAddOns', params:{ field_id: row.item.id, page: 1, type: 'mineral_fertilizer' }}">
                       <b-button variant="primary" class="mx-1">Minerālmēslojuma dati</b-button>
+                    </router-link>
+                    <router-link :to="{ name: 'FieldActions', params:{ id: row.item.id, page: 1 }}">
+                      <b-button variant="primary" class="mx-1">Citas darbības</b-button>
                     </router-link>
                   </div>
                 </template>

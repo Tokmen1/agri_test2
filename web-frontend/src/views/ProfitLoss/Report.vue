@@ -53,6 +53,22 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
+                  <template v-slot:cell(quantity)="row">
+                    <div v-if="row.item.quantity == undefined" class="flex-container">
+                      -
+                    </div>
+                    <div v-else-if="row.item.unit_of_measure == undefined" class="flex-container">
+                      <div v-if="row.item.whoIm == 'Raža'">
+                        {{ row.item.quantity + " t"}}
+                      </div>
+                      <div v-else>
+                        {{ row.item.quantity + " Kg"}}
+                      </div>
+                    </div>
+                    <div v-else-if="row.item.whoIm != 'Cita darbība'" class="flex-container">
+                      {{ row.item.quantity + " " + row.item.unit_of_measure }}
+                    </div>
+                  </template>
                 <!-- <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'SowingUpdate', params:{ id: row.item.id }}">
@@ -97,6 +113,7 @@ export default {
         { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
         { key: 'whoIm', sortable: true, label: 'Darbība' },
         { key: 'name', sortable: true, label: 'Nosaukums' },
+        { key: 'quantity', sortable: true, label: 'Kopējais daudzums' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         // { key: 'options', label: 'Iespējas' },

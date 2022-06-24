@@ -52,6 +52,9 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
+                <template v-slot:cell(amount_per_ha)="row">
+                  {{ row.item.amount_per_ha + " " + row.item.unit_of_measure}}
+                </template>
                 <template v-slot:cell(options)="row">
                   <div class="flex-container options-center">
                   <router-link :to="{ name: 'FieldAddOnsUpdate', params:{ id: row.item.id }}">
@@ -59,7 +62,6 @@
                     <b-btn variant="primary" class="mx-1">Rediģēt</b-btn>
                   </router-link>
                   <b-btn href="#" @click="delete_data(row.item.id)" variant="danger" class="mx-1">Dzēst</b-btn>
-                  <!-- <Delete v-if="row.item.actions.delete"  :id="row.item.id" @deleted="getData" :deleteFn="()=>deleteFn(row.item.id)" /> -->
                   </div>
                 </template>
               </b-table>

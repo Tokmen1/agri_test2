@@ -29,18 +29,18 @@
             v-model="entity.cost"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
+        <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums') || dateErr(entity.date_from, entity.date_to)">
           <label>Sākuma datums</label>
           <b-form-input type="date" placeholder="Sākuma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') }"
+            :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') || dateErr(entity.date_from, entity.date_to) }"
             debounce="250"
             v-model="entity.date_from"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.date_to, 'Noslēguma datums')">
+        <b-form-group :invalid-feedback="dateErr(entity.date_from, entity.date_to)">
           <label>Noslēguma datums</label>
           <b-form-input type="date" placeholder="Noslēguma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_to, 'Noslēguma datums') }"
+            :class="{ 'is-invalid' : dateErr(entity.date_from, entity.date_to) }"
             debounce="250"
             v-model="entity.date_to"/>
         </b-form-group>
@@ -139,6 +139,7 @@ export default {
     save() {
       if (this.entity.action_type === null) { this.entity.action_type = ""; }
       if (this.entity.date_from === null) { this.entity.date_from = ""; }
+      if (this.entity.date_from > this.entity.date_to) { this.entity.date_from = ""; }
       if (this.isEmbedded) return;
       this.spinners.isSaving = true;
       const action = this.isUpdateForm ? this.pushUpdate : this.pushCreate;

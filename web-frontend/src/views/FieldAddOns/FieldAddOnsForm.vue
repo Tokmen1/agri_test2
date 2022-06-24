@@ -21,14 +21,42 @@
             v-model="entity.name"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra (kg/ha)')">
+        <div v-if="this.type != 'lime'">
+        <b-form-group :invalid-feedback="decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra')">
+          <label>Daudzums uz hektāra</label>
+          <b-form-input type="text" placeholder="Daudzums uz hektāra"
+            :class="{ 'is-invalid' : decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra') }"
+            debounce="250"
+            v-model="entity.amount_per_ha"/>
+        </b-form-group>
+
+        <b-form-group v-slot="{ ariaDescribedby }">
+          <label class="mx-1">Mērvienība</label>
+          <b-form-radio v-model="entity.unit_of_measure"
+            :aria-describedby="ariaDescribedby"
+            name="radio-inline"
+            value="kg"
+            class="radio-inline mx-1">
+            kg
+          </b-form-radio>
+          <b-form-radio v-model="entity.unit_of_measure" 
+            :aria-describedby="ariaDescribedby" 
+            name="radio-inline"
+            value="l"
+            class="radio-inline mx-1">
+            l
+          </b-form-radio>
+        </b-form-group>
+        </div>
+        <div v-else>
+          <b-form-group :invalid-feedback="decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra (kg/ha)')">
           <label>Daudzums uz hektāra (kg/ha)</label>
           <b-form-input type="text" placeholder="Daudzums uz hektāra (kg/ha)"
             :class="{ 'is-invalid' : decimalErr(entity.amount_per_ha, 'Daudzums uz hektāra (kg/ha)') }"
             debounce="250"
             v-model="entity.amount_per_ha"/>
-        </b-form-group>
-
+          </b-form-group>
+        </div>
         <b-form-group :invalid-feedback="costErr(entity.cost, 'Izmaksas EUR')">
           <label>Izmaksas EUR</label>
           <b-form-input type="text" placeholder="Izmaksas EUR"
@@ -37,18 +65,18 @@
             v-model="entity.cost"/>
         </b-form-group>
         
-        <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums')">
+        <b-form-group :invalid-feedback="fErr(entity.date_from, 'Sākuma datums') || dateErr(entity.date_from, entity.date_to)">
           <label>Sākuma datums</label>
           <b-form-input type="date" placeholder="Sākuma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') }"
+            :class="{ 'is-invalid' : fErr(entity.date_from, 'Sākuma datums') || dateErr(entity.date_from, entity.date_to) }"
             debounce="250"
             v-model="entity.date_from"/>
         </b-form-group>
 
-        <b-form-group :invalid-feedback="fErr(entity.date_to, 'Noslēguma datums')">
+        <b-form-group :invalid-feedback="dateErr(entity.date_from, entity.date_to)">
           <label>Noslēguma datums</label>
           <b-form-input type="date" placeholder="Noslēguma datums"
-            :class="{ 'is-invalid' : fErr(entity.date_to, 'Noslēguma datums') }"
+            :class="{ 'is-invalid' : dateErr(entity.date_from, entity.date_to) }"
             debounce="250"
             v-model="entity.date_to"/>
         </b-form-group>
@@ -103,6 +131,7 @@ export default {
           name: null,
           cost: null,
           amount_per_ha: null,
+          unit_of_measure: "kg",
           date_from: null,
           date_to: null,
           field_id: this.$route.params.field_id,
@@ -117,8 +146,8 @@ export default {
     isEmbedded() { return this.$options.propsData.value !== undefined; },
     isUpdateForm() { return this.id !== null; },
     typeText() {
-      if (this.type == 'lime') {
-        return 'Kaļķa';
+      if (this.type == "lime") {
+        return "Kaļķa";
       }
       if (this.type == "AAL") {
         return "AAL";
@@ -149,6 +178,7 @@ export default {
       if (this.entity.name === null) { this.entity.name = ""; }
       if (this.entity.amount_per_ha === null) { this.entity.amount_per_ha = ""; }
       if (this.entity.date_from === null) { this.entity.date_from = ""; }
+      if (this.entity.date_from > this.entity.date_to) { this.entity.date_from = ""; }
       if (this.isEmbedded) return;
       this.spinners.isSaving = true;
       const action = this.isUpdateForm ? this.pushUpdate : this.pushCreate;
@@ -175,3 +205,9 @@ export default {
   mixins: [ErrorMixin, AlertMixin]
 }
 </script>
+
+<style scoped>
+  .radio-inline{
+    display: inline;
+  }
+</style>

@@ -49,6 +49,7 @@ class ProfitLossController extends Controller
         }
         foreach($result as $oneResult) {
             $oneResult['whoIm'] = "Sēja";
+            $oneResult['quantity'] = $oneResult['sowing_rate'] * $oneResult['area'];
             $result->add($oneResult);
         };
         foreach($harvests as $harvest) {
@@ -58,7 +59,17 @@ class ProfitLossController extends Controller
             $result->add($harvest);
         };
         foreach($fieldAddOns as $fieldAddOn) {
-            $fieldAddOn['whoIm'] = "Papildvielas pievienotas";
+            if ($fieldAddOn['type'] == "mineral_fertilizer") {
+                $fieldAddOn['whoIm'] = "Minerālmēslojums";
+            }
+            else if ($fieldAddOn['type'] == "lime") {
+                $fieldAddOn['whoIm'] = "Kaļķis";
+            }
+            else if ($fieldAddOn['type'] == "AAL") {
+                $fieldAddOn['whoIm'] = "AAL";
+            }
+            $fieldAddOn['quantity'] = $fieldAddOn['amount_per_ha'] * $fieldAddOn['area'];
+            // $fieldAddOn['whoIm'] = "Papildvielas pievienotas";
             $result->add($fieldAddOn);
         };
         foreach($fieldActions as $fieldAction) {

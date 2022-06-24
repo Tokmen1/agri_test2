@@ -26,13 +26,13 @@
               </b-input-group>
               <b-row class="pt-2">
                 <b-col>
-                  <b>Kopējie ienākumi: {{ profit_value.toFixed(2) }}</b>
+                  <b>Kopējie ieņēmumi: {{ profit_value.toFixed(2) }}</b>
                 </b-col>
                 <b-col>
                   <b>Kopējie tēriņi: {{ loss_value.toFixed(2) }}</b>
                 </b-col>
                 <b-col>
-                  <b>Ienākumi - tēriņi: {{ loss_value + profit_value }}</b>
+                  <b>Ienākumi: {{ loss_value + profit_value }}</b>
                 </b-col>
               </b-row>
               <b-btn v-if="!isHidden" variant="primary" @click="printer()" >
@@ -64,6 +64,22 @@
                   :fields="tableFields"
                   :items="tableItems"
                   >
+                <template v-slot:cell(quantity)="row">
+                    <div v-if="row.item.quantity == undefined" class="flex-container">
+                      -
+                    </div>
+                    <div v-else-if="row.item.unit_of_measure == undefined" class="flex-container">
+                      <div v-if="row.item.whoIm == 'Raža'">
+                        {{ row.item.quantity + " t"}}
+                      </div>
+                      <div v-else>
+                        {{ row.item.quantity + " Kg"}}
+                      </div>
+                    </div>
+                    <div v-else-if="row.item.whoIm != 'Cita darbība'" class="flex-container">
+                      {{ row.item.quantity + " " + row.item.unit_of_measure }}
+                    </div>
+                  </template>
               </b-table>
             </b-col>
           </b-row>
@@ -98,7 +114,8 @@ export default {
         { key: 'field_name', sortable: true, label: 'Lauka nosaukums' },
         { key: 'whoIm', sortable: true, label: 'Darbība' },
         { key: 'name', sortable: true, label: 'Nosaukums' },
-        { key: 'cost', sortable: true, label: 'Cena EUR' },
+        { key: 'quantity', sortable: true, label: 'Kopējais daudzums' },
+        { key: 'cost', sortable: true, label: 'Summa EUR' },
         { key: 'date_from', sortable: true, label: 'Sākuma datums' },
         { key: 'date_to', sortable: true, label: 'Noslēguma datums' },
         // { key: 'options', label: 'Iespējas' },

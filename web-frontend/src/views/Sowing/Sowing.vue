@@ -25,10 +25,10 @@
                   <b-button variant="primary" @click="getData()"><b-icon icon="search" /></b-button>
                 </b-input-group-append>
               </b-input-group>
-              <b-input-group>
+              <!-- <b-input-group>
                 <b-form-input v-model="filters.startDateSearch" type="date" placeholder="Meklēt..." debounce="700"></b-form-input>
                 <b-form-input v-model="filters.endDateSearch" type="date" placeholder="Meklēt..." debounce="700"></b-form-input>
-              </b-input-group>
+              </b-input-group> -->
             </b-form-group>
           </b-col>
           <b-col md="auto" v-if="tableItems.length">
@@ -116,8 +116,8 @@ export default {
         sort_order: true,
         search: '',
         field_id: this.$route.params.field_id,
-        startDateSearch: '',
-        endDateSearch: ''
+        // startDateSearch: '',
+        // endDateSearch: ''
       }
     };
   },

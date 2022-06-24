@@ -34,5 +34,12 @@ export default {
         }
       }
     },
+    dateErr(dateFrom, dateTo) {
+      if (dateTo != "" || dateTo !== null) {
+        if (dateFrom > dateTo) {
+          return "\'Sākuma datums\' nedrīkst būt lielāks par \'Noslēguma datums\'";
+        }
+      }
+    },
   }
 };
